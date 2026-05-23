@@ -2,8 +2,6 @@
 
 Native **C++ / Dear ImGui** port of [MakuTweaker](https://github.com/MarkAdderly/MakuTweaker) — a Windows system tweaker with 13 feature sections and 26 UI languages.
 
-The original WPF (.NET 8) sources are kept locally under `legacy/` (gitignored) for reference during porting.
-
 ## Requirements
 
 - Windows 10 1607+ (build 14393+)
