@@ -1,0 +1,19 @@
+{
+  "version": "0.2.1",
+  "configurations": [
+    {
+      "type": "default",
+      "project": "CMakeLists.txt",
+      "projectTarget": "MakuTweaker.exe",
+      "name": "MakuTweaker++ (Debug)",
+      "currentDir": "${workspaceRoot}/build/Debug"
+    },
+    {
+      "type": "default",
+      "project": "CMakeLists.txt",
+      "projectTarget": "MakuTweaker.exe",
+      "name": "MakuTweaker++ (Release)",
+      "currentDir": "${workspaceRoot}/build/Release"
+    }
+  ]
+}

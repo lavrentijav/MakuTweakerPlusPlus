@@ -26,8 +26,8 @@
                 "off": "Kapalı",
                 "apply": "Uygula",
                 "applied": "Uygulandı",
-                "updatenotify": "MakuTweaker güncellemesi mevcut!\nİndirme sayfasına gitmek için bildirime tıklayın.",
-                "updatedialog": "MakuTweaker güncellemesi mevcut.\nYeni özelliklere ve hata düzeltmelerine erişmek için en son sürümü yüklemeniz önerilir. Siteye gitmek ve yeni yükleyiciyi indirmek için «Güncelle»ye tıklayın.",
+                "updatenotify": "MakuTweaker++ güncellemesi mevcut!\nİndirme sayfasına gitmek için bildirime tıklayın.",
+                "updatedialog": "MakuTweaker++ güncellemesi mevcut.\nYeni özelliklere ve hata düzeltmelerine erişmek için en son sürümü yüklemeniz önerilir. Siteye gitmek ve yeni yükleyiciyi indirmek için «Güncelle»ye tıklayın.",
                 "updatebutton": "Güncelle",
                 "updatecancel": "Daha sonra",
                 "updatecheckb": "Program güncellenene kadar tekrar gösterme",
@@ -119,7 +119,7 @@
                 "isnt": "yüklü değil...",
                 "comp": "Kontrol tamamlandı!",
                 "suredialogT1": "Kaldırmak için seçtiniz:",
-                "suredialogT2": "MakuTweaker ile.",
+                "suredialogT2": "MakuTweaker++ ile.",
                 "suredialogT3": "Bu uygulamanın sisteme geri yüklenemeyeceğini ve bu bileşenlerle ilgili işlevlerin kararsız olabileceğini anlamalısınız.",
                 "suredialogT4": "Devam etmek için metin kutusuna ILOVEMAKUTWEAKER yazın ve Tamam'a tıklayın.",
                 "suredialogNS": "İptal"
@@ -223,7 +223,7 @@
                 "telemetry": "Sistemdeki tüm telemetri ve takibi devre dışı bırak"
             },
             "status": {
-                "uacwarn": "\"Kullanıcı Hesabı Denetimini (UAC) devre dışı bırak\" seçeneğini etkinleştirdiğinizde, Windows 11'de görev çubuğuna sürükle-bırak özelliği çalışmayı durdurur. MakuTweaker'ın bu sorunla bir ilgisi yoktur. Devam etmek istiyor musunuz?"
+                "uacwarn": "\"Kullanıcı Hesabı Denetimini (UAC) devre dışı bırak\" seçeneğini etkinleştirdiğinizde, Windows 11'de görev çubuğuna sürükle-bırak özelliği çalışmayı durdurur. MakuTweaker++'ın bu sorunla bir ilgisi yoktur. Devam etmek istiyor musunuz?"
             }
         },
         "perfor": {
@@ -232,7 +232,7 @@
                 "applyb": "Sınırı uygula",
                 "minb": "Min. performans",
                 "maxb": "Maks. performans",
-                "info": "MakuTweaker ile işlemci güç seviyesini yazılımsal olarak sınırlayarak dizüstü bilgisayarınızın pil ömrünü uzatabilirsiniz.\nMasaüstü bilgisayarlarda bu, ısınmayı, güç tüketimini ve fan gürültüsünü azaltarak sistemin daha sessiz ve kararlı çalışmasını sağlar.\nYüzdeyi ne kadar düşük ayarlarsanız, performans o kadar düşer ancak pil ömrü o kadar uzar.\nDizüstü bilgisayarın şarjdan çıkarılmasından sonra limitin yeniden ayarlanması gerekebilir.",
+                "info": "MakuTweaker++ ile işlemci güç seviyesini yazılımsal olarak sınırlayarak dizüstü bilgisayarınızın pil ömrünü uzatabilirsiniz.\nMasaüstü bilgisayarlarda bu, ısınmayı, güç tüketimini ve fan gürültüsünü azaltarak sistemin daha sessiz ve kararlı çalışmasını sağlar.\nYüzdeyi ne kadar düşük ayarlarsanız, performans o kadar düşer ancak pil ömrü o kadar uzar.\nDizüstü bilgisayarın şarjdan çıkarılmasından sonra limitin yeniden ayarlanması gerekebilir.",
                 "flyout": "İşlemci performans limiti şuna ayarlandı: "
             }
         },
@@ -285,7 +285,7 @@
                 "ssdl": "Disk sürücüleri",
                 "sname": "Ad:",
                 "smem": "Toplam kapasite:",
-                "benchtitle": "MakuTweaker ile kıyaslama (Benchmark)",
+                "benchtitle": "MakuTweaker++ ile kıyaslama (Benchmark)",
                 "benchbutton": "Tek çekirdek testi",
                 "benchbutton2": "Çok çekirdekli test",
                 "lookresulbutton": "Diğer sonuçlar",
@@ -335,7 +335,7 @@
         },
         "myan": {
             "main": {
-                "info": "MakuTweaker, belirtilen süreçlerin ve uygulamaların başlatılmasını engellemenizi sağlar. Bunları virgülle ayırarak listeleyin ve program kısıtlamaları otomatik olarak uygular. Bir sürecin engelini kaldırmak için listeden silin ve değişiklikleri kaydedin.",
+                "info": "MakuTweaker++, belirtilen süreçlerin ve uygulamaların başlatılmasını engellemenizi sağlar. Bunları virgülle ayırarak listeleyin ve program kısıtlamaları otomatik olarak uygular. Bir sürecin engelini kaldırmak için listeden silin ve değişiklikleri kaydedin.",
                 "excltitle": "Uygulama engelleme",
                 "applyban": "Engellemeyi uygula",
                 "howitworks": "Nasıl çalışır?",
@@ -353,7 +353,7 @@
                 "d": "Koyu",
                 "st": "Stil",
                 "label": "Ayarlar",
-                "cfg_info": "Seçilen MakuTweaker ayarlarını .mktw dosyasına kaydedebilir, daha sonra yeni bir bilgisayarda içe aktararak uygulayabilir veya arkadaşlarınızla paylaşabilirsiniz. Uygulamadan sonra yeniden başlatma gerekir.",
+                "cfg_info": "Seçilen MakuTweaker++ ayarlarını .mktw dosyasına kaydedebilir, daha sonra yeni bir bilgisayarda içe aktararak uygulayabilir veya arkadaşlarınızla paylaşabilirsiniz. Uygulamadan sonra yeniden başlatma gerekir.",
                 "cfg_title": "Yapılandırmalar / Ön Ayarlar",
                 "cfg_save": "Kaydet",
                 "cfg_import": "Yükle",
@@ -369,10 +369,10 @@
             "main": {
                 "sfc": "Windows onarımı için iki standart seçenekten biri.\nİnternet bağlantısı olmadan sistem dosyalarının hızlı kontrolü ve onarımı.",
                 "dism": "Windows onarımı için iki standart seçenekten biri.\nDISM daha derin ve güvenilirdir çünkü Windows Update'e bağlanarak Microsoft sunucularından düzeltilmiş dosyaları indirir.",
-                "sticky": "Shift tuşuna art arda basıldığında, oyun sırasında rahatsız edebilecek \"Yapışkan Tuşlar\" penceresi görünür.\nMakuTweaker'da bu özellik devre dışı bırakılabilir.",
+                "sticky": "Shift tuşuna art arda basıldığında, oyun sırasında rahatsız edebilecek \"Yapışkan Tuşlar\" penceresi görünür.\nMakuTweaker++'da bu özellik devre dışı bırakılabilir.",
                 "coreisol": "Çekirdek yalıtımı, bilgisayar performansını (özellikle düşük performanslı olanlarda) düşürür ve bazen sanal makinelerin çalışmasını bozar. Sanal makine (VMware Workstation) çalıştırma sorunlarınız varsa veya oyunlarda ciddi takılmalar yaşıyorsanız, Çekirdek Yalıtımı ve Sanallaştırma Tabanlı Güvenliği (VBS) devre dışı bırakmanız önerilir. Normal bir kullanıcı için bu özellikler gerekli değildir ve en yeni bilgisayarlarda bile %5'e kadar performans artışı sağlayabilir.\nÇekirdek Yalıtımı ve VBS ek bir güvenlik katmanıdır, ancak Windows Defender yeterli koruma sağlar.",
                 "vbs": "Çekirdek yalıtımı ve Sanallaştırma Tabanlı Güvenliği (VBS) devre dışı bırakmanız önerilir. Normal bir kullanıcı için bu özellikler gerekli değildir ve en yeni bilgisayarlarda bile %5'e kadar performans artışı sağlayabilir.\nÇekirdek Yalıtımı ve VBS ek bir güvenlik katmanıdır, ancak Windows Defender yeterli koruma sağlar.",
-                "duac": "MakuTweaker gibi yönetici hakları gerektiren bir uygulama başlattığınızda, \"Bu uygulamanın cihazınızda değişiklik yapmasına izin veriyor musunuz?\" penceresi görünür. MakuTweaker bu pencerenin görünmesini engellemenizi sağlar. Dikkat: UAC devre dışıyken tüm uygulamalar yönetici haklarıyla çalışır. Bazı Python betikleri normal haklarla çalışmayı gerektirebilir. Ayrıca Windows 11'de UAC devre dışı bırakıldıktan sonra görev çubuğuna sürükle-bırak çalışmaz. Bu bir Windows 11 kısıtlamasıdır.",
+                "duac": "MakuTweaker++ gibi yönetici hakları gerektiren bir uygulama başlattığınızda, \"Bu uygulamanın cihazınızda değişiklik yapmasına izin veriyor musunuz?\" penceresi görünür. MakuTweaker++ bu pencerenin görünmesini engellemenizi sağlar. Dikkat: UAC devre dışıyken tüm uygulamalar yönetici haklarıyla çalışır. Bazı Python betikleri normal haklarla çalışmayı gerektirebilir. Ayrıca Windows 11'de UAC devre dışı bırakıldıktan sonra görev çubuğuna sürükle-bırak çalışmaz. Bu bir Windows 11 kısıtlamasıdır.",
                 "smartscr": "İmzalanmamış uygulamaları çalıştırırken, \"Windows bilgisayarınızı korudu\" veya \"Zararlı dosya\" gibi korkutucu uyarılar çıkabilir. SmartScreen ayrıca Microsoft Edge indirmelerindeki uyarıları da etkiler. Devre dışı bırakıldığında, indirmeler gereksiz onay diyalogları olmadan hemen başlar.",
                 "hybern": "Hazırda bekletmeyi devre dışı bırakmak, bilgisayarınızdaki RAM miktarına bağlı olarak sistem sürücünüzde onlarca gigabayt yer açabilir. Hazırda bekletme, uyku modunun bir benzeridir. SSD sürücülerde bu, aşınmayı hızlandırabilir. Microsoft bu seçeneği varsayılan olarak gizlemiştir, ancak hazırda bekletme dosyası diskte yer kaplamaya devam eder.",
                 "swap": "Disk belleği dosyasını (swap) tamamen devre dışı bırakmanız kesinlikle önerilmez.\nDisk belleği dosyası, RAM yetersiz kaldığında disk alanının bir kısmını sanal bellek olarak kullanan bir sistem mekanizmasıdır. Yüksek yük altında sistemin çökmesini önlemeye yardımcı olur. Devre dışı bırakılması sadece 120 GB'a kadar küçük SSD'li cihazlarda 20 GB'a kadar yer açmak için mantıklı olabilir.",
@@ -387,9 +387,9 @@
                 "hyperv": "Hyper-V bileşenini zorunlu olarak devre dışı bırakmak, VMware Workstation sanal makinelerinin performans kısıtlamalarını gidermeye yardımcı olabilir.",
                 "directplay": "DirectPlay, GTA Vice City gibi eski oyunları çalıştırmak için gereklidir.",
                 "bing": "Modern Windows 10 ve 11 sürümlerinde, Başlat menüsünde arama yaparken sistem Bing sonuçlarını önerir. Bu özelliği devre dışı bırakırsanız, sağ tarafta bulunan dosya bilgileri görüntülenecektir.",
-                "MakuTweakerProcessMGR": "\"İşlem Yönetimi\" sekmesi, Windows Görev Yöneticisi'nin en iyi alternatifidir.\n\nYaklaşım son derece kullanıcı dostudur: sonlandırılamayan sistem işlemleri gizlenmiştir. Sadece kullanıcının başlattığı işlemler görüntülenir.\n\nTüm işlemler otomatik olarak en yüksek tüketime göre sıralanır. Ayrıca, işlemleri görüntülemek için minimum bellek tüketim eşiği (50 MB'tan 2 GB'a kadar) belirleyebilirsiniz. Bu, düzenleme programları, sanal makineler veya oyunlar gibi en \"ağır\" işlemleri filtrelemek için kullanışlıdır.\n\nMakuTweaker'daki işlem yönetiminin ana özelliği, alttaki \"Sadece yanıt vermeyen işlemleri göster\" onay kutusudur. Windows'ta bir pencere yanıt vermiyorsa, sadece bu pencereleri görüntüleyerek donan işlemi hızlıca bulup sonlandırabilirsiniz.\n\nAyrıca, bir işleme sağ tıklayarak bağlam menüsünü açabilirsiniz. Görev Yöneticisi'nden farklı olarak, işlemin \"Dosya konumu\"nu doğrudan açabilirsiniz. \"Görevi sonlandır\"a tıkladığınızda, tüm işlem ağacı anında sonlandırılır.\n\nMakuTweaker'daki RAM tüketim hesaplama sistemi Görev Yöneticisi'nden farklıdır; MakuTweaker'daki değerler daha gerçekçidir.\nProgram, sistemin kullandığı kaynakları ve Görev Yöneticisi'nin gizlediği uygulamalar tarafından ayrılan gereksiz belleği hesaba katar. Bu sayede, video düzenleme programlarının önizleme için ayırdığı belleği görebilirsiniz. Bu, tüm programlar için geçerlidir.",
-                "MakuTweakerProcessMGR1": "Yardım penceresini genişletmek için düğmeye tıklayın.",
-                "ttl": "Rusya'daki mobil operatörler (MTS, Beeline, MegaFon, Tele2, Yota), akıllı telefondan bilgisayara sınırsız internet paylaşımını genellikle engeller veya ek ücret talep eder. Bunu, Windows'ta varsayılan olarak 128, telefonlarda ise 64 olan TTL parametresini izleyerek yaparlar.\nTTL'yi 65 değerine sabitlemek, telefon üzerinden geçerken değerin 1 azalmasına ve operatörün standart 64 değerine sahip bir \"akıllı telefon\" paketi görmesine neden olur. Operatör, ağın bilgisayara değil başka bir akıllı telefona paylaşıldığını düşünecektir.\n\nMakuTweaker bunun çalışacağını garanti etmez.\nRusya'da bu kayıt defteri parametresi popülerlik kazanmaktadır.\nMakuTweaker kullanıcıları tarafından eklenmesi istenmiştir."
+                "MakuTweaker++ProcessMGR": "\"İşlem Yönetimi\" sekmesi, Windows Görev Yöneticisi'nin en iyi alternatifidir.\n\nYaklaşım son derece kullanıcı dostudur: sonlandırılamayan sistem işlemleri gizlenmiştir. Sadece kullanıcının başlattığı işlemler görüntülenir.\n\nTüm işlemler otomatik olarak en yüksek tüketime göre sıralanır. Ayrıca, işlemleri görüntülemek için minimum bellek tüketim eşiği (50 MB'tan 2 GB'a kadar) belirleyebilirsiniz. Bu, düzenleme programları, sanal makineler veya oyunlar gibi en \"ağır\" işlemleri filtrelemek için kullanışlıdır.\n\nMakuTweaker++'daki işlem yönetiminin ana özelliği, alttaki \"Sadece yanıt vermeyen işlemleri göster\" onay kutusudur. Windows'ta bir pencere yanıt vermiyorsa, sadece bu pencereleri görüntüleyerek donan işlemi hızlıca bulup sonlandırabilirsiniz.\n\nAyrıca, bir işleme sağ tıklayarak bağlam menüsünü açabilirsiniz. Görev Yöneticisi'nden farklı olarak, işlemin \"Dosya konumu\"nu doğrudan açabilirsiniz. \"Görevi sonlandır\"a tıkladığınızda, tüm işlem ağacı anında sonlandırılır.\n\nMakuTweaker++'daki RAM tüketim hesaplama sistemi Görev Yöneticisi'nden farklıdır; MakuTweaker++'daki değerler daha gerçekçidir.\nProgram, sistemin kullandığı kaynakları ve Görev Yöneticisi'nin gizlediği uygulamalar tarafından ayrılan gereksiz belleği hesaba katar. Bu sayede, video düzenleme programlarının önizleme için ayırdığı belleği görebilirsiniz. Bu, tüm programlar için geçerlidir.",
+                "MakuTweaker++ProcessMGR1": "Yardım penceresini genişletmek için düğmeye tıklayın.",
+                "ttl": "Rusya'daki mobil operatörler (MTS, Beeline, MegaFon, Tele2, Yota), akıllı telefondan bilgisayara sınırsız internet paylaşımını genellikle engeller veya ek ücret talep eder. Bunu, Windows'ta varsayılan olarak 128, telefonlarda ise 64 olan TTL parametresini izleyerek yaparlar.\nTTL'yi 65 değerine sabitlemek, telefon üzerinden geçerken değerin 1 azalmasına ve operatörün standart 64 değerine sahip bir \"akıllı telefon\" paketi görmesine neden olur. Operatör, ağın bilgisayara değil başka bir akıllı telefona paylaşıldığını düşünecektir.\n\nMakuTweaker++ bunun çalışacağını garanti etmez.\nRusya'da bu kayıt defteri parametresi popülerlik kazanmaktadır.\nMakuTweaker++ kullanıcıları tarafından eklenmesi istenmiştir."
             }
         }
     }

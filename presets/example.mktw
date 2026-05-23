@@ -1,0 +1,9 @@
+{
+  "lang": "ru",
+  "theme": "Dark",
+  "tweaks": {
+    "ttlBypass": true,
+    "telemetryOff": true,
+    "hibernateOff": true
+  }
+}

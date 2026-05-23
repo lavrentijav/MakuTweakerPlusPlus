@@ -26,8 +26,8 @@
                 "off": "Disattivo",
                 "apply": "Applica",
                 "applied": "Applicato",
-                "updatenotify": "È disponibile un aggiornamento di MakuTweaker!\nFai clic sulla notifica per andare alla pagina di download.",
-                "updatedialog": "È disponibile un aggiornamento di MakuTweaker.\nSi consiglia di installare l’ultima versione per accedere a nuove funzionalità e correzioni di bug. Fai clic su «Aggiorna» per visitare il sito e scaricare il nuovo installer.",
+                "updatenotify": "È disponibile un aggiornamento di MakuTweaker++!\nFai clic sulla notifica per andare alla pagina di download.",
+                "updatedialog": "È disponibile un aggiornamento di MakuTweaker++.\nSi consiglia di installare l’ultima versione per accedere a nuove funzionalità e correzioni di bug. Fai clic su «Aggiorna» per visitare il sito e scaricare il nuovo installer.",
                 "updatebutton": "Aggiorna",
                 "updatecancel": "Più tardi",
                 "updatecheckb": "Non mostrare più fino all’aggiornamento del programma",
@@ -119,7 +119,7 @@
                 "isnt": "non installato...",
                 "comp": "Controllo completato!",
                 "suredialogT1": "Hai selezionato la rimozione di",
-                "suredialogT2": "tramite MakuTweaker.",
+                "suredialogT2": "tramite MakuTweaker++.",
                 "suredialogT3": "Devi essere consapevole che questa app non potrà essere ripristinata nel sistema e le funzionalità correlate potrebbero diventare instabili.",
                 "suredialogT4": "Per continuare, digita ILOVEMAKUTWEAKER nel campo di testo e premi OK.",
                 "suredialogNS": "Annulla"
@@ -223,7 +223,7 @@
                 "telemetry": "Disabilita tutta la telemetria e il tracciamento nel sistema"
             },
             "status": {
-                "uacwarn": "Abilitando l'opzione \"Disabilita Controllo Account Utente (UAC)\", su Windows 11 smette di funzionare il trascinamento (Drag-and-Drop) sulla barra delle applicazioni. MakuTweaker non è responsabile di questo problema. Vuoi davvero continuare?"
+                "uacwarn": "Abilitando l'opzione \"Disabilita Controllo Account Utente (UAC)\", su Windows 11 smette di funzionare il trascinamento (Drag-and-Drop) sulla barra delle applicazioni. MakuTweaker++ non è responsabile di questo problema. Vuoi davvero continuare?"
             }
         },
         "perfor": {
@@ -232,7 +232,7 @@
                 "applyb": "Applica limite",
                 "minb": "Prestazioni min.",
                 "maxb": "Prestazioni max.",
-                "info": "Con MakuTweaker puoi aumentare la durata della batteria del laptop limitando via software il livello di potenza del processore.\nSui PC desktop, questo aiuta a ridurre il calore, il consumo energetico e il rumore delle ventole, rendendo il sistema più silenzioso e stabile.\nMinore è la percentuale impostata, minori saranno le prestazioni, ma maggiore sarà la durata della batteria.\nPotrebbe essere necessario reimpostare il limite dopo aver scollegato il laptop dall'alimentazione.",
+                "info": "Con MakuTweaker++ puoi aumentare la durata della batteria del laptop limitando via software il livello di potenza del processore.\nSui PC desktop, questo aiuta a ridurre il calore, il consumo energetico e il rumore delle ventole, rendendo il sistema più silenzioso e stabile.\nMinore è la percentuale impostata, minori saranno le prestazioni, ma maggiore sarà la durata della batteria.\nPotrebbe essere necessario reimpostare il limite dopo aver scollegato il laptop dall'alimentazione.",
                 "flyout": "Limite prestazioni processore impostato al "
             }
         },
@@ -285,7 +285,7 @@
                 "ssdl": "Unità disco",
                 "sname": "Nome:",
                 "smem": "Capacità totale:",
-                "benchtitle": "Benchmark con MakuTweaker",
+                "benchtitle": "Benchmark con MakuTweaker++",
                 "benchbutton": "Test single-core",
                 "benchbutton2": "Test multi-core",
                 "lookresulbutton": "Altri risultati",
@@ -335,7 +335,7 @@
         },
         "myan": {
             "main": {
-                "info": "MakuTweaker consente di bloccare l'avvio di processi e applicazioni specificati. Elencali separati da virgole e il programma applicherà automaticamente le restrizioni. Per sbloccare un processo, rimuovilo dall'elenco e salva le modifiche.",
+                "info": "MakuTweaker++ consente di bloccare l'avvio di processi e applicazioni specificati. Elencali separati da virgole e il programma applicherà automaticamente le restrizioni. Per sbloccare un processo, rimuovilo dall'elenco e salva le modifiche.",
                 "excltitle": "Blocco applicazioni",
                 "applyban": "Applica blocco",
                 "howitworks": "Come funziona?",
@@ -353,7 +353,7 @@
                 "d": "Scuro",
                 "st": "Stile",
                 "label": "Impostazioni",
-                "cfg_info": "Puoi salvare le impostazioni selezionate di MakuTweaker in un file .mktw per importarle e applicarle su un nuovo computer o condividerle con amici. Dopo l'applicazione è necessario riavviare.",
+                "cfg_info": "Puoi salvare le impostazioni selezionate di MakuTweaker++ in un file .mktw per importarle e applicarle su un nuovo computer o condividerle con amici. Dopo l'applicazione è necessario riavviare.",
                 "cfg_title": "Configurazioni / Preset",
                 "cfg_save": "Salva",
                 "cfg_import": "Carica",
@@ -369,11 +369,11 @@
             "main": {
                 "sfc": "Una delle due opzioni standard di ripristino di Windows.\nControllo rapido e ripristino dei file di sistema senza connessione Internet.",
                 "dism": "Una delle due opzioni standard di ripristino di Windows.\nDISM è più profondo e affidabile poiché si collega a Windows Update per scaricare i file corretti dai server Microsoft.",
-                "sticky": "Premendo ripetutamente il tasto Shift appare la finestra \"Tasti permanenti\", che può disturbare durante il gioco.\nIn MakuTweaker questa funzione può essere disabilitata.",
+                "sticky": "Premendo ripetutamente il tasto Shift appare la finestra \"Tasti permanenti\", che può disturbare durante il gioco.\nIn MakuTweaker++ questa funzione può essere disabilitata.",
                 "coreisol": "L'isolamento core riduce le prestazioni del PC (spesso su quelli meno potenti) e talvolta compromette il funzionamento delle macchine virtuali. Si consiglia di disabilitare l'isolamento core insieme alla Virtualization Based Security se riscontri problemi con macchine virtuali VMware Workstation o micro-scatti nei giochi e nel sistema. Per un utente comune queste funzioni non sono necessarie e, anche sui PC più recenti, possono aumentare le prestazioni fino al 5%.\nL'isolamento core e VBS sono un ulteriore livello di sicurezza, ma Windows Defender fornisce già una protezione sufficiente.",
                 "vbs": "Si consiglia di disabilitare l'isolamento core insieme alla Virtualization Based Security se riscontri problemi con macchine virtuali VMware Workstation o micro-scatti nei giochi e nel sistema. Per un utente comune queste funzioni non sono necessarie e, anche sui PC più recenti, possono aumentare le prestazioni fino al 5%.\nL'isolamento core e VBS sono un ulteriore livello di sicurezza, ma Windows Defender fornisce già una protezione sufficiente.",
-                "duac": "All'avvio di un'applicazione che richiede privilegi di amministratore, come MakuTweaker, appare la finestra \"Consentire a questa app di apportare modifiche al dispositivo?\". Molti la trovano fastidiosa, quindi MakuTweaker permette di disabilitarla. Tieni presente: con UAC disabilitato, tutte le app vengono eseguite con privilegi di amministratore. Alcuni script Python richiedono privilegi standard per funzionare correttamente. Inoltre, su Windows 11, dopo aver disabilitato l'UAC, il trascinamento sulla barra delle applicazioni smetterà di funzionare. Questa è una limitazione di Windows 11 e non dipende da MakuTweaker.",
-                "smartscr": "All'avvio di app non firmate, come MakuTweaker, appare una finestra con il testo allarmante \"Windows ha protetto il PC\" o \"File dannoso\", il che spesso non è vero. Questo accade con vari repack o crack. SmartScreen influisce anche sugli avvisi nei download di Microsoft Edge. Dopo averlo disabilitato, i download inizieranno immediatamente, senza finestre di conferma.",
+                "duac": "All'avvio di un'applicazione che richiede privilegi di amministratore, come MakuTweaker++, appare la finestra \"Consentire a questa app di apportare modifiche al dispositivo?\". Molti la trovano fastidiosa, quindi MakuTweaker++ permette di disabilitarla. Tieni presente: con UAC disabilitato, tutte le app vengono eseguite con privilegi di amministratore. Alcuni script Python richiedono privilegi standard per funzionare correttamente. Inoltre, su Windows 11, dopo aver disabilitato l'UAC, il trascinamento sulla barra delle applicazioni smetterà di funzionare. Questa è una limitazione di Windows 11 e non dipende da MakuTweaker++.",
+                "smartscr": "All'avvio di app non firmate, come MakuTweaker++, appare una finestra con il testo allarmante \"Windows ha protetto il PC\" o \"File dannoso\", il che spesso non è vero. Questo accade con vari repack o crack. SmartScreen influisce anche sugli avvisi nei download di Microsoft Edge. Dopo averlo disabilitato, i download inizieranno immediatamente, senza finestre di conferma.",
                 "hybern": "Disabilitare l'ibernazione può liberare decine di gigabyte sul disco di sistema, a seconda della RAM. L'ibernazione è simile alla sospensione, ma salva i dati sul disco invece che nella RAM. Sugli SSD, questo può accelerare l'usura. Per questo motivo Microsoft ha nascosto questa opzione, ma il file di ibernazione continua a occupare spazio.",
                 "swap": "Non è assolutamente consigliato disabilitare il file di paging.\nIl file di paging è un meccanismo di sistema che usa parte del disco come memoria virtuale aggiuntiva quando la RAM è insufficiente. Aiuta a prevenire crash e chiusure improvvise delle app. Disabilitarlo è giustificato solo su dispositivi con SSD piccoli (fino a 120 GB) per liberare fino a 20 GB di spazio.",
                 "oldloader": "Nei vecchi bootloader di Windows (pre-Windows 7) era possibile premere F8 all'avvio per accedere alla modalità provvisoria. Nelle versioni moderne è necessario interrompere l'avvio tre volte, il che rallenta il processo. Puoi abilitare il vecchio design del bootloader per accedere facilmente alla modalità provvisoria.",
@@ -387,9 +387,9 @@
                 "hyperv": "Disabilitare forzatamente il componente Hyper-V può aiutare a eliminare le limitazioni di prestazioni delle macchine virtuali VMware Workstation.",
                 "directplay": "DirectPlay è necessario per eseguire vecchi giochi, come GTA Vice City.",
                 "bing": "Nelle versioni moderne di Windows 10 e 11, quando digiti nel menu Start, il sistema suggerisce risultati da Bing. Se disabiliti questa funzione, a destra verranno visualizzate informazioni sul file trovato.",
-                "MakuTweakerProcessMGR": "La scheda \"Gestione processi\" è la migliore alternativa al Task Manager di Windows.\n\nL'approccio è molto amichevole: i processi di sistema che non possono essere terminati sono nascosti. Vengono mostrati solo i processi avviati dall'utente.\n\nTutti i processi sono ordinati automaticamente dal consumo maggiore al minore. Puoi impostare una soglia minima di consumo di memoria per visualizzare i processi (da 50 MB a 2 GB). È utile per filtrare l'elenco e lasciare solo i processi più \"pesanti\" (es. software di montaggio, macchine virtuali o giochi).\n\nLa funzione principale di MakuTweaker è la casella \"Mostra solo processi bloccati\". Se una finestra in Windows è contrassegnata come bloccata, puoi visualizzare solo quelle per trovare rapidamente il processo e terminarlo.\n\nInoltre, cliccando con il tasto destro su un processo, puoi aprire il menu contestuale. A differenza del Task Manager, puoi aprire direttamente il \"Percorso file\". E cliccando su \"Termina processo\", viene terminato l'intero albero dei processi.\n\nIl sistema di conteggio del consumo di RAM in MakuTweaker è diverso dal Task Manager: i valori sono più realistici.\nIl programma tiene conto delle risorse di sistema utilizzate e della memoria riservata in eccesso dalle app che il Task Manager nasconde. Grazie a questo, puoi conoscere il consumo effettivo dei software di montaggio che riservano RAM per l'anteprima dei video.",
-                "MakuTweakerProcessMGR1": "Clicca sul pulsante per espandere la finestra di aiuto.",
-                "ttl": "Gli operatori mobili spesso bloccano o richiedono un pagamento extra per il tethering di Internet illimitato dallo smartphone al PC. Lo tracciano tramite il parametro TTL, che in Windows è 128 e negli smartphone 64.\nFissare il TTL a 65 farà sì che, passando attraverso il telefono, il valore diminuisca di 1, e l'operatore riceverà il pacchetto \"smartphone\" standard con valore 64. Vedrà che la rete è condivisa con un altro smartphone, non con un PC, il che può evitare costi aggiuntivi.\n\nMakuTweaker non garantisce assolutamente che funzioni.\nIn Russia questo parametro di registro sta guadagnando popolarità ed è stato richiesto dagli utenti di MakuTweaker."
+                "MakuTweaker++ProcessMGR": "La scheda \"Gestione processi\" è la migliore alternativa al Task Manager di Windows.\n\nL'approccio è molto amichevole: i processi di sistema che non possono essere terminati sono nascosti. Vengono mostrati solo i processi avviati dall'utente.\n\nTutti i processi sono ordinati automaticamente dal consumo maggiore al minore. Puoi impostare una soglia minima di consumo di memoria per visualizzare i processi (da 50 MB a 2 GB). È utile per filtrare l'elenco e lasciare solo i processi più \"pesanti\" (es. software di montaggio, macchine virtuali o giochi).\n\nLa funzione principale di MakuTweaker++ è la casella \"Mostra solo processi bloccati\". Se una finestra in Windows è contrassegnata come bloccata, puoi visualizzare solo quelle per trovare rapidamente il processo e terminarlo.\n\nInoltre, cliccando con il tasto destro su un processo, puoi aprire il menu contestuale. A differenza del Task Manager, puoi aprire direttamente il \"Percorso file\". E cliccando su \"Termina processo\", viene terminato l'intero albero dei processi.\n\nIl sistema di conteggio del consumo di RAM in MakuTweaker++ è diverso dal Task Manager: i valori sono più realistici.\nIl programma tiene conto delle risorse di sistema utilizzate e della memoria riservata in eccesso dalle app che il Task Manager nasconde. Grazie a questo, puoi conoscere il consumo effettivo dei software di montaggio che riservano RAM per l'anteprima dei video.",
+                "MakuTweaker++ProcessMGR1": "Clicca sul pulsante per espandere la finestra di aiuto.",
+                "ttl": "Gli operatori mobili spesso bloccano o richiedono un pagamento extra per il tethering di Internet illimitato dallo smartphone al PC. Lo tracciano tramite il parametro TTL, che in Windows è 128 e negli smartphone 64.\nFissare il TTL a 65 farà sì che, passando attraverso il telefono, il valore diminuisca di 1, e l'operatore riceverà il pacchetto \"smartphone\" standard con valore 64. Vedrà che la rete è condivisa con un altro smartphone, non con un PC, il che può evitare costi aggiuntivi.\n\nMakuTweaker++ non garantisce assolutamente che funzioni.\nIn Russia questo parametro di registro sta guadagnando popolarità ed è stato richiesto dagli utenti di MakuTweaker++."
             }
         }
     }

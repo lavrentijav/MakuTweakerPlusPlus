@@ -26,8 +26,8 @@
                 "off": "Izsl.",
                 "apply": "Pielietot",
                 "applied": "Lietots",
-                "updatenotify": "Ir pieejams MakuTweaker atjauninājums!\nNoklikšķiniet uz paziņojuma, lai pārietu uz lejupielādes lapu.",
-                "updatedialog": "Ir pieejams MakuTweaker atjauninājums.\nIeteicams instalēt jaunāko versiju, lai piekļūtu jaunām funkcijām un kļūdu labojumiem. Noklikšķiniet uz «Atjaunināt», lai apmeklētu vietni un lejupielādētu jauno instalētāju.",
+                "updatenotify": "Ir pieejams MakuTweaker++ atjauninājums!\nNoklikšķiniet uz paziņojuma, lai pārietu uz lejupielādes lapu.",
+                "updatedialog": "Ir pieejams MakuTweaker++ atjauninājums.\nIeteicams instalēt jaunāko versiju, lai piekļūtu jaunām funkcijām un kļūdu labojumiem. Noklikšķiniet uz «Atjaunināt», lai apmeklētu vietni un lejupielādētu jauno instalētāju.",
                 "updatebutton": "Atjaunināt",
                 "updatecancel": "Atlikt",
                 "updatecheckb": "Nerādīt atkārtoti līdz programmas atjaunināšanai",
@@ -119,7 +119,7 @@
                 "isnt": "nav instalēta...",
                 "comp": "Pārbaude pabeigta!",
                 "suredialogT1": "Jūs izvēlējāties noņemt",
-                "suredialogT2": "izmantojot MakuTweaker.",
+                "suredialogT2": "izmantojot MakuTweaker++.",
                 "suredialogT3": "Jums jāsaprot, ka šo lietotni sistēmā vairs nevarēs atgriezt,\nun darbs, kas saistīts ar šiem komponentiem, var kļūt nestabils.",
                 "suredialogT4": "Lai turpinātu, ievadiet ILOVEMAKUTWEAKER teksta laukā un nospiediet OK.",
                 "suredialogNS": "Atcelt"
@@ -223,7 +223,7 @@
                 "telemetry": "Atspējot visu telemetriju un izsekošanu sistēmā"
             },
             "status": {
-                "uacwarn": "Ieslēdzot opciju \"Atspējot lietotāja konta kontroli (UAC)\", Windows 11 pārstāj darboties vilkšana (Drag-and-Drop) uz uzdevumjoslas. MakuTweaker nav saistīts ar šo problēmu. Vai tiešām vēlaties turpināt?"
+                "uacwarn": "Ieslēdzot opciju \"Atspējot lietotāja konta kontroli (UAC)\", Windows 11 pārstāj darboties vilkšana (Drag-and-Drop) uz uzdevumjoslas. MakuTweaker++ nav saistīts ar šo problēmu. Vai tiešām vēlaties turpināt?"
             }
         },
         "perfor": {
@@ -232,7 +232,7 @@
                 "applyb": "Pielietot ierobežojumu",
                 "minb": "Min. veiktspēja",
                 "maxb": "Maks. veiktspēja",
-                "info": "Ar MakuTweaker palīdzību varat palielināt klēpjdatora darbības laiku, programmatiski ierobežojot procesora jaudas līmeni.\nGalddatoriem tas palīdz samazināt uzkaršanu, enerģijas patēriņu un ventilatoru troksni, padarot sistēmas darbību klusāku un stabilāku.\nJo mazāku procentu uzstādīsiet, jo zemāka būs veiktspēja, bet ilgāks darbības laiks no akumulatora.\nIespējams, pēc klēpjdatora atvienošanas no lādētāja, limits būs jāuzstāda no jauna.",
+                "info": "Ar MakuTweaker++ palīdzību varat palielināt klēpjdatora darbības laiku, programmatiski ierobežojot procesora jaudas līmeni.\nGalddatoriem tas palīdz samazināt uzkaršanu, enerģijas patēriņu un ventilatoru troksni, padarot sistēmas darbību klusāku un stabilāku.\nJo mazāku procentu uzstādīsiet, jo zemāka būs veiktspēja, bet ilgāks darbības laiks no akumulatora.\nIespējams, pēc klēpjdatora atvienošanas no lādētāja, limits būs jāuzstāda no jauna.",
                 "flyout": "Procesora veiktspējas limits uzstādīts uz "
             }
         },
@@ -285,7 +285,7 @@
                 "ssdl": "Diska ierīces",
                 "sname": "Nosaukums:",
                 "smem": "Pilns apjoms:",
-                "benchtitle": "Benčmarki ar MakuTweaker",
+                "benchtitle": "Benčmarki ar MakuTweaker++",
                 "benchbutton": "Vienkodola tests",
                 "benchbutton2": "Daudzkodolu tests",
                 "lookresulbutton": "Citi rezultāti",
@@ -335,7 +335,7 @@
         },
         "myan": {
             "main": {
-                "info": "MakuTweaker ļauj bloķēt norādīto procesu un lietotņu palaišanu. Uzskaitiet tos, atdalot ar komatiem, un programma automātiski piemēros ierobežojumus. Lai atbloķētu procesu, noņemiet to no saraksta un saglabājiet izmaiņas.",
+                "info": "MakuTweaker++ ļauj bloķēt norādīto procesu un lietotņu palaišanu. Uzskaitiet tos, atdalot ar komatiem, un programma automātiski piemēros ierobežojumus. Lai atbloķētu procesu, noņemiet to no saraksta un saglabājiet izmaiņas.",
                 "excltitle": "Lietotņu bloķēšana",
                 "applyban": "Piemērot bloķēšanu",
                 "howitworks": "Kā tas darbojas?",
@@ -353,7 +353,7 @@
                 "d": "Tumšā",
                 "st": "Stils",
                 "label": "Iestatījumi",
-                "cfg_info": "Varat saglabāt izvēlētos MakuTweaker iestatījumus .mktw failā, lai vēlāk tos importētu un piemērotu jaunā datorā vai kopīgotu ar draugiem. Pēc piemērošanas nepieciešama restartēšana.",
+                "cfg_info": "Varat saglabāt izvēlētos MakuTweaker++ iestatījumus .mktw failā, lai vēlāk tos importētu un piemērotu jaunā datorā vai kopīgotu ar draugiem. Pēc piemērošanas nepieciešama restartēšana.",
                 "cfg_title": "Konfigurācijas / Preseti",
                 "cfg_save": "Saglabāt",
                 "cfg_import": "Ielādēt",
@@ -369,11 +369,11 @@
             "main": {
                 "sfc": "Viens no diviem standarta Windows atjaunošanas variantiem.\nĀtra sistēmas failu pārbaude un atjaunošana bez interneta pieslēguma.",
                 "dism": "Viens no diviem standarta Windows atjaunošanas variantiem.\nDISM ir dziļāks un uzticamāks, jo vēršas pie Windows Update, kur lejupielādē labotus failus no Microsoft serveriem.",
-                "sticky": "Vairākkārt nospiežot Shift taustiņu, parādās \"Lipīgo taustiņu\" funkcijas logs, kas var traucēt spēļu laikā.\nMakuTweaker šo funkciju var atspējot.",
+                "sticky": "Vairākkārt nospiežot Shift taustiņu, parādās \"Lipīgo taustiņu\" funkcijas logs, kas var traucēt spēļu laikā.\nMakuTweaker++ šo funkciju var atspējot.",
                 "coreisol": "Kodola izolācija pasliktina datora veiktspēju (bieži vājākiem), un dažreiz pat traucē virtuālo mašīnu darbību. Kodola izolāciju kopā ar Virtualization Based Security ieteicams izslēgt, ja jums ir problēmas ar VMware Workstation virtuālo mašīnu palaišanu vai nopietni mikrostutteri spēlēs un visā sistēmā. Parastam lietotājam šīs funkcijas nav vajadzīgas, un pat uz jaunākajiem datoriem tas var dot līdz 5% veiktspējas pieaugumu.\nKodola izolācija un VBS ir papildu drošības slānis, taču Windows Defender nodrošina pietiekamu aizsardzības līmeni.",
                 "vbs": "Kodola izolāciju kopā ar Virtualization Based Security ieteicams izslēgt, ja jums ir problēmas ar VMware Workstation virtuālo mašīnu palaišanu vai nopietni mikrostutteri spēlēs un visā sistēmā. Parastam lietotājam šīs funkcijas nav vajadzīgas, un pat uz jaunākajiem datoriem tas var dot līdz 5% veiktspējas pieaugumu.\nKodola izolācija un VBS ir papildu drošības slānis, taču Windows Defender nodrošina pietiekamu aizsardzības līmeni.",
-                "duac": "Palaižot lietotni, kurai nepieciešamas administratora tiesības, piemēram, MakuTweaker - parādās logs \"Vai atļaut šai lietotnei veikt izmaiņas jūsu ierīcē?\". Daudziem tas traucē, tāpēc MakuTweaker ļauj atspējot šī loga parādīšanos. Ņemiet vērā: ar atspējotu UAC visas lietotnes palaižas ar administratora tiesībām. Daži Python skripti prasa palaišanu ar parastām tiesībām, jo ar paaugstinātām tiesībām tie var darboties nepareizi. Un Windows 11 - pēc UAC atspējošanas pārstās darboties vilkšana uz uzdevumjoslas. Tas ir Windows 11 ierobežojums, un tam nav saistības ar MakuTweaker.",
-                "smartscr": "Palaižot neparakstītas lietotnes, piemēram, MakuTweaker - parādās logs ar biedējošu tekstu \"Windows sistēma aizsargāja jūsu datoru\", vai pat \"Ļaunprātīgs fails. Šī lietotne var kaitēt ierīcei\", kas bieži vien nav patiesība. Šāds logs parādās, palaižot dažādus repakus un programmu uzlauzumus, mēģinot jūs apturēt no pirātisma. SmartScreen komponents ietekmē arī brīdinājumus Microsoft Edge lejupielādēs. Pēc tā atspējošanas lejupielādes sāksies uzreiz, bez liekiem apstiprinājuma dialogiem.",
+                "duac": "Palaižot lietotni, kurai nepieciešamas administratora tiesības, piemēram, MakuTweaker++ - parādās logs \"Vai atļaut šai lietotnei veikt izmaiņas jūsu ierīcē?\". Daudziem tas traucē, tāpēc MakuTweaker++ ļauj atspējot šī loga parādīšanos. Ņemiet vērā: ar atspējotu UAC visas lietotnes palaižas ar administratora tiesībām. Daži Python skripti prasa palaišanu ar parastām tiesībām, jo ar paaugstinātām tiesībām tie var darboties nepareizi. Un Windows 11 - pēc UAC atspējošanas pārstās darboties vilkšana uz uzdevumjoslas. Tas ir Windows 11 ierobežojums, un tam nav saistības ar MakuTweaker++.",
+                "smartscr": "Palaižot neparakstītas lietotnes, piemēram, MakuTweaker++ - parādās logs ar biedējošu tekstu \"Windows sistēma aizsargāja jūsu datoru\", vai pat \"Ļaunprātīgs fails. Šī lietotne var kaitēt ierīcei\", kas bieži vien nav patiesība. Šāds logs parādās, palaižot dažādus repakus un programmu uzlauzumus, mēģinot jūs apturēt no pirātisma. SmartScreen komponents ietekmē arī brīdinājumus Microsoft Edge lejupielādēs. Pēc tā atspējošanas lejupielādes sāksies uzreiz, bez liekiem apstiprinājuma dialogiem.",
                 "hybern": "Hibernācijas atspējošana var atbrīvot līdz pat vairākiem desmitiem gigabaitu atmiņas sistēmas diskā, atkarībā no datora operatīvās atmiņas apjoma. Hibernācija ir miega režīma analogs. Kamēr miegs saglabā visus datus operatīvajā atmiņā, hibernācija saglabā visu sistēmas diskā. SSD diskos tas var paātrināt nolietojumu. Šī iemesla dēļ Microsoft pat noklusējumā paslēpa šo punktu, taču hibernācijas fails joprojām aizņem vietu diskā.",
                 "swap": "Virtuālās atmiņas failu (swap) atspējot stingri nav ieteicams.\nTas ir sistēmas mehānisms, kas izmanto daļu diska vietas kā papildu virtuālo atmiņu, ja nepietiek operatīvās atmiņas. Tas palīdz sistēmai novērst kļūmes un programmu aizvēršanos lielas slodzes laikā. Virtuālās atmiņas faila atspējošana var būt attaisnojama tikai ierīcēs ar maziem SSD (līdz 120 GB), jo tas var atbrīvot līdz 20 GB diska vietas.",
                 "oldloader": "Vecajos Windows ielādētājos (līdz Windows 7) varēja vairākkārt spiest F8, palaižot datoru, lai nokļūtu drošajā režīmā. Mūsdienu Windows versijās tam nepieciešams manuāli pārtraukt datora ielādi trīs reizes, kas ievērojami palēnina drošā režīma procesu. Varat ieslēgt veco ielādētāja dizainu un nebaidīties, ka nevarēsiet nokļūt drošajā režīmā.",
@@ -387,9 +387,9 @@
                 "hyperv": "Piespiedu Hyper-V komponenta atspējošana var palīdzēt novērst VMware Workstation virtuālo mašīnu veiktspējas ierobežojumus.",
                 "directplay": "DirectPlay ir nepieciešams veco spēļu palaišanai, piemēram, GTA Vice City.",
                 "bing": "Mūsdienu Windows 10 un Windows 11 versijās, ievadot tekstu \"Sākuma\" izvēlnes meklēšanā, sistēma piedāvā rezultātus no Bing. Ja atspējosiet šo funkciju, labajā pusē tiks rādīta informācija par atrasto failu.",
-                "MakuTweakerProcessMGR": "Cilne \"Procesu pārvaldība\" ir labākais Windows Uzdevumu pārvaldnieka analogs.\n\nPieeja ir maksimāli draudzīga: sistēmas procesi, kurus tik un tā nevar beigt, ir paslēpti. Tiek rādīti tikai tie procesi, kurus lietotājs patiešām palaidis pats.\n\nVisi procesi automātiski tiek kārtoti no lielākā patēriņa uz mazāko. Var arī uzstādīt minimālo atmiņas patēriņa slieksni procesu rādīšanai - no 50 megabaitiem līdz 2 gigabaitiem. Tas ir ērti, lai filtrētu sarakstu un atstātu tikai \"smagākos\" procesus - piemēram, montāžas programmas, virtuālās mašīnas vai spēles.\n\nGalvenā MakuTweaker procesu pārvaldības fīča - apakšā ir izvēles rūtiņa \"Rādīt tikai uzkārušos procesus\". Ja Windows logs ir atzīmēts kā uzkāries un kļuvis balts, var ieslēgt tikai šādu logu rādīšanu, lai ātri atrastu procesu, kas uzkāries, un to beigtu.\n\nTāpat, nospiežot ar peles labo pogu uz procesa, varēsiet atvērt konteksta izvēlni. Tajā, atšķirībā no uzdevumu pārvaldnieka, var uzreiz atvērt procesa \"Faila atrašanās vietu\". Bet, nospiežot \"Beigt procesu\" - uzreiz tiek beigts viss procesu koks.\n\nOperatīvās atmiņas patēriņa skaitīšanas sistēma MakuTweaker atšķiras no uzdevumu pārvaldnieka - MakuTweaker vērtības ir reālistiskākas.\nLieta tāda, ka programma ņem vērā izmantotos sistēmas resursus, kā arī lieko lietotņu rezervēto atmiņu, kuru uzdevumu pārvaldnieks slēpj. Pateicoties tam, piemēram, var uzzināt faktisko montāžas programmu patēriņu, kuras rezervē operatīvo atmiņu video priekšskatīšanai. Tas attiecas uz jebkurām programmām.",
-                "MakuTweakerProcessMGR1": "Nospiediet pogu, lai izvērstu palīdzības logu.",
-                "ttl": "Krievijas mobilo sakaru operatori (piemēram - MTS, Beeline, MegaFon, Tele2, Yota) bieži bloķē vai prasa papildu maksu par neierobežota interneta koplietošanu no viedtālruņa uz datoru. Viņi to izseko pēc TTL parametra, kas Windows pēc noklusējuma ir 128, bet tālruņiem - 64.\nTTL fiksēšana uz 65 novedīs pie tā, ka, izejot caur tālruni, vērtība samazināsies par 1, un operators saņems standarta \"viedtālruņa\" paketi ar vērtību 64. Viņš redzēs, ka tīkls tiek koplietots it kā uz citu viedtālruni, nevis datoru, tāpēc tas var pasargāt no liekas prasības apmaksāt rēķinu.\n\nMakuTweaker absolūti negarantē, ka tas nostrādās.\nKrievijā šis reģistra parametrs iegūst popularitāti.\nTo lūdza pievienot MakuTweaker lietotāji no Krievijas."
+                "MakuTweaker++ProcessMGR": "Cilne \"Procesu pārvaldība\" ir labākais Windows Uzdevumu pārvaldnieka analogs.\n\nPieeja ir maksimāli draudzīga: sistēmas procesi, kurus tik un tā nevar beigt, ir paslēpti. Tiek rādīti tikai tie procesi, kurus lietotājs patiešām palaidis pats.\n\nVisi procesi automātiski tiek kārtoti no lielākā patēriņa uz mazāko. Var arī uzstādīt minimālo atmiņas patēriņa slieksni procesu rādīšanai - no 50 megabaitiem līdz 2 gigabaitiem. Tas ir ērti, lai filtrētu sarakstu un atstātu tikai \"smagākos\" procesus - piemēram, montāžas programmas, virtuālās mašīnas vai spēles.\n\nGalvenā MakuTweaker++ procesu pārvaldības fīča - apakšā ir izvēles rūtiņa \"Rādīt tikai uzkārušos procesus\". Ja Windows logs ir atzīmēts kā uzkāries un kļuvis balts, var ieslēgt tikai šādu logu rādīšanu, lai ātri atrastu procesu, kas uzkāries, un to beigtu.\n\nTāpat, nospiežot ar peles labo pogu uz procesa, varēsiet atvērt konteksta izvēlni. Tajā, atšķirībā no uzdevumu pārvaldnieka, var uzreiz atvērt procesa \"Faila atrašanās vietu\". Bet, nospiežot \"Beigt procesu\" - uzreiz tiek beigts viss procesu koks.\n\nOperatīvās atmiņas patēriņa skaitīšanas sistēma MakuTweaker++ atšķiras no uzdevumu pārvaldnieka - MakuTweaker++ vērtības ir reālistiskākas.\nLieta tāda, ka programma ņem vērā izmantotos sistēmas resursus, kā arī lieko lietotņu rezervēto atmiņu, kuru uzdevumu pārvaldnieks slēpj. Pateicoties tam, piemēram, var uzzināt faktisko montāžas programmu patēriņu, kuras rezervē operatīvo atmiņu video priekšskatīšanai. Tas attiecas uz jebkurām programmām.",
+                "MakuTweaker++ProcessMGR1": "Nospiediet pogu, lai izvērstu palīdzības logu.",
+                "ttl": "Krievijas mobilo sakaru operatori (piemēram - MTS, Beeline, MegaFon, Tele2, Yota) bieži bloķē vai prasa papildu maksu par neierobežota interneta koplietošanu no viedtālruņa uz datoru. Viņi to izseko pēc TTL parametra, kas Windows pēc noklusējuma ir 128, bet tālruņiem - 64.\nTTL fiksēšana uz 65 novedīs pie tā, ka, izejot caur tālruni, vērtība samazināsies par 1, un operators saņems standarta \"viedtālruņa\" paketi ar vērtību 64. Viņš redzēs, ka tīkls tiek koplietots it kā uz citu viedtālruni, nevis datoru, tāpēc tas var pasargāt no liekas prasības apmaksāt rēķinu.\n\nMakuTweaker++ absolūti negarantē, ka tas nostrādās.\nKrievijā šis reģistra parametrs iegūst popularitāti.\nTo lūdza pievienot MakuTweaker++ lietotāji no Krievijas."
             }
         }
     }

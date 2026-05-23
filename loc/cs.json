@@ -26,8 +26,8 @@
                 "off": "Vyp.",
                 "apply": "Použít",
                 "applied": "Použito",
-                "updatenotify": "Je k dispozici aktualizace MakuTweaker!\nKlikněte na oznámení pro přechod na stránku stahování.",
-                "updatedialog": "Je k dispozici aktualizace MakuTweaker.\nDoporučuje se nainstalovat nejnovější verzi, abyste získali přístup k novým funkcím a opravám chyb. Klikněte na «Aktualizovat» pro přechod na web a stažení nového instalátoru.",
+                "updatenotify": "Je k dispozici aktualizace MakuTweaker++!\nKlikněte na oznámení pro přechod na stránku stahování.",
+                "updatedialog": "Je k dispozici aktualizace MakuTweaker++.\nDoporučuje se nainstalovat nejnovější verzi, abyste získali přístup k novým funkcím a opravám chyb. Klikněte na «Aktualizovat» pro přechod na web a stažení nového instalátoru.",
                 "updatebutton": "Aktualizovat",
                 "updatecancel": "Odložit",
                 "updatecheckb": "Znovu nezobrazovat do aktualizace programu",
@@ -119,7 +119,7 @@
                 "isnt": "není nainstalován...",
                 "comp": "Kontrola je ukončena!",
                 "suredialogT1": "Vybrali jste smazání",
-                "suredialogT2": "pomocí MakuTweakeru.",
+                "suredialogT2": "pomocí MakuTweaker++u.",
                 "suredialogT3": "Musíte pochopit, že tuto aplikaci nelze vrátit do systému,\na práce spojená s těmito komponentami může být nestabilní.",
                 "suredialogT4": "Pro pokračování zadejte do textového pole ILOVEMAKUTWEAKER a klikněte na OK.",
                 "suredialogNS": "Zrušit"
@@ -223,7 +223,7 @@
                 "telemetry": "Vypnout veškerou telemetrii a sledování v systému"
             },
             "status": {
-                "uacwarn": "Při zapnutí možnosti \"Vypnout Řízení uživatelských účtů (UAC)\", přestane ve Windows 11 fungovat přetahování (Drag-and-Drop) na hlavním panelu. MakuTweaker za tento problém nenese odpovědnost. Opravdu chcete pokračovat?"
+                "uacwarn": "Při zapnutí možnosti \"Vypnout Řízení uživatelských účtů (UAC)\", přestane ve Windows 11 fungovat přetahování (Drag-and-Drop) na hlavním panelu. MakuTweaker++ za tento problém nenese odpovědnost. Opravdu chcete pokračovat?"
             }
         },
         "perfor": {
@@ -232,7 +232,7 @@
                 "applyb": "Použít omezení",
                 "minb": "Min. výkon",
                 "maxb": "Max. výkon",
-                "info": "Pomocí MakuTweaker můžete prodloužit výdrž baterie notebooku programovým omezením úrovně výkonu procesoru.\nU stolních počítačů to pomáhá snížit zahřívání, spotřebu energie a hluk ventilátorů, čímž se chod systému stává tišším a stabilnějším.\nČím nižší procento nastavíte, tím nižší bude výkon,\nale tím delší bude výdrž baterie.\nPo odpojení notebooku od nabíjení budete možná muset limit resetovat.",
+                "info": "Pomocí MakuTweaker++ můžete prodloužit výdrž baterie notebooku programovým omezením úrovně výkonu procesoru.\nU stolních počítačů to pomáhá snížit zahřívání, spotřebu energie a hluk ventilátorů, čímž se chod systému stává tišším a stabilnějším.\nČím nižší procento nastavíte, tím nižší bude výkon,\nale tím delší bude výdrž baterie.\nPo odpojení notebooku od nabíjení budete možná muset limit resetovat.",
                 "flyout": "Limit výkonu procesoru je nastaven na "
             }
         },
@@ -285,7 +285,7 @@
                 "ssdl": "Disková úložiště",
                 "sname": "Název:",
                 "smem": "Celková kapacita:",
-                "benchtitle": "Benchmarky pomocí MakuTweaker",
+                "benchtitle": "Benchmarky pomocí MakuTweaker++",
                 "benchbutton": "Jednojádrový test",
                 "benchbutton2": "Vícejádrový test",
                 "lookresulbutton": "Další výsledky",
@@ -335,7 +335,7 @@
         },
         "myan": {
             "main": {
-                "info": "MakuTweaker umožňuje blokovat spouštění zadaných procesů a aplikací. Uveďte je oddělené čárkou a program automaticky použije omezení. Chcete-li proces odblokovat, odstraňte jej ze seznamu a uložte změny.",
+                "info": "MakuTweaker++ umožňuje blokovat spouštění zadaných procesů a aplikací. Uveďte je oddělené čárkou a program automaticky použije omezení. Chcete-li proces odblokovat, odstraňte jej ze seznamu a uložte změny.",
                 "excltitle": "Blokování aplikací",
                 "applyban": "Použít blokování",
                 "howitworks": "Jak to funguje?",
@@ -353,7 +353,7 @@
                 "d": "Tmavý",
                 "st": "Styl",
                 "label": "Nastavení",
-                "cfg_info": "Vybraná nastavení MakuTweaker můžete uložit do souboru .mktw, abyste je mohli později importovat a použít na novém počítači nebo sdílet s přáteli. Po použití je nutný restart.",
+                "cfg_info": "Vybraná nastavení MakuTweaker++ můžete uložit do souboru .mktw, abyste je mohli později importovat a použít na novém počítači nebo sdílet s přáteli. Po použití je nutný restart.",
                 "cfg_title": "Konfigurace / Presety",
                 "cfg_save": "Uložit",
                 "cfg_import": "Načíst",
@@ -369,11 +369,11 @@
             "main": {
                 "sfc": "Jeden ze dvou standardních způsobů obnovení Windows.\nRychlá kontrola a oprava systémových souborů bez připojení k internetu.",
                 "dism": "Jeden ze dvou standardních způsobů obnovení Windows.\nDISM je hlubší a spolehlivější, protože využívá službu Windows Update, odkud stahuje opravené soubory ze serverů Microsoftu.",
-                "sticky": "Při opakovaném stisknutí klávesy Shift se zobrazí okno funkce\n\"Lepkavé klávesy\", které může překážet během hraní.\nV MakuTweaker lze tuto funkci vypnout.",
+                "sticky": "Při opakovaném stisknutí klávesy Shift se zobrazí okno funkce\n\"Lepkavé klávesy\", které může překážet během hraní.\nV MakuTweaker++ lze tuto funkci vypnout.",
                 "coreisol": "Izolace jádra zhoršuje výkon PC (často u slabších) a někdy úplně narušuje fungování virtuálních strojů. Izolaci jádra spolu se zabezpečením založeným na virtualizaci (VBS) se doporučuje vypnout, pokud máte problémy se spuštěním virtuálních strojů VMware Workstation nebo zaznamenáváte vážné mikro-záseky ve hrách a v celém systému. Běžnému uživateli jsou tyto funkce naprosto zbytečné a i na nejnovějších PC to může přidat až 5 % výkonu.\nIzolace jádra a VBS představují dodatečnou vrstvu zabezpečení, ale Windows Defender sám o sobě poskytuje dostatečnou úroveň ochrany.",
                 "vbs": "Izolaci jádra spolu se zabezpečením založeným na virtualizaci (VBS) se doporučuje vypnout, pokud máte problémy se spuštěním virtuálních strojů VMware Workstation nebo zaznamenáváte vážné mikro-záseky ve hrách a v celém systému. Běžnému uživateli jsou tyto funkce naprosto zbytečné a i na nejnovějších PC to může přidat až 5 % výkonu.\nIzolace jádra a VBS představují dodatečnou vrstvu zabezpečení, ale Windows Defender sám o sobě poskytuje dostatečnou úroveň ochrany.",
-                "duac": "Při spuštění aplikace vyžadující práva správce,\nnapříklad MakuTweaker, se zobrazí okno \"Chcete této aplikaci povolit provádění změn ve vašem zařízení?\". Mnoha lidem to překáží, proto MakuTweaker umožňuje toto okno vypnout. Vezměte na vědomí: při vypnutém UAC se všechny aplikace spouštějí s právy správce. Některé Python skripty vyžadují spuštění s běžnými právy, protože se zvýšenými právy nemusí fungovat správně. Ve Windows 11 navíc po vypnutí UAC přestane fungovat přetahování na hlavní panel. Toto je omezení systému Windows 11 a nemá žádnou souvislost s aplikací MakuTweaker.",
-                "smartscr": "Při spuštění nepodepsaných aplikací, například MakuTweaker, se zobrazí okno s textem \"Filtr SmartScreen v systému Windows ochránil váš počítač\", nebo dokonce \"Škodlivý soubor. Tato aplikace může poškodit vaše zařízení\", což je často nepravdivé. Takové okno se objevuje při spouštění různých repacků nebo cracků, kdy se vás snaží zastavit před pirátstvím. Komponenta SmartScreen také ovlivňuje varování při stahování v Microsoft Edge. Po jejím vypnutí se stahování spustí okamžitě, bez jakýchkoli zbytečných potvrzovacích dialogů.",
+                "duac": "Při spuštění aplikace vyžadující práva správce,\nnapříklad MakuTweaker++, se zobrazí okno \"Chcete této aplikaci povolit provádění změn ve vašem zařízení?\". Mnoha lidem to překáží, proto MakuTweaker++ umožňuje toto okno vypnout. Vezměte na vědomí: při vypnutém UAC se všechny aplikace spouštějí s právy správce. Některé Python skripty vyžadují spuštění s běžnými právy, protože se zvýšenými právy nemusí fungovat správně. Ve Windows 11 navíc po vypnutí UAC přestane fungovat přetahování na hlavní panel. Toto je omezení systému Windows 11 a nemá žádnou souvislost s aplikací MakuTweaker++.",
+                "smartscr": "Při spuštění nepodepsaných aplikací, například MakuTweaker++, se zobrazí okno s textem \"Filtr SmartScreen v systému Windows ochránil váš počítač\", nebo dokonce \"Škodlivý soubor. Tato aplikace může poškodit vaše zařízení\", což je často nepravdivé. Takové okno se objevuje při spouštění různých repacků nebo cracků, kdy se vás snaží zastavit před pirátstvím. Komponenta SmartScreen také ovlivňuje varování při stahování v Microsoft Edge. Po jejím vypnutí se stahování spustí okamžitě, bez jakýchkoli zbytečných potvrzovacích dialogů.",
                 "hybern": "Vypnutí hibernace vám může uvolnit až několik desítek gigabajtů místa na systémovém disku, v závislosti na velikosti vaší operační paměti. Hibernace je obdobou režimu spánku. Zatímco režim spánku ukládá všechna data do operační paměti, hibernace ukládá vše na systémový disk. U disků typu SSD to může urychlit jejich opotřebení. Z tohoto důvodu Microsoft tuto možnost ve výchozím nastavení skryl, avšak soubor hibernace stále zabírá místo na disku.",
                 "swap": "Vypnutí stránkovacího souboru se důrazně nedoporučuje.\nStránkovací soubor je systémový mechanismus, který využívá část místa na disku jako dodatečnou virtuální paměť v případě nedostatku operační paměti. Pomáhá systému předcházet pádům a vynucenému ukončení programů při vysokém zatížení. Vypnutí stránkovacího souboru může být opodstatněné pouze u zařízení s malým SSD diskem do 120 GB, protože to může uvolnit až 20 GB diskového prostoru.",
                 "oldloader": "U starších zavaděčů systému Windows (do Windows 7) bylo možné při spuštění PC opakovaně mačkat klávesu F8 pro vstup do nouzového režimu. V moderních verzích systému Windows je pro tento účel nutné třikrát ručně přerušit zavádění počítače, což výrazně zpomaluje proces vstupu do nouzového režimu při problémech se spuštěním systému. Můžete si zapnout starý vzhled zavaděče a nebát se, že se nedostanete do nouzového režimu.",
@@ -387,9 +387,9 @@
                 "hyperv": "Vynucené vypnutí komponenty Hyper-V může pomoci odstranit omezení výkonu virtuálních strojů ve VMware Workstation.",
                 "directplay": "DirectPlay je vyžadován pro spouštění starších her, například GTA Vice City.",
                 "bing": "V moderních verzích systémů Windows 10 a Windows 11 nabízí systém při zadávání textu do vyhledávání v nabídce \"Start\" výsledky z Bingu. Pokud tuto funkci vypnete, bude se na pravé straně místo toho zobrazovat informace o nalezeném souboru.",
-                "MakuTweakerProcessMGR": "Karta \"Správa procesů\" - je tu nejlepší alternativou ke Správci úloh systému Windows.\n\nPřístup je maximálně uživatelsky přívětivý: systémové procesy, které stejně nelze ukončit, jsou skryté. Zobrazují se pouze ty procesy, které uživatel skutečně spustil sám.\n\nVšechny procesy jsou automaticky řazeny od nejvyšší spotřeby po nejnižší. Lze také nastavit minimální práh spotřeby paměti pro zobrazení procesů - od 50 megabajtů do 2 gigabajtů. To je užitečné pro odfiltrování seznamu a ponechání pouze \"těch nejnáročnějších\" procesů - jako jsou střižny videí, virtuální stroje nebo hry.\n\nHlavní předností správy procesů v MakuTweakeru je zaškrtávací políčko \"Zobrazit pouze zamrzlé procesy\" dole v okně. Pokud je okno ve Windows označeno jako neodpovídající a zbělá, můžete si zapnout zobrazení pouze těchto oken, abyste rychle našli proces, který zamrzl, a ukončili jej.\n\nKromě toho můžete kliknutím pravým tlačítkem na proces otevřít kontextovou nabídku. V něm lze, na rozdíl od standardního Správce úloh, okamžitě otevřít \"Umístění souboru\" daného procesu. A při volbě \"Ukončit proces\" - se automaticky ukončí celý strom procesů.\n\nSystém počítání spotřeby operační paměti v MakuTweakeru se liší od toho ve Správci úloh - V MakuTweakeru jsou hodnoty realističtější.\nJe to tím, že program zohledňuje skutečně využívané systémové prostředky a také nadbytečnou paměť rezervovanou aplikacemi, kterou Správce úloh skrývá. Díky tomu lze například zjistit skutečnou spotřebu programů pro střih videa, které si rezervují operační paměť pro náhledy klipů. To platí pro jakékoli programy.",
-                "MakuTweakerProcessMGR1": "Klikněte na tlačítko pro rozbalení okna nápovědy.",
-                "ttl": "Někteří mobilní operátoři, zejména v Rusku (např. MTS, Beeline, MegaFon, Tele2, Yota), často blokují sdílení neomezeného internetu ze smartphonu do PC nebo za něj vyžadují dodatečný poplatek. Sledují to pomocí parametru TTL,\nkterý je ve Windows standardně nastaven na 128, zatímco u telefonů na 64.\nPevné nastavení hodnoty TTL na 65 způsobí, že po průchodu telefonem se hodnota sníží o 1 a operátor obdrží standardní \"smartphonový\" paket s hodnotou 64. Uvidí tak, že síť je údajně sdílena do jiného smartphonu, nikoli do počítače, což vás může ušetřit nečekaných poplatků.\n\nMakuTweaker absolutně nezaručuje, že toto řešení bude fungovat.\nO jeho přidání požádali uživatelé MakuTweakeru z Ruska."
+                "MakuTweaker++ProcessMGR": "Karta \"Správa procesů\" - je tu nejlepší alternativou ke Správci úloh systému Windows.\n\nPřístup je maximálně uživatelsky přívětivý: systémové procesy, které stejně nelze ukončit, jsou skryté. Zobrazují se pouze ty procesy, které uživatel skutečně spustil sám.\n\nVšechny procesy jsou automaticky řazeny od nejvyšší spotřeby po nejnižší. Lze také nastavit minimální práh spotřeby paměti pro zobrazení procesů - od 50 megabajtů do 2 gigabajtů. To je užitečné pro odfiltrování seznamu a ponechání pouze \"těch nejnáročnějších\" procesů - jako jsou střižny videí, virtuální stroje nebo hry.\n\nHlavní předností správy procesů v MakuTweaker++u je zaškrtávací políčko \"Zobrazit pouze zamrzlé procesy\" dole v okně. Pokud je okno ve Windows označeno jako neodpovídající a zbělá, můžete si zapnout zobrazení pouze těchto oken, abyste rychle našli proces, který zamrzl, a ukončili jej.\n\nKromě toho můžete kliknutím pravým tlačítkem na proces otevřít kontextovou nabídku. V něm lze, na rozdíl od standardního Správce úloh, okamžitě otevřít \"Umístění souboru\" daného procesu. A při volbě \"Ukončit proces\" - se automaticky ukončí celý strom procesů.\n\nSystém počítání spotřeby operační paměti v MakuTweaker++u se liší od toho ve Správci úloh - V MakuTweaker++u jsou hodnoty realističtější.\nJe to tím, že program zohledňuje skutečně využívané systémové prostředky a také nadbytečnou paměť rezervovanou aplikacemi, kterou Správce úloh skrývá. Díky tomu lze například zjistit skutečnou spotřebu programů pro střih videa, které si rezervují operační paměť pro náhledy klipů. To platí pro jakékoli programy.",
+                "MakuTweaker++ProcessMGR1": "Klikněte na tlačítko pro rozbalení okna nápovědy.",
+                "ttl": "Někteří mobilní operátoři, zejména v Rusku (např. MTS, Beeline, MegaFon, Tele2, Yota), často blokují sdílení neomezeného internetu ze smartphonu do PC nebo za něj vyžadují dodatečný poplatek. Sledují to pomocí parametru TTL,\nkterý je ve Windows standardně nastaven na 128, zatímco u telefonů na 64.\nPevné nastavení hodnoty TTL na 65 způsobí, že po průchodu telefonem se hodnota sníží o 1 a operátor obdrží standardní \"smartphonový\" paket s hodnotou 64. Uvidí tak, že síť je údajně sdílena do jiného smartphonu, nikoli do počítače, což vás může ušetřit nečekaných poplatků.\n\nMakuTweaker++ absolutně nezaručuje, že toto řešení bude fungovat.\nO jeho přidání požádali uživatelé MakuTweaker++u z Ruska."
             }
         }
     }

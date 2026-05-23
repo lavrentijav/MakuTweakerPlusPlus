@@ -26,8 +26,8 @@
                 "off": "Nonaktif",
                 "apply": "Terapkan",
                 "applied": "Diterapkan",
-                "updatenotify": "Pembaruan MakuTweaker tersedia!\nKlik notifikasi untuk membuka halaman unduhan.",
-                "updatedialog": "Pembaruan MakuTweaker tersedia.\nDisarankan untuk menginstal versi terbaru agar mendapatkan fitur baru dan perbaikan bug. Klik «Perbarui» untuk membuka situs dan mengunduh installer baru.",
+                "updatenotify": "Pembaruan MakuTweaker++ tersedia!\nKlik notifikasi untuk membuka halaman unduhan.",
+                "updatedialog": "Pembaruan MakuTweaker++ tersedia.\nDisarankan untuk menginstal versi terbaru agar mendapatkan fitur baru dan perbaikan bug. Klik «Perbarui» untuk membuka situs dan mengunduh installer baru.",
                 "updatebutton": "Perbarui",
                 "updatecancel": "Nanti",
                 "updatecheckb": "Jangan tampilkan lagi hingga program diperbarui",
@@ -119,7 +119,7 @@
                 "isnt": "tidak terinstal...",
                 "comp": "Pemeriksaan selesai!",
                 "suredialogT1": "Anda memilih untuk menghapus",
-                "suredialogT2": "menggunakan MakuTweaker.",
+                "suredialogT2": "menggunakan MakuTweaker++.",
                 "suredialogT3": "Anda harus memahami bahwa aplikasi ini tidak dapat dikembalikan ke sistem,\ndan pekerjaan yang terkait dengan komponen ini mungkin menjadi tidak stabil.",
                 "suredialogT4": "Untuk melanjutkan, masukkan ILOVEMAKUTWEAKER di kolom teks dan tekan OK.",
                 "suredialogNS": "Batal"
@@ -223,7 +223,7 @@
                 "telemetry": "Nonaktifkan semua telemetri dan pelacakan di sistem"
             },
             "status": {
-                "uacwarn": "Saat mengaktifkan opsi \"Nonaktifkan Kontrol Akun Pengguna (UAC)\", fitur seret-dan-lepas (Drag-and-Drop) pada bilah tugas di Windows 11 akan berhenti berfungsi. MakuTweaker tidak bertanggung jawab atas masalah ini. Apakah Anda benar-benar ingin melanjutkan?"
+                "uacwarn": "Saat mengaktifkan opsi \"Nonaktifkan Kontrol Akun Pengguna (UAC)\", fitur seret-dan-lepas (Drag-and-Drop) pada bilah tugas di Windows 11 akan berhenti berfungsi. MakuTweaker++ tidak bertanggung jawab atas masalah ini. Apakah Anda benar-benar ingin melanjutkan?"
             }
         },
         "perfor": {
@@ -232,7 +232,7 @@
                 "applyb": "Terapkan batasan",
                 "minb": "Performa min.",
                 "maxb": "Performa maks.",
-                "info": "Dengan MakuTweaker, Anda dapat meningkatkan masa pakai baterai laptop dengan membatasi tingkat daya prosesor secara perangkat lunak.\nPada PC desktop, ini membantu mengurangi panas, konsumsi energi, dan kebisingan kipas, membuat sistem lebih tenang dan stabil.\nSemakin rendah persentase yang Anda tetapkan, semakin rendah performanya, tetapi masa pakai baterai akan lebih lama.\nMungkin setelah mencabut laptop dari pengisi daya, batas perlu diatur ulang.",
+                "info": "Dengan MakuTweaker++, Anda dapat meningkatkan masa pakai baterai laptop dengan membatasi tingkat daya prosesor secara perangkat lunak.\nPada PC desktop, ini membantu mengurangi panas, konsumsi energi, dan kebisingan kipas, membuat sistem lebih tenang dan stabil.\nSemakin rendah persentase yang Anda tetapkan, semakin rendah performanya, tetapi masa pakai baterai akan lebih lama.\nMungkin setelah mencabut laptop dari pengisi daya, batas perlu diatur ulang.",
                 "flyout": "Batas performa prosesor diatur ke "
             }
         },
@@ -285,7 +285,7 @@
                 "ssdl": "Drive disk",
                 "sname": "Nama:",
                 "smem": "Volume penuh:",
-                "benchtitle": "Benchmark dengan MakuTweaker",
+                "benchtitle": "Benchmark dengan MakuTweaker++",
                 "benchbutton": "Tes inti tunggal",
                 "benchbutton2": "Tes multi-inti",
                 "lookresulbutton": "Hasil lainnya",
@@ -335,7 +335,7 @@
         },
         "myan": {
             "main": {
-                "info": "MakuTweaker memungkinkan Anda memblokir peluncuran proses dan aplikasi tertentu. Daftarkan dengan dipisahkan koma, dan program akan otomatis menerapkan pembatasan. Untuk membuka blokir proses, hapus dari daftar dan simpan perubahan.",
+                "info": "MakuTweaker++ memungkinkan Anda memblokir peluncuran proses dan aplikasi tertentu. Daftarkan dengan dipisahkan koma, dan program akan otomatis menerapkan pembatasan. Untuk membuka blokir proses, hapus dari daftar dan simpan perubahan.",
                 "excltitle": "Pemblokiran aplikasi",
                 "applyban": "Terapkan pemblokiran",
                 "howitworks": "Bagaimana cara kerjanya?",
@@ -353,7 +353,7 @@
                 "d": "Gelap",
                 "st": "Gaya",
                 "label": "Pengaturan",
-                "cfg_info": "Anda dapat menyimpan pengaturan MakuTweaker yang dipilih ke file .mktw untuk kemudian diimpor dan diterapkan di komputer baru atau dibagikan dengan teman. Setelah diterapkan, diperlukan restart.",
+                "cfg_info": "Anda dapat menyimpan pengaturan MakuTweaker++ yang dipilih ke file .mktw untuk kemudian diimpor dan diterapkan di komputer baru atau dibagikan dengan teman. Setelah diterapkan, diperlukan restart.",
                 "cfg_title": "Konfigurasi / Preset",
                 "cfg_save": "Simpan",
                 "cfg_import": "Muat",
@@ -369,11 +369,11 @@
             "main": {
                 "sfc": "Salah satu dari dua opsi pemulihan Windows standar.\nPemeriksaan cepat dan pemulihan file sistem tanpa koneksi internet.",
                 "dism": "Salah satu dari dua opsi pemulihan Windows standar.\nDISM lebih mendalam dan andal karena mengakses Windows Update untuk mengunduh file yang diperbaiki dari server Microsoft.",
-                "sticky": "Saat menekan tombol Shift berulang kali, jendela fungsi\n\"Sticky Keys\" muncul, yang dapat mengganggu saat bermain game.\nDi MakuTweaker, fungsi ini dapat dinonaktifkan.",
+                "sticky": "Saat menekan tombol Shift berulang kali, jendela fungsi\n\"Sticky Keys\" muncul, yang dapat mengganggu saat bermain game.\nDi MakuTweaker++, fungsi ini dapat dinonaktifkan.",
                 "coreisol": "Isolasi inti menurunkan performa PC (seringkali pada PC yang lemah), dan terkadang merusak mesin virtual. Isolasi inti bersama dengan Keamanan Berbasis Virtualisasi disarankan untuk dinonaktifkan jika Anda mengalami masalah saat menjalankan mesin virtual VMware Workstation atau micro-stuttering yang serius dalam game dan di seluruh sistem. Pengguna biasa tidak memerlukan fitur ini, dan bahkan pada PC terbaru, ini dapat menambah performa hingga 5%.\nIsolasi inti dan VBS adalah lapisan keamanan tambahan, tetapi Windows Defender memberikan tingkat perlindungan yang cukup.",
                 "vbs": "Isolasi inti bersama dengan Keamanan Berbasis Virtualisasi disarankan untuk dinonaktifkan jika Anda mengalami masalah saat menjalankan mesin virtual VMware Workstation atau micro-stuttering yang serius dalam game dan di seluruh sistem. Pengguna biasa tidak memerlukan fitur ini, dan bahkan pada PC terbaru, ini dapat menambah performa hingga 5%.\nIsolasi inti dan VBS adalah lapisan keamanan tambahan, tetapi Windows Defender memberikan tingkat perlindungan yang cukup.",
-                "duac": "Saat menjalankan aplikasi yang memerlukan hak administrator,\ncontohnya MakuTweaker - jendela \"Izinkan aplikasi ini membuat perubahan pada perangkat Anda?\" muncul. Banyak orang merasa terganggu, jadi MakuTweaker memungkinkan untuk menonaktifkan jendela ini. Perlu diingat: saat UAC dinonaktifkan, semua aplikasi berjalan dengan hak administrator. Beberapa skrip Python memerlukan hak pengguna biasa karena dengan hak yang ditingkatkan, mereka mungkin tidak berfungsi dengan benar. Dan pada Windows 11 - setelah menonaktifkan UAC, seret-dan-lepas ke bilah tugas akan berhenti berfungsi. Ini adalah batasan Windows 11 dan tidak ada hubungannya dengan MakuTweaker.",
-                "smartscr": "Saat menjalankan aplikasi yang tidak ditandatangani, contohnya MakuTweaker - jendela muncul dengan teks yang menakutkan bagi orang awam \"Windows melindungi PC Anda\", atau bahkan \"File berbahaya. Aplikasi ini dapat membahayakan perangkat\", yang seringkali tidak benar. Jendela seperti itu muncul saat menjalankan berbagai repack dan crack program, mencoba menghentikan Anda dari pembajakan. Komponen SmartScreen juga memengaruhi peringatan dalam unduhan Microsoft Edge. Setelah dinonaktifkan, unduhan akan segera dimulai tanpa dialog konfirmasi tambahan.",
+                "duac": "Saat menjalankan aplikasi yang memerlukan hak administrator,\ncontohnya MakuTweaker++ - jendela \"Izinkan aplikasi ini membuat perubahan pada perangkat Anda?\" muncul. Banyak orang merasa terganggu, jadi MakuTweaker++ memungkinkan untuk menonaktifkan jendela ini. Perlu diingat: saat UAC dinonaktifkan, semua aplikasi berjalan dengan hak administrator. Beberapa skrip Python memerlukan hak pengguna biasa karena dengan hak yang ditingkatkan, mereka mungkin tidak berfungsi dengan benar. Dan pada Windows 11 - setelah menonaktifkan UAC, seret-dan-lepas ke bilah tugas akan berhenti berfungsi. Ini adalah batasan Windows 11 dan tidak ada hubungannya dengan MakuTweaker++.",
+                "smartscr": "Saat menjalankan aplikasi yang tidak ditandatangani, contohnya MakuTweaker++ - jendela muncul dengan teks yang menakutkan bagi orang awam \"Windows melindungi PC Anda\", atau bahkan \"File berbahaya. Aplikasi ini dapat membahayakan perangkat\", yang seringkali tidak benar. Jendela seperti itu muncul saat menjalankan berbagai repack dan crack program, mencoba menghentikan Anda dari pembajakan. Komponen SmartScreen juga memengaruhi peringatan dalam unduhan Microsoft Edge. Setelah dinonaktifkan, unduhan akan segera dimulai tanpa dialog konfirmasi tambahan.",
                 "hybern": "Menonaktifkan hibernasi dapat membebaskan hingga beberapa puluh gigabyte memori pada disk sistem, tergantung pada jumlah RAM di PC Anda. Hibernasi adalah analog dari mode tidur. Sementara tidur menyimpan semua data ke RAM, hibernasi menyimpan semuanya ke disk sistem. Pada disk SSD, ini dapat mempercepat keausan. Karena alasan ini, Microsoft bahkan menyembunyikan item ini secara default, namun file hibernasi masih memakan ruang di disk.",
                 "swap": "Menonaktifkan file swap sangat tidak disarankan.\nFile swap adalah mekanisme sistem yang menggunakan sebagian ruang disk sebagai memori virtual tambahan saat RAM tidak mencukupi. Ini membantu sistem mencegah kegagalan dan penutupan program saat beban tinggi. Menonaktifkan file swap hanya dapat dibenarkan pada perangkat dengan SSD kecil hingga 120 GB, karena dapat membebaskan hingga 20 GB ruang disk.",
                 "oldloader": "Di pemuat Windows lama (sebelum Windows 7), Anda dapat menekan F8 berulang kali saat memulai PC untuk masuk ke mode aman. Dalam versi Windows modern, Anda harus memutus pemuatan komputer secara manual tiga kali, yang secara signifikan memperlambat proses masuk ke mode aman jika ada masalah saat memulai sistem. Anda dapat mengaktifkan desain pemuat lama, dan tidak perlu takut tidak bisa masuk ke mode aman.",
@@ -387,9 +387,9 @@
                 "hyperv": "Paksa nonaktifkan komponen Hyper-V dapat membantu mengatasi batasan performa mesin virtual VMware Workstation.",
                 "directplay": "DirectPlay diperlukan untuk menjalankan game lama, misalnya GTA Vice City.",
                 "bing": "Dalam versi modern Windows 10 dan Windows 11, saat memasukkan teks dalam pencarian menu \"Mulai\", sistem menawarkan hasil dari Bing. Jika Anda menonaktifkan fitur ini, informasi tentang file yang ditemukan akan ditampilkan di sebelah kanan.",
-                "MakuTweakerProcessMGR": "Tab \"Manajemen proses\" adalah alternatif terbaik untuk Task Manager Windows.\n\nPendekatan yang sangat ramah: proses sistem yang tidak dapat diakhiri disembunyikan. Hanya proses yang benar-benar dijalankan oleh pengguna yang ditampilkan.\n\nSemua proses secara otomatis diurutkan dari konsumsi terbesar ke terkecil. Anda juga dapat mengatur ambang batas konsumsi memori minimum untuk menampilkan proses - dari 50 megabyte hingga 2 gigabyte. Ini nyaman untuk memfilter daftar dan hanya menyisakan proses yang paling \"berat\" - misalnya, program pengeditan, mesin virtual, atau game.\n\nFitur utama manajemen proses di MakuTweaker - di bagian bawah ada kotak centang \"Tampilkan hanya proses yang macet\". Jika di Windows jendela ditandai sebagai macet dan memutih, Anda dapat mengaktifkan tampilan hanya jendela tersebut untuk menemukan proses yang macet dengan cepat dan mengakhirinya.\n\nSelain itu, dengan mengklik kanan pada proses, Anda dapat membuka menu konteks. Di dalamnya, tidak seperti Task Manager, Anda dapat langsung membuka \"Lokasi file\" proses. Dan saat menekan \"Akhiri proses\" - seluruh pohon proses langsung diakhiri.\n\nSistem penghitungan konsumsi RAM di MakuTweaker berbeda dari Task Manager - Di MakuTweaker nilainya lebih realistis.\nMasalahnya adalah program memperhitungkan sumber daya sistem yang digunakan, serta memori cadangan tambahan oleh aplikasi yang disembunyikan oleh Task Manager. Berkat ini, misalnya, Anda dapat mengetahui konsumsi aktual program pengeditan yang mencadangkan RAM untuk pratinjau video. Ini berlaku untuk program apa pun.",
-                "MakuTweakerProcessMGR1": "Klik tombol untuk memperluas jendela bantuan.",
-                "ttl": "Operator seluler di Rusia (misalnya - MTS, Beeline, MegaFon, Tele2, Yota) sering memblokir atau meminta biaya tambahan untuk tethering internet tanpa batas dari smartphone ke PC. Mereka melacak ini melalui parameter TTL, yang di Windows secara default adalah 128, dan di ponsel - 64.\nMemperbaiki TTL pada nilai 65 akan menyebabkan saat melewati ponsel, nilai akan berkurang 1, dan operator akan menerima paket \"smartphone\" standar dengan nilai 64. Mereka akan melihat bahwa jaringan dibagikan seolah-olah ke smartphone lain, bukan ke komputer, sehingga ini dapat menyelamatkan Anda dari permintaan tambahan untuk membayar tagihan.\n\nMakuTweaker sama sekali tidak menjamin bahwa ini akan berhasil.\nDi Rusia, parameter registri ini semakin populer.\nPengguna MakuTweaker dari Rusia meminta untuk menambahkannya."
+                "MakuTweaker++ProcessMGR": "Tab \"Manajemen proses\" adalah alternatif terbaik untuk Task Manager Windows.\n\nPendekatan yang sangat ramah: proses sistem yang tidak dapat diakhiri disembunyikan. Hanya proses yang benar-benar dijalankan oleh pengguna yang ditampilkan.\n\nSemua proses secara otomatis diurutkan dari konsumsi terbesar ke terkecil. Anda juga dapat mengatur ambang batas konsumsi memori minimum untuk menampilkan proses - dari 50 megabyte hingga 2 gigabyte. Ini nyaman untuk memfilter daftar dan hanya menyisakan proses yang paling \"berat\" - misalnya, program pengeditan, mesin virtual, atau game.\n\nFitur utama manajemen proses di MakuTweaker++ - di bagian bawah ada kotak centang \"Tampilkan hanya proses yang macet\". Jika di Windows jendela ditandai sebagai macet dan memutih, Anda dapat mengaktifkan tampilan hanya jendela tersebut untuk menemukan proses yang macet dengan cepat dan mengakhirinya.\n\nSelain itu, dengan mengklik kanan pada proses, Anda dapat membuka menu konteks. Di dalamnya, tidak seperti Task Manager, Anda dapat langsung membuka \"Lokasi file\" proses. Dan saat menekan \"Akhiri proses\" - seluruh pohon proses langsung diakhiri.\n\nSistem penghitungan konsumsi RAM di MakuTweaker++ berbeda dari Task Manager - Di MakuTweaker++ nilainya lebih realistis.\nMasalahnya adalah program memperhitungkan sumber daya sistem yang digunakan, serta memori cadangan tambahan oleh aplikasi yang disembunyikan oleh Task Manager. Berkat ini, misalnya, Anda dapat mengetahui konsumsi aktual program pengeditan yang mencadangkan RAM untuk pratinjau video. Ini berlaku untuk program apa pun.",
+                "MakuTweaker++ProcessMGR1": "Klik tombol untuk memperluas jendela bantuan.",
+                "ttl": "Operator seluler di Rusia (misalnya - MTS, Beeline, MegaFon, Tele2, Yota) sering memblokir atau meminta biaya tambahan untuk tethering internet tanpa batas dari smartphone ke PC. Mereka melacak ini melalui parameter TTL, yang di Windows secara default adalah 128, dan di ponsel - 64.\nMemperbaiki TTL pada nilai 65 akan menyebabkan saat melewati ponsel, nilai akan berkurang 1, dan operator akan menerima paket \"smartphone\" standar dengan nilai 64. Mereka akan melihat bahwa jaringan dibagikan seolah-olah ke smartphone lain, bukan ke komputer, sehingga ini dapat menyelamatkan Anda dari permintaan tambahan untuk membayar tagihan.\n\nMakuTweaker++ sama sekali tidak menjamin bahwa ini akan berhasil.\nDi Rusia, parameter registri ini semakin populer.\nPengguna MakuTweaker++ dari Rusia meminta untuk menambahkannya."
             }
         }
     }
