@@ -10,6 +10,8 @@
 #include "core/Tweaks.h"
 #include "core/Automation.h"
 #include "core/Rollback.h"
+#include "platform/MetricsService.h"
+#include "platform/MetricsTray.h"
 #include <cstdio>
 #include <fstream>
 #include <iostream>
@@ -118,6 +120,25 @@ Options Parse(const int argc, wchar_t* argv[]) {
         } else if (IsFlag(a, L"--restore-rollback")) {
             o.restoreRollback = true;
             o.runGui = false;
+        } else if (IsFlag(a, L"--metrics-service") || IsFlag(a, L"--service")) {
+            o.metricsService = true;
+            o.runGui = false;
+        } else if (IsFlag(a, L"--install-metrics-service")) {
+            o.installMetricsService = true;
+            o.runGui = false;
+        } else if (IsFlag(a, L"--uninstall-metrics-service")) {
+            o.uninstallMetricsService = true;
+            o.runGui = false;
+        } else if (IsFlag(a, L"--collect-metrics")) {
+            o.collectMetricsOnce = true;
+            o.runGui = false;
+        } else if (IsFlag(a, L"--metrics-tray")) {
+            o.metricsTray = true;
+            o.runGui = false;
+        } else if (IsFlag(a, L"--open-gui")) {
+            o.metricsTrayOpenGui = true;
+        } else if (IsFlag(a, L"--foreground-gui")) {
+            o.foregroundGui = true;
         }
     }
 
@@ -159,6 +180,15 @@ GUI:
   --safe-mode                Ignore saved exclusions on launch
   --log <path>               Log registry/tweak operations
 
+Metrics:
+  --metrics-service, --service  Run this executable as the metrics Windows service
+  --install-metrics-service  Install service (same exe + --metrics-service) and start
+  --uninstall-metrics-service Remove metrics service
+  --collect-metrics          Collect one metrics sample and exit
+  --metrics-tray             Tray icon helper (launched by metrics service)
+  --open-gui                 With --metrics-tray: open GUI after tray starts
+  --foreground-gui           Open GUI even when metrics service is running
+
   --help, -h                 This help
 )";
     std::cout << h;
@@ -170,6 +200,7 @@ app::PageId TabFromAlias(const std::string& tab) {
     if (tab == "uwp") return app::PageId::Uwp;
     if (tab == "updates" || tab == "wu") return app::PageId::WindowsUpdate;
     if (tab == "info" || tab == "pci") return app::PageId::Pci;
+    if (tab == "monitor" || tab == "mon") return app::PageId::Monitor;
     if (tab == "advanced" || tab == "adv") return app::PageId::Advanced;
     return app::PageFromTag(tab);
 }
@@ -240,6 +271,22 @@ int RunHeadless(const Options& opts) {
 
     if (opts.restoreRollback) {
         return rollback::RestoreLatest() ? 0 : 1;
+    }
+
+    if (opts.metricsService) {
+        return metrics_svc::RunServiceMain();
+    }
+    if (opts.installMetricsService) {
+        return metrics_svc::Install() ? 0 : 1;
+    }
+    if (opts.uninstallMetricsService) {
+        return metrics_svc::Uninstall() ? 0 : 1;
+    }
+    if (opts.collectMetricsOnce) {
+        return metrics_svc::CollectOnce(5) ? 0 : 1;
+    }
+    if (opts.metricsTray) {
+        return metrics_tray::RunStandalone(GetModuleHandleW(nullptr));
     }
 
     if (!opts.killFromPath.empty()) {

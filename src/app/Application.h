@@ -25,13 +25,14 @@ enum class PageId {
     ShutdownTimer,
     ProcessMgr,
     Pci,
+    Monitor,
     Settings,
     Count
 };
 
 inline const char* PageTag(PageId id) {
     static const char* tags[] = {"exp", "wu",   "sys",  "per",  "uwp", "quick", "adv",
-                                 "compon", "act", "perf", "sat",  "pmgr", "pci"};
+                                 "compon", "act", "perf", "sat",  "pmgr", "pci", "mon"};
     return id == PageId::Settings ? "settings" : tags[static_cast<int>(id)];
 }
 
@@ -57,6 +58,7 @@ public:
     Settings& GetSettings() { return settings_; }
     l10n::Localization& L10n() { return *l10n_; }
     void ReloadLanguage();
+    void RequestLanguageReload();
     void RequestFontReload();
     platform::TrayIcon& Tray() { return tray_; }
 
@@ -70,11 +72,17 @@ public:
         bool pciCompact = false;
         bool safeMode = false;
         PageId startPage = PageId::Count;
+        std::string pendingLang;
     };
     void ConfigureLaunch(const LaunchConfig& cfg) { launch_ = cfg; }
     const LaunchConfig& Launch() const { return launch_; }
 
     HWND Hwnd() const { return hwnd_; }
+    void SetTopmost(bool on);
+    bool TryHideToMetricsTray();
+    void RequestQuit();
+    /// Service started while GUI is open: hand off tray to metrics helper, keep window alive.
+    void AdoptMetricsServiceTrayMode();
 
     /// Re-apply DWM chrome when theme changes.
     void RefreshGlassPipeline();
@@ -100,6 +108,7 @@ private:
     bool showUpdateDialog_{false};
     platform::UpdateInfo pendingUpdate_{};
     bool pendingFontReload_{false};
+    bool pendingLanguageReload_{false};
 };
 
 } // namespace maku::app

@@ -50,4 +50,17 @@ inline std::wstring GetAppDataPath() {
     return result;
 }
 
+/// Shared data directory (ProgramData) — same path for GUI and Windows service.
+inline std::wstring GetSharedDataPath() {
+    wchar_t* path = nullptr;
+    if (FAILED(SHGetKnownFolderPath(FOLDERID_ProgramData, 0, nullptr, &path)))
+        return L"";
+    std::wstring result = path;
+    CoTaskMemFree(path);
+    result += L"\\";
+    result += brand::kAppDataFolder;
+    CreateDirectoryW(result.c_str(), nullptr);
+    return result;
+}
+
 } // namespace maku::util

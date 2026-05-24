@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.20)
-project(MakuTweaker VERSION 5.6 LANGUAGES CXX)
+project(MakuTweaker VERSION 5.6 LANGUAGES CXX C)
 
 if(WIN32 AND MSVC)
     include("${CMAKE_SOURCE_DIR}/cmake/WindowsAppSDK.cmake")
+    include("${CMAKE_SOURCE_DIR}/cmake/EmbedData.cmake")
 endif()
 
 set(CMAKE_CXX_STANDARD 20)
@@ -22,7 +23,11 @@ FetchContent_Declare(json
     GIT_REPOSITORY https://github.com/nlohmann/json.git
     GIT_TAG v3.11.3
 )
-FetchContent_MakeAvailable(imgui json)
+FetchContent_Declare(implot
+    GIT_REPOSITORY https://github.com/epezent/implot.git
+    GIT_TAG v0.16
+)
+FetchContent_MakeAvailable(imgui json implot)
 
 set(IMGUI_SOURCES
     ${imgui_SOURCE_DIR}/imgui.cpp
@@ -31,33 +36,47 @@ set(IMGUI_SOURCES
     ${imgui_SOURCE_DIR}/imgui_widgets.cpp
     ${imgui_SOURCE_DIR}/backends/imgui_impl_win32.cpp
     ${imgui_SOURCE_DIR}/backends/imgui_impl_dx11.cpp
+    ${implot_SOURCE_DIR}/implot.cpp
+    ${implot_SOURCE_DIR}/implot_items.cpp
 )
 
 file(GLOB_RECURSE MAKU_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
 add_executable(MakuTweaker WIN32
     ${MAKU_SOURCES}
     ${IMGUI_SOURCES}
+    ${CMAKE_SOURCE_DIR}/third_party/sqlite/sqlite3.c
+)
+
+# Explicit so VS/CMake globs pick up new units without a full reconfigure.
+target_sources(MakuTweaker PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/MetricsBackground.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/MetricsWriteBuffer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/ui/MonitorPlotAxis.cpp
 )
 
 target_include_directories(MakuTweaker PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
     ${imgui_SOURCE_DIR}
     ${imgui_SOURCE_DIR}/backends
+    ${implot_SOURCE_DIR}
+    ${CMAKE_SOURCE_DIR}/third_party/sqlite
 )
 
 target_link_libraries(MakuTweaker PRIVATE
     nlohmann_json::nlohmann_json
-    d3d11 dxgi dwmapi shell32 ole32 oleaut32 wbemuuid pdh psapi advapi32 iphlpapi ws2_32 crypt32
+    d3d11 dxgi dwmapi shell32 ole32 oleaut32 wbemuuid pdh psapi advapi32 iphlpapi ws2_32 crypt32 wtsapi32 userenv
 )
 
 target_compile_definitions(MakuTweaker PRIVATE
     UNICODE _UNICODE
     MAKUTWEAKER_VERSION="${PROJECT_VERSION}"
     NOMINMAX WIN32_LEAN_AND_MEAN
+    SQLITE_THREADSAFE=1
 )
 
 if(WIN32 AND MSVC)
     maku_link_winappsdk(MakuTweaker)
+    maku_setup_embedded_data(MakuTweaker)
 endif()
 
 if(MSVC)
@@ -97,10 +116,12 @@ else()
 endif()
 target_compile_definitions(MakuTweaker PRIVATE MAKUTWEAKER_BUILD=${BUILD_NUMBER})
 
-add_custom_command(TARGET MakuTweaker POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-        "${CMAKE_SOURCE_DIR}/loc" "$<TARGET_FILE_DIR:MakuTweaker>/loc"
-    COMMAND ${CMAKE_COMMAND} -E copy_directory
-        "${CMAKE_SOURCE_DIR}/assets" "$<TARGET_FILE_DIR:MakuTweaker>/assets"
-    COMMENT "Copying loc/ and assets/ to output"
+add_custom_command(
+    TARGET MakuTweaker POST_BUILD
+    COMMAND ${CMAKE_COMMAND}
+        -DSRC=${CMAKE_SOURCE_DIR}
+        -DDST=$<TARGET_FILE_DIR:MakuTweaker>
+        -DCONFIG=$<CONFIG>
+        -P ${CMAKE_SOURCE_DIR}/cmake/PostBuildCopy.cmake
+    COMMENT "Copy loc/ and assets/ (Debug only; Release embeds in exe)"
 )

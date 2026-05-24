@@ -102,6 +102,10 @@ void Win32Window::SetMessageHandler(std::function<void(UINT, WPARAM, LPARAM)> ha
 
 }
 
+void Win32Window::SetCloseInterceptor(std::function<bool()> handler) {
+    closeInterceptor_ = std::move(handler);
+}
+
 
 
 LRESULT CALLBACK Win32Window::WndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
@@ -109,6 +113,10 @@ LRESULT CALLBACK Win32Window::WndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp)
     if (msg == WM_ERASEBKGND) return 1;
 
 
+
+    if (msg == WM_CLOSE && g_instance && g_instance->hwnd_ == hwnd &&
+        g_instance->closeInterceptor_ && g_instance->closeInterceptor_())
+        return 0;
 
     if (g_instance && g_instance->hwnd_ == hwnd && g_instance->handler_)
 

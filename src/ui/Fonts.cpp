@@ -56,6 +56,29 @@ static void MergeCjk(ImGuiIO& io, float size, ImFont* dst) {
     }
 }
 
+static void MergeExtendedScripts(ImGuiIO& io, float size, ImFont* dst) {
+    if (!dst) return;
+    static const ImWchar devanagari[] = {0x0900, 0x097F, 0};
+    static const ImWchar thai[] = {0x0E00, 0x0E7F, 0};
+    struct ScriptFont {
+        const wchar_t* file;
+        const ImWchar* range;
+    };
+    const ScriptFont scripts[] = {
+        {L"Nirmala.ttf", devanagari},
+        {L"NirmalaUI.ttf", devanagari},
+        {L"LeelawUI.ttf", thai},
+        {L"tahoma.ttf", thai},
+    };
+    ImFontConfig m{};
+    m.MergeMode = true;
+    m.DstFont = dst;
+    for (const auto& s : scripts) {
+        const std::string p = SystemFontPath(s.file);
+        if (FileExists(p)) io.Fonts->AddFontFromFileTTF(p.c_str(), size, &m, s.range);
+    }
+}
+
 void InitFonts(HWND hwnd) {
     ImGuiIO& io = ImGui::GetIO();
     io.Fonts->Clear();
@@ -99,6 +122,7 @@ void InitFonts(HWND hwnd) {
     }
 
     MergeCjk(io, uiSize, g_fontUi);
+    MergeExtendedScripts(io, uiSize, g_fontUi);
 
     ImFontConfig cfgTitle = cfg;
     g_fontTitle = LoadSegoe(io, segoeBold.c_str(), titleSize, &cfgTitle);

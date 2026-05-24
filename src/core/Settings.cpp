@@ -1,4 +1,5 @@
 #include "core/Settings.h"
+#include "core/Languages.h"
 #include "core/StringUtil.h"
 #include <fstream>
 #include <windows.h>
@@ -16,7 +17,10 @@ void Settings::Load() {
     try {
         nlohmann::json j;
         f >> j;
-        if (j.contains("lang")) lang = j["lang"].get<std::string>();
+        if (j.contains("lang")) {
+            lang = j["lang"].get<std::string>();
+            if (!l10n::IsSupportedLanguage(lang)) lang = "en";
+        }
         if (j.contains("langSI")) langSI = j["langSI"].get<int>();
         if (j.contains("firRun")) firRun = j["firRun"].get<bool>();
         if (j.contains("theme")) {
@@ -47,6 +51,11 @@ void Settings::Load() {
             shellContextMenu = j["shellContextMenu"].get<bool>();
         if (j.contains("gamingTcp")) gamingTcp = j["gamingTcp"].get<bool>();
         if (j.contains("preferredDns")) preferredDns = j["preferredDns"].get<std::string>();
+        if (j.contains("metricsServiceEnabled"))
+            metricsServiceEnabled = j["metricsServiceEnabled"].get<bool>();
+        if (j.contains("metricsIntervalSec"))
+            metricsIntervalSec = j["metricsIntervalSec"].get<int>();
+        if (j.contains("topmost")) topmost = j["topmost"].get<bool>();
     } catch (...) {
     }
 }
@@ -74,12 +83,14 @@ void Settings::Save() const {
     j["shellContextMenu"] = shellContextMenu;
     j["gamingTcp"] = gamingTcp;
     j["preferredDns"] = preferredDns;
+    j["metricsServiceEnabled"] = metricsServiceEnabled;
+    j["metricsIntervalSec"] = metricsIntervalSec;
+    j["topmost"] = topmost;
     std::ofstream f(Path());
     if (f) f << j.dump(2);
 }
 
 std::string Settings::DetectSystemLanguage() {
-    wchar_t locale[16]{};
     if (GetUserDefaultUILanguage()) {
         LCID lcid = GetUserDefaultUILanguage();
         wchar_t lang[8]{}, region[8]{};
@@ -94,11 +105,9 @@ std::string Settings::DetectSystemLanguage() {
 
         std::string iso = util::ToUtf8(lang);
         if (iso == "fil") return "tl";
-        const char* supported[] = {
-            "uk", "cs", "ru", "az", "es", "tl", "tr", "ko", "zh", "it", "de", "fr", "be",
-            "vi", "id", "hi", "ja", "kk", "pt", "lv", "fi", "et", "pl", "th"};
-        for (auto s : supported)
-            if (iso == s) return iso;
+        for (int i = 0; i < l10n::kLanguageCount; ++i) {
+            if (iso == l10n::kLanguages[i].tag) return iso;
+        }
     }
     return "en";
 }

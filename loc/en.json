@@ -14,7 +14,8 @@
                 "perf": "Performance",
                 "per": "Personalization",
                 "procmgr": "Process Management",
-                "pci": "PC Information"
+                "pci": "PC Information",
+                "mon": "Monitoring"
             },
             "lowtabs": {
                 "rexp": "Restart Explorer",
@@ -468,7 +469,71 @@
                 "cfg_error": "An error occurred while saving the file.",
                 "cfg_error1": "An error occurred while reading the file.",
                 "credL": "Version:\nIdea and Development:\r\nProgram Icon:\r\nSpecial Thanks:",
-                "atop": "Official Website"
+                "atop": "Official Website",
+                "github": "GitHub",
+                "donate": "Donate",
+                "export_mktw": "Export .mktw",
+                "import_mktw": "Import .mktw",
+                "metrics_service": "Background metrics collection",
+                "metrics_interval": "Collection interval (sec)",
+                "topmost": "Always on top"
+            }
+        },
+        "mon": {
+            "main": {
+                "label": "Monitoring",
+                "service_status": "Service",
+                "service_enable": "Collect metrics in background",
+                "service_install": "Install service",
+                "service_start": "Start service",
+                "no_data": "No data yet — enable the metrics service or wait for samples",
+                "1h": "1 h",
+                "6h": "6 h",
+                "24h": "24 h",
+                "7d": "7 d",
+                "30d": "30 d",
+                "zoom": "Zoom (minutes)",
+                "service_install_ok": "Service installed",
+                "service_install_fail": "Could not install service (admin rights required)",
+                "gui_collect_hint": "GUI collects metrics while service is stopped"
+            },
+            "res": {
+                "cpu": "CPU",
+                "gpu": "GPU",
+                "ram": "RAM",
+                "net": "Network",
+                "disk": "Disk"
+            },
+            "graph": {
+                "time": "Time",
+                "pct": "Percent (%)",
+                "speed": "Speed"
+            },
+            "cpu": {
+                "auto": "Auto",
+                "threads": "Threads",
+                "cores": "Cores",
+                "numa": "NUMA",
+                "heatmap": "Heatmap",
+                "topn": "Top loaded",
+                "logical": "Threads",
+                "physical": "Cores",
+                "topn_count": "Top N",
+                "many_warn": "Too many threads — showing heatmap fallback",
+                "others": "Others (avg)",
+                "core_lbl": "Core #",
+                "thread_lbl": "Thread #",
+                "core_fmt": "Core",
+                "thread_fmt": "Thread"
+            },
+            "tray": {
+                "open": "Open MakuTweaker++",
+                "monitor": "Open Monitoring",
+                "start_service": "Start metrics service",
+                "stop_service": "Stop metrics service",
+                "not_installed": "Service not installed",
+                "open_data": "Open data folder",
+                "exit_tray": "Exit completely"
             }
         },
         "tooltips": {

@@ -1,26 +1,27 @@
 #include "platform/TrayIcon.h"
 
 #include "app/Branding.h"
-#include "core/StringUtil.h"
+#include "platform/MetricsTray.h"
+#include "platform/TrayIconLoad.h"
 
 namespace maku::platform {
 
 bool TrayIcon::Create(HWND hwnd, HINSTANCE inst) {
     hwnd_ = hwnd;
+#ifdef NOTIFYICONDATAW_V3_SIZE
+    nid_.cbSize = NOTIFYICONDATAW_V3_SIZE;
+#else
     nid_.cbSize = sizeof(nid_);
+#endif
     nid_.hWnd = hwnd;
     nid_.uID = 1;
     nid_.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
     nid_.uCallbackMessage = WM_USER + 1;
-    nid_.hIcon = LoadIconW(inst, MAKEINTRESOURCEW(brand::kAppIconResourceId));
-    if (!nid_.hIcon) {
-        const std::wstring iconPath =
-            maku::util::GetExeDirectory() + L"\\assets\\icons\\MakuTweaker.ico";
-        nid_.hIcon = static_cast<HICON>(LoadImageW(nullptr, iconPath.c_str(), IMAGE_ICON, 0, 0,
-                                                   LR_LOADFROMFILE | LR_DEFAULTSIZE));
-    }
+    nid_.hIcon = tray_icon::LoadNotifyAreaIcon(inst);
     wcscpy_s(nid_.szTip, brand::kDisplayName);
-    return Shell_NotifyIconW(NIM_ADD, &nid_) != FALSE;
+    if (Shell_NotifyIconW(NIM_ADD, &nid_) == FALSE) return false;
+    tray_icon::SetNotifyIconVersion(nid_);
+    return true;
 }
 
 void TrayIcon::Destroy() {
@@ -37,9 +38,14 @@ void TrayIcon::ShowBalloon(const std::wstring& title, const std::wstring& messag
     Shell_NotifyIconW(NIM_MODIFY, &n);
 }
 
-bool TrayIcon::HandleMessage(UINT msg, WPARAM, LPARAM) {
-    if (msg == WM_USER + 1) return true;
+bool TrayIcon::HandleMessage(UINT msg, WPARAM wp, LPARAM lp) {
+    if (msg == WM_USER + 1) return ProcessCallback(hwnd_, wp, lp);
     return false;
+}
+
+bool TrayIcon::ProcessCallback(HWND hwnd, WPARAM wp, LPARAM lp) {
+    (void)wp;
+    return metrics_tray::ProcessMainTrayMessage(hwnd, wp, lp);
 }
 
 } // namespace maku::platform

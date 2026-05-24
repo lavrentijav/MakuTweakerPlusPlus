@@ -4,6 +4,9 @@
 #include "core/JobQueue.h"
 #include "core/OsUtil.h"
 #include "core/ProcessWatchdog.h"
+#include "core/MetricsBackground.h"
+#include "platform/MetricsService.h"
+#include "platform/MetricsTray.h"
 #include "core/ProcessRunner.h"
 #include "core/LogFile.h"
 #include "core/PendingUi.h"
@@ -19,6 +22,7 @@
 #include <imgui.h>
 #include <imgui_impl_dx11.h>
 #include <imgui_impl_win32.h>
+#include <implot.h>
 #include "core/PciCollector.h"
 #include "platform/D3D11Context.h"
 #include "platform/WinAppSdkRuntime.h"
@@ -46,6 +50,10 @@ bool Application::Init(HINSTANCE inst) {
                                     : "Process running without UAC elevation");
     settings_.Load();
     pending::Load();
+    if (!launch_.pendingLang.empty()) {
+        settings_.lang = launch_.pendingLang;
+        settings_.Save();
+    }
     settings_.theme = ui::NormalizeTheme(settings_.theme);
     if (launch_.safeMode) settings_.processExclusions.clear();
     if (launch_.safeMode) settings_.makuYanPar.clear();
@@ -70,6 +78,7 @@ bool Application::Init(HINSTANCE inst) {
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
+    ImPlot::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
     io.IniFilename = nullptr;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
@@ -81,14 +90,18 @@ bool Application::Init(HINSTANCE inst) {
     ui::SyncDwmTheme(hwnd_, settings_.theme, g_dx.UsesAlphaSwapChain());
     ui::InitAppShell();
     pci::PciCollector::Instance().Prefetch();
-    tray_.Create(hwnd_, inst);
+    const bool metricsSvcTray =
+        settings_.metricsServiceEnabled && metrics_svc::IsRunning();
+    if (!metricsSvcTray) {
+        metrics_tray::ShutdownStandalone();
+        tray_.Create(hwnd_, inst);
+    }
 
     currentPage_ = launch_.startPage != PageId::Count ? launch_.startPage
                                                       : PageFromTag(settings_.lastPageTag);
     if (currentPage_ == PageId::Count) currentPage_ = PageId::Explorer;
 
-    if (launch_.topmost)
-        SetWindowPos(hwnd_, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE);
+    if (launch_.topmost || settings_.topmost) SetTopmost(true);
 
 #ifndef MAKUTWEAKER_BUILD
 #define MAKUTWEAKER_BUILD 0
@@ -108,8 +121,15 @@ bool Application::Init(HINSTANCE inst) {
     if (settings_.autoTtlOnBoot && !auto_task::IsBootTtlInstalled()) auto_task::InstallBootTtl();
     if (settings_.autoWeeklyCleanup && !auto_task::IsWeeklyCleanupInstalled())
         auto_task::InstallWeeklyCleanup();
+    if (settings_.metricsServiceEnabled) metrics_svc::EnsureAutostartAndRunning();
 
+    g_window.SetCloseInterceptor([] { return g_app->TryHideToMetricsTray(); });
     g_window.SetMessageHandler([](UINT msg, WPARAM wp, LPARAM lp) {
+        if (msg == metrics_tray::kMsgForceQuitMain) {
+            DestroyWindow(g_app->hwnd_);
+            return;
+        }
+        if (g_app->Tray().HandleMessage(msg, wp, lp)) return;
         if (ImGui_ImplWin32_WndProcHandler(g_app->hwnd_, msg, wp, lp)) return;
         if (msg == WM_SIZE && wp != SIZE_MINIMIZED) {
             g_dx.Resize(LOWORD(lp), HIWORD(lp));
@@ -118,7 +138,34 @@ bool Application::Init(HINSTANCE inst) {
     return true;
 }
 
+bool Application::TryHideToMetricsTray() {
+    if (!settings_.metricsServiceEnabled || !metrics_svc::IsRunning()) return false;
+    metrics_tray::EnsureStandaloneTray();
+    DestroyWindow(hwnd_);
+    return true;
+}
+
+void Application::RequestQuit() {
+    if (hwnd_) DestroyWindow(hwnd_);
+}
+
+void Application::AdoptMetricsServiceTrayMode() {
+    if (!settings_.metricsServiceEnabled || !metrics_svc::IsRunning()) return;
+    tray_.Destroy();
+    metrics_tray::EnsureStandaloneTray();
+}
+
+void Application::SetTopmost(bool on) {
+    if (!hwnd_) return;
+    SetWindowPos(hwnd_, on ? HWND_TOPMOST : HWND_NOTOPMOST, 0, 0, 0, 0,
+                 SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+    settings_.topmost = on;
+    settings_.Save();
+}
+
 void Application::RequestFontReload() { pendingFontReload_ = true; }
+
+void Application::RequestLanguageReload() { pendingLanguageReload_ = true; }
 
 void Application::ReloadLanguage() {
     l10n_ = std::make_unique<l10n::Localization>(settings_.lang);
@@ -163,6 +210,10 @@ void Application::SetPage(PageId page) {
 
 void Application::Run() {
     while (g_window.ProcessMessages()) {
+        if (pendingLanguageReload_) {
+            pendingLanguageReload_ = false;
+            ReloadLanguage();
+        }
         if (explorerRestartPending_ && GetTickCount() >= explorerRestartAt_) {
             proc::StartExplorer();
             explorerRestartPending_ = false;
@@ -171,6 +222,8 @@ void Application::Run() {
             pendingFontReload_ = false;
             ui::ReloadFonts(hwnd_);
         }
+
+        metrics::MetricsBackground::Instance().Tick();
 
         ImGui_ImplDX11_NewFrame();
         ImGui_ImplWin32_NewFrame();
@@ -193,6 +246,7 @@ void Application::Shutdown() {
     tray_.Destroy();
     ImGui_ImplDX11_Shutdown();
     ImGui_ImplWin32_Shutdown();
+    ImPlot::DestroyContext();
     ImGui::DestroyContext();
     g_dx.Shutdown();
 }

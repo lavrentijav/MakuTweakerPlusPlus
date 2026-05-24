@@ -27,7 +27,7 @@ cmake --preset windows-x64
 cmake --build --preset release
 ```
 
-Output: `build/Release/MakuTweaker++.exe` with `loc/` and `assets/` copied beside the binary.
+Output: `build/Release/MakuTweaker++.exe` — **Release** embeds all `loc/*.json` and `assets/**` inside the exe (portable single file). **Debug** still copies `loc/` and `assets/` next to the binary for faster iteration.
 
 ### Debug
 

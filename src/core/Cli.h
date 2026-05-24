@@ -23,6 +23,13 @@ struct Options {
     bool activateHwid = false;
     bool cleanupTemp = false;
     bool restoreRollback = false;
+    bool metricsService = false;
+    bool installMetricsService = false;
+    bool uninstallMetricsService = false;
+    bool collectMetricsOnce = false;
+    bool metricsTray = false;
+    bool metricsTrayOpenGui = false;
+    bool foregroundGui = false;
 
     std::wstring reportPath;
     std::wstring killFromPath;

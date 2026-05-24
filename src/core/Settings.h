@@ -27,6 +27,9 @@ struct Settings {
     bool shellContextMenu = false;
     bool gamingTcp = false;
     std::string preferredDns;
+    bool metricsServiceEnabled = false;
+    int metricsIntervalSec = 5;
+    bool topmost = false;
 
     void Load();
     void Save() const;

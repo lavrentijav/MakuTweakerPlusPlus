@@ -4,3 +4,6 @@
 build/
 legacy/
 out/
+loc/.*.cache.json
+loc/_*
+loc/__pycache__/

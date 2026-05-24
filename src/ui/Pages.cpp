@@ -15,9 +15,11 @@
 #include "core/SystemReport.h"
 #include "core/Preset.h"
 #include "core/LogFile.h"
+#include "platform/MetricsService.h"
 #include "core/PendingUi.h"
 #include "core/Tweaks.h"
 #include "ui/Extras.h"
+#include "ui/MonitorPage.h"
 #include <atomic>
 #include <nlohmann/json.hpp>
 #include "core/Wmi.h"
@@ -40,14 +42,12 @@
 #include <unordered_map>
 #include <map>
 
+#include "core/Languages.h"
+
 namespace maku::ui::pages {
 namespace {
 
 using app::Application;
-
-static const char* kLangTags[] = {
-    "en", "ru", "uk", "be", "kk", "cs", "de", "fr", "es", "it", "pt", "fi", "et",
-    "lv", "pl", "az", "tr", "zh", "tw", "ja", "ko", "vi", "th", "id", "tl", "hi"};
 
 static bool g_loaded = false;
 
@@ -1581,7 +1581,7 @@ static void DrawPci() {
         return;
     }
 
-    if (ImGui::BeginTable("pci_os_cards", 3, ImGuiTableFlags_SizingStretchSame)) {
+    if (ImGui::BeginTable("pci_os_cards", 2, ImGuiTableFlags_SizingStretchSame)) {
             auto card = [&](const char* id, const char* key, const std::wstring& val) {
                 ImGui::TableNextColumn();
                 DrawInfoCard(id, PciLbl(l, key, key), val);
@@ -1589,9 +1589,10 @@ static void DrawPci() {
             ImGui::TableNextRow();
             card("os", "oslabel", snap.osCaption);
             card("ver", "verlabel", snap.displayVersion);
-            card("ed", "editionlabel", snap.edition);
             ImGui::TableNextRow();
+            card("ed", "editionlabel", snap.edition);
             card("bld", "buildlabel", snap.build);
+            ImGui::TableNextRow();
             card("inst", "installdatelabel", snap.installDate);
             card("act", "activationlabel", mapSt(snap.activation));
             ImGui::EndTable();
@@ -1836,24 +1837,21 @@ static void DrawSettings() {
     auto& s = app.GetSettings();
     PageTitle(l.Get("base", "lowtabs", "set"));
 
-    int langIdx = 0;
-    for (int i = 0; i < 26; ++i)
-        if (s.lang == kLangTags[i]) langIdx = i;
+    const int langIdx = l10n::LanguageIndex(s.lang);
 
     ImGui::TextUnformatted(l.Get("ab", "main", "lang").c_str());
     ImGui::SameLine();
-    if (ImGui::BeginCombo("##lang", kLangTags[langIdx])) {
-        for (int i = 0; i < 26; ++i) {
+    if (ImGui::BeginCombo("##lang", l10n::kLanguages[langIdx].nativeName)) {
+        for (int i = 0; i < l10n::kLanguageCount; ++i) {
             const bool selected = (langIdx == i);
-            if (ImGui::Selectable(kLangTags[i], selected)) langIdx = i;
+            if (ImGui::Selectable(l10n::kLanguages[i].nativeName, selected)) {
+                s.lang = l10n::kLanguages[i].tag;
+                s.Save();
+                app.RequestLanguageReload();
+            }
             if (selected) ImGui::SetItemDefaultFocus();
         }
         ImGui::EndCombo();
-    }
-    if (ImGui::Button(l.Get("base", "def", "apply").c_str())) {
-        s.lang = kLangTags[langIdx];
-        s.Save();
-        app.ReloadLanguage();
     }
 
     ImGui::TextUnformatted(l.Get("ab", "main", "th").c_str());
@@ -1871,12 +1869,33 @@ static void DrawSettings() {
             }
         }
     }
+
+    bool topmost = s.topmost;
+    if (ImGui::Checkbox(l.Get("ab", "main", "topmost").c_str(), &topmost)) app.SetTopmost(topmost);
+
     ImGui::Separator();
     ImGui::Text("MakuTweaker++ 5.6 (C++/ImGui)");
     ImGui::Text("Mark Adderly");
-    if (ImGui::Button("GitHub"))
+    if (ImGui::Button(l.Get("ab", "main", "github").c_str()))
         proc::OpenUrl(L"https://github.com/MarkAdderly/MakuTweaker");
-    if (ImGui::Button("Donate")) proc::OpenUrl(L"https://adderly.top/mt");
+    if (ImGui::Button(l.Get("ab", "main", "donate").c_str())) proc::OpenUrl(L"https://adderly.top/mt");
+
+    ImGui::Separator();
+    bool metricsSvc = s.metricsServiceEnabled;
+    if (ImGui::Checkbox(l.Get("ab", "main", "metrics_service").c_str(), &metricsSvc)) {
+        s.metricsServiceEnabled = metricsSvc;
+        s.Save();
+        if (metricsSvc) {
+            metrics_svc::EnsureAutostartAndRunning();
+        } else {
+            metrics_svc::Stop();
+        }
+    }
+    ImGui::SetNextItemWidth(120.f);
+    if (ImGui::InputInt(l.Get("ab", "main", "metrics_interval").c_str(), &s.metricsIntervalSec)) {
+        s.metricsIntervalSec = std::clamp(s.metricsIntervalSec, 1, 60);
+        s.Save();
+    }
 
     ImGui::Separator();
     static char exclusions[1024]{};
@@ -1900,7 +1919,7 @@ static void DrawSettings() {
     }
 
     ImGui::Separator();
-    if (ImGui::Button("Export .mktw")) {
+    if (ImGui::Button(l.Get("ab", "main", "export_mktw").c_str())) {
         nlohmann::json j;
         j["lang"] = s.lang;
         j["theme"] = s.theme;
@@ -1913,9 +1932,9 @@ static void DrawSettings() {
         if (out) out << j.dump(2);
     }
     ImGui::SameLine();
-    if (ImGui::Button("Import .mktw")) {
+    if (ImGui::Button(l.Get("ab", "main", "import_mktw").c_str())) {
         preset::ApplyFile(util::GetExeDirectory() + L"\\export.mktw", s, false);
-        app.ReloadLanguage();
+        app.RequestLanguageReload();
     }
 
     static bool showMakuYan{};
@@ -1953,6 +1972,7 @@ void Draw(app::PageId page) {
     case app::PageId::ShutdownTimer: DrawSat(); break;
     case app::PageId::ProcessMgr: DrawProcessMgr(); break;
     case app::PageId::Pci: DrawPci(); break;
+    case app::PageId::Monitor: DrawMonitor(); break;
     case app::PageId::Settings: DrawSettings(); break;
     default: break;
     }
