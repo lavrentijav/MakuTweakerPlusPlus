@@ -14,7 +14,8 @@
                 "perf": "Performances",
                 "per": "Personnalisation",
                 "procmgr": "Gestion des processus",
-                "pci": "Informations PC"
+                "pci": "Informations PC",
+                "wininfo": "Informations Windows"
             },
             "lowtabs": {
                 "rexp": "Redémarrer l'Explorateur",
@@ -198,7 +199,9 @@
                 "oldbootloader": "Activer l'ancien chargeur de démarrage",
                 "advancedboot": "Options avancées à chaque démarrage",
                 "swap": "Désactiver le fichier d'échange",
-                "ttl": "Activer le contournement des restrictions de partage de connexion (TTL 65)"
+                "ttl": "Activer le contournement des restrictions de partage de connexion (TTL 65)",
+                "sitebantitle": "Bloquer certains sites web et domaines",
+                "sitebanopen": "Ouvrir"
             }
         },
         "sr": {
@@ -220,7 +223,9 @@
                 "smartscreen": "Désactiver SmartScreen",
                 "chkdsk": "Définir le délai d'attente Chkdsk à 1 minute",
                 "reportbutton": "Rapport",
-                "telemetry": "Désactiver toute la télémétrie et le suivi système"
+                "telemetry": "Désactiver toute la télémétrie et le suivi système",
+                "pipcache": "Vider le cache pip",
+                "status": "Nettoyage du cache en cours... Cela peut prendre un peu de temps."
             },
             "status": {
                 "uacwarn": "En activant l'option \"Désactiver le contrôle de compte d'utilisateur (UAC)\", le glisser-déposer dans la barre des tâches cesse de fonctionner sous Windows 11. MakuTweaker n'est pas responsable de ce problème. Voulez-vous vraiment continuer ?"
@@ -303,15 +308,21 @@
                 "manu": "Fabricant:",
                 "capac": "Capacité:",
                 "partnum": "Référence:",
-                "modeln": "Modèle",
+                "modeln": "Modèle de l’appareil",
                 "allvram": "Mémoire vidéo totale",
                 "devicemanu": "Fabricant de l'appareil",
-                "tooltip": "Appuyez sur F5 ou Ctrl+S pour enregistrer le contenu de la page dans un fichier TXT."
+                "tooltip": "Appuyez sur F5 ou Ctrl+S pour enregistrer le contenu de la page dans un fichier TXT.",
+                "allstorage": "Capacité totale de tous les disques",
+                "loading": "Récupération des informations sur les caractéristiques du PC… Cela ne prendra pas plus d’une minute.",
+                "freespace": "Libre:",
+                "save": "Enregistrer le rapport complet des caractéristiques du PC dans un fichier TXT",
+                "save_done": "Le rapport des caractéristiques du PC a été créé avec succès!",
+                "clipboard": "Copier le rapport court des caractéristiques du PC dans le presse-papiers\n\nFormat:\nProcesseur (Cœurs/Threads)\nMémoire RAM (Capacité et type DDR)\nCarte graphique principale (Quantité de mémoire vidéo)\nModèle de l’appareil / Carte mère"
             }
         },
         "pmgr": {
             "main": {
-                "label": "Gestion des processus",
+                "label": "Gestionnaire des tâches",
                 "endprocess": "Terminer le processus",
                 "onlyfrozen": "Uniquement figés",
                 "compact": "Vue compacte",
@@ -319,8 +330,8 @@
                 "process": "Processus",
                 "memuse": "Utilisation mémoire",
                 "location": "Emplacement du fichier",
-                "excl": "Ajouter aux exclusions",
-                "exclinfo": "Entrez les noms des processus séparés par des virgules :",
+                "excl": "Masquer de la liste",
+                "exclinfo": "Entrez les noms des processus que vous souhaitez masquer, séparés par des virgules.",
                 "excltitle": "Exclusions de processus",
                 "clear": "Effacer",
                 "save": "Enregistrer",
@@ -330,7 +341,25 @@
                 "from300mb": "> 300 Mo",
                 "from500mb": "> 500 Mo",
                 "from1000mb": "> 1 Go",
-                "from2000mb": "> 2 Go"
+                "from2000mb": "> 2 Go",
+                "monitoring": "Surveillance des ressources",
+                "backtoprocess": "Gestion des processus",
+                "updspeed": "Vitesse de mise à jour des informations :",
+                "showsysproc": "Afficher les processus système et non terminables",
+                "milisec": "ms.",
+                "search": "Recherche de processus",
+                "viewtype": "Style d’affichage des processus",
+                "friendly": "Convivial",
+                "systematic": "Systématique",
+                "bothvar": "Les deux variantes",
+                "onlymb": "Afficher la consommation de RAM uniquement en mégaoctets",
+                "taskmgr": "Remplacer le Gestionnaire des tâches par la page \"Gestion des processus\"",
+                "getback": "Quitter le mode exclusif",
+                "getfullscr": "Mode exclusif",
+                "modeset": "Lancer le programme en mode exclusif",
+                "topmost": "Toujours au-dessus",
+                "settings": "Paramètres",
+                "pause": "Suspendre la mise à jour"
             }
         },
         "myan": {
@@ -341,7 +370,9 @@
                 "howitworks": "Comment ça fonctionne?",
                 "banyandex": "Bloquer Yandex",
                 "clear": "Effacer",
-                "makutnah": "Ne me bloque pas!"
+                "makutnah": "Ne me bloque pas!",
+                "siteban": "Avec MakuTweaker, vous pouvez bloquer l’accès à des sites web spécifiques et à des domaines entiers à l’aide du mécanisme hosts intégré à Windows. Indiquez-les un par ligne et le programme appliquera automatiquement les restrictions. Pour débloquer un site ou un domaine, supprimez-le de la liste et enregistrez les modifications.",
+                "sitebandone": "La liste des sites web bloqués a été mise à jour avec succès."
             }
         },
         "ab": {
@@ -362,7 +393,11 @@
                 "cfg_error": "Une erreur s'est produite lors de l'enregistrement du fichier.",
                 "cfg_error1": "Une erreur s'est produite lors de la lecture du fichier.",
                 "credL": "Version:\nIdée et développement:\nIcône du programme:\nRemerciements particuliers:",
-                "atop": "Site officiel"
+                "atop": "Site officiel",
+                "winr": "Ajouter le lancement du programme à Win+R",
+                "winrinfo": "Vous pourrez lancer MakuTweaker via la fenêtre \"Exécuter\" (Win+R)\nen saisissant makut, maku ou mt.\n\nVous pouvez également ajouter des arguments pour ouvrir certaines pages :\n/u - Windows Update\n/p - Performances\n/s - Minuteur d’arrêt\n/mgr - Gestionnaire des tâches\n/pc - Informations PC\n/win - Informations Windows\n\nEn plus du slash, vous pouvez utiliser un tiret ou ne mettre aucun symbole.",
+                "disabletelemetry": "Désactiver la collecte des données analytiques",
+                "telemetryabt": "Afin de rendre le programme aussi utile et pratique que possible, MakuTweaker collecte une petite quantité de données techniques : les onglets et ajustements que vous utilisez le plus souvent, ainsi que les résultats de vos tests de processeur si vous les exécutez dans MakuTweaker Benchmark. Ces statistiques nous aident à comprendre quelles fonctionnalités nécessitent des améliorations ou des corrections et lesquelles sont peu utilisées.\n\nNous accordons une grande importance à votre vie privée. MakuTweaker ne collecte jamais vos données personnelles ni aucune information sans rapport avec le fonctionnement du programme. Nous souhaitons simplement mieux comprendre les besoins de nos utilisateurs afin de développer le projet dans la bonne direction.\n\nSi vous ne souhaitez pas partager vos données, cochez simplement la case. Dans ce cas, MakuTweaker cessera de collecter des statistiques et n’enverra aucune requête. La confidentialité de votre utilisation reste entièrement sous votre contrôle."
             }
         },
         "tooltips": {
@@ -390,6 +425,85 @@
                 "MakuTweakerProcessMGR": "L'onglet \"Gestion des processus\" est la meilleure alternative au Gestionnaire des tâches de Windows.\n\nL'approche est conviviale: les processus système qui ne peuvent pas être terminés sont masqués. Seuls les processus lancés par l'utilisateur sont affichés.\n\nTous les processus sont triés par consommation de ressources. Vous pouvez définir un seuil de consommation mémoire pour filtrer la liste (de 50 Mo à 2 Go). C'est pratique pour ne garder que les processus les plus \"lourds\" (montage vidéo, machines virtuelles, jeux).\n\nLa fonctionnalité principale de MakuTweaker est la case \"Afficher uniquement les processus gelés\". Si une fenêtre est marquée comme gelée dans Windows, vous pouvez filtrer la liste pour trouver rapidement le processus responsable et le terminer.\n\nDe plus, un clic droit sur un processus permet d'ouvrir le menu contextuel. Contrairement au gestionnaire des tâches, vous pouvez ouvrir directement l'\"Emplacement du fichier\". Et en cliquant sur \"Terminer le processus\", toute l'arborescence est fermée.\n\nLe système de calcul de la RAM dans MakuTweaker est plus réaliste que celui du gestionnaire des tâches, car il prend en compte les ressources réellement utilisées et la mémoire réservée inutilement par les applications. Cela permet de connaître la consommation réelle des logiciels de montage qui réservent de la RAM pour la prévisualisation.",
                 "MakuTweakerProcessMGR1": "Cliquez sur le bouton pour afficher l'aide.",
                 "ttl": "Les opérateurs mobiles (ex: Orange, SFR, Bouygues, Free) bloquent souvent ou facturent le partage de connexion illimité depuis un smartphone vers un PC. Ils utilisent le paramètre TTL (128 par défaut pour Windows, 64 pour les téléphones).\nFixer le TTL à 65 permet, après passage par le téléphone, d'obtenir une valeur de 64. L'opérateur verra une connexion provenant d'un autre smartphone et non d'un ordinateur, ce qui peut éviter des frais supplémentaires.\n\nMakuTweaker ne garantit absolument pas que cela fonctionnera.\nCe paramètre de registre est de plus en plus utilisé par les utilisateurs russes."
+            }
+        },
+        "wininfo": {
+            "main": {
+                "label": "Informations Windows",
+                "status_on": "Activé",
+                "status_off": "Désactivé",
+                "name": "Système d’exploitation",
+                "version": "Version",
+                "edition": "Édition",
+                "build": "Build",
+                "install_date": "Date d’installation",
+                "activation": "État de l’activation",
+                "locale_header": "Paramètres régionaux",
+                "isolation_header": "Virtualisation et isolation",
+                "protection_header": "Composants de protection",
+                "language": "Langue du système",
+                "region": "Région",
+                "timezone": "Fuseau horaire",
+                "activated": "Activé",
+                "not_activated": "Non activé",
+                "unknown": "Inconnu",
+                "not_supported": "Non pris en charge",
+                "present": "Présent",
+                "working": "Fonctionne",
+                "status_off_or_not_found": "Introuvable / Désactivé",
+                "on_enforced": "Activé (Enforced)",
+                "on_audit": "Mode d’évaluation (Audit)",
+                "on_not_working": "Activé (mais ne fonctionne pas)",
+                "on_realtime": "Activé (Real-Time)",
+                "coreisol": "Isolation du noyau",
+                "uac": "Contrôle de compte d’utilisateur (UAC)",
+                "uac_off_no_prompt": "(Sans élévation) Désactivé",
+                "uac_medium": "Moyen (Niveau {0})"
+            }
+        },
+        "monitoring": {
+            "main": {
+                "CPU": "Processeur",
+                "GPU": "Carte graphique",
+                "RAM": "RAM",
+                "Network": "Internet",
+                "Disk": "Disque",
+                "fetching": "Détection...",
+                "allnetwork": "Tous les adaptateurs réseau",
+                "alldrives": "Tous les lecteurs",
+                "other": "Autre",
+                "unknown": "Inconnu",
+                "sdc": "Carte SD",
+                "show": "Afficher",
+                "hide": "Masquer",
+                "cpuusage": "Utilisation du processeur",
+                "cpufreq": "Fréquence",
+                "proccount": "Processus",
+                "uptime": "Temps de fonctionnement",
+                "gpuusage": "Utilisation du GPU",
+                "gpumem": "Utilisation de la mémoire vidéo",
+                "gpucod": "Utilisation de l’encodeur",
+                "ram": "Utilisation de la mémoire",
+                "rampafi": "Fichier d’échange",
+                "netload": "Téléchargement",
+                "netusage": "Envoi",
+                "ipv4": "Adresse IPv4",
+                "ipad": "IP externe",
+                "mac": "Adresse MAC",
+                "diskusage": "Charge du disque",
+                "readspeed": "Vitesse de lecture",
+                "writespeed": "Vitesse d’écriture",
+                "capacity": "Capacité",
+                "freespace": "Libre",
+                "typedisk": "Type de disque",
+                "totalwrites": "Lectures totales",
+                "totalreads": "Écritures totales",
+                "state": "État",
+                "cpu_all": "Graphique global",
+                "cpu_cores": "Graphique des cœurs",
+                "cpu_threads": "Graphique des threads",
+                "temp": "Température",
+                "tdp": "Consommation d’énergie"
             }
         }
     }

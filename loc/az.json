@@ -14,7 +14,8 @@
                 "perf": "Məhsuldarlıq",
                 "per": "Fərdiləşdirmə",
                 "procmgr": "Proseslərin idarə edilməsi",
-                "pci": "PC haqqında məlumat"
+                "pci": "PC haqqında məlumat",
+                "wininfo": "Windows məlumatları"
             },
             "lowtabs": {
                 "rexp": "Explorer-i yenidən başladın",
@@ -198,7 +199,9 @@
                 "oldbootloader": "Köhnə sistem yükləyicisini aktivləşdir",
                 "advancedboot": "Hər sistem yüklənməsində əlavə parametrlər",
                 "swap": "Səhifələmə faylını (swap) söndür",
-                "ttl": "İnternet paylaşımı məhdudiyyətlərini keçməyi aktivləşdir (TTL 65)"
+                "ttl": "İnternet paylaşımı məhdudiyyətlərini keçməyi aktivləşdir (TTL 65)",
+                "sitebantitle": "Müəyyən veb-saytların və domenlərin bloklanması",
+                "sitebanopen": "Aç"
             }
         },
         "sr": {
@@ -220,7 +223,9 @@
                 "smartscreen": "Smart Screen-i söndür",
                 "chkdsk": "Chkdsk üçün taym-autu 1 dəqiqəyə təyin et",
                 "reportbutton": "Hesabat",
-                "telemetry": "Sistemdə bütün telemetriya və izləməni söndür"
+                "telemetry": "Sistemdə bütün telemetriya və izləməni söndür",
+                "pipcache": "pip keşini təmizlə",
+                "status": "Keş təmizlənir... Bu bir az vaxt apara bilər."
             },
             "status": {
                 "uacwarn": "\"İstifadəçi hesabı nəzarətini (UAC) söndür\" funksiyasını aktivləşdirdikdə, Windows 11-də tapşırıq panelində sürüklə-burax (Drag-and-Drop) funksiyası işləmir. MakuTweaker-in bu problemlə əlaqəsi yoxdur. Həqiqətən davam etmək istəyirsiniz?"
@@ -303,15 +308,21 @@
                 "manu": "İstehsalçı:",
                 "capac": "Həcm:",
                 "partnum": "Detalların nömrəsi:",
-                "modeln": "Model",
+                "modeln": "Cihaz modeli",
                 "allvram": "Ümumi video yaddaş",
                 "devicemanu": "Cihaz istehsalçısı",
-                "tooltip": "Səhifənin məzmununu TXT faylına saxlamaq üçün F5 və ya Ctrl+S basın."
+                "tooltip": "Səhifənin məzmununu TXT faylına saxlamaq üçün F5 və ya Ctrl+S basın.",
+                "allstorage": "Bütün yaddaş daşıyıcılarının həcmi",
+                "loading": "Kompüter xüsusiyyətləri haqqında məlumat alınır… Bu, bir dəqiqədən çox çəkməyəcək.",
+                "freespace": "Boş yer:",
+                "save": "Kompüter xüsusiyyətləri haqqında tam hesabatı TXT faylına saxla",
+                "save_done": "Kompüter xüsusiyyətləri haqqında hesabat uğurla yaradıldı!",
+                "clipboard": "Kompüter xüsusiyyətləri haqqında qısa hesabatı mübadilə buferinə kopyala\n\nFormat:\nProsessor (Nüvələr/Axınlar)\nOperativ yaddaş (Həcm və DDR tipi)\nƏsas videokart (Videoyaddaş miqdarı)\nCihaz modeli / Ana plata"
             }
         },
         "pmgr": {
             "main": {
-                "label": "Proseslərin idarə edilməsi",
+                "label": "Tapşırıq Meneceri",
                 "endprocess": "Prosesi bitir",
                 "onlyfrozen": "Yalnız donmuşlar",
                 "compact": "Yığcam görünüş",
@@ -319,18 +330,36 @@
                 "process": "Proses",
                 "memuse": "Yaddaş istifadəsi",
                 "location": "Faylın yerləşdiyi yer",
-                "excl": "İstisnalara əlavə et",
-                "exclinfo": "Proses adlarını vergüllə daxil edin:",
+                "excl": "Siyahıdan gizlət",
+                "exclinfo": "Gizlətmək istədiyiniz proses adlarını vergüllə daxil edin.",
                 "excltitle": "Proses istisnaları",
                 "clear": "Təmizlə",
-                "save": "Saxla",
+                "save": "Yadda saxla",
                 "showall": "Hamısını göstər",
                 "from50mb": "50 MB-dan",
                 "from100mb": "100 MB-dan",
                 "from300mb": "300 MB-dan",
                 "from500mb": "500 MB-dan",
                 "from1000mb": "1 GB-dan",
-                "from2000mb": "2 GB-dan"
+                "from2000mb": "2 GB-dan",
+                "monitoring": "Resurs monitorinqi",
+                "backtoprocess": "Proseslərin idarə edilməsi",
+                "updspeed": "Məlumatın yenilənmə sürəti:",
+                "showsysproc": "Sistem və sonlandırıla bilməyən prosesləri göstər",
+                "milisec": "ms.",
+                "search": "Proses axtarışı",
+                "viewtype": "Proseslərin göstərilmə üslubu",
+                "friendly": "Dostyana",
+                "systematic": "Sistemli",
+                "bothvar": "Hər iki variant",
+                "onlymb": "RAM istifadəsini yalnız meqabaytla göstər",
+                "taskmgr": "Tapşırıq Menecerini \"Proseslərin idarə edilməsi\" səhifəsi ilə əvəz et",
+                "getback": "Eksklüziv rejimdən çıx",
+                "getfullscr": "Eksklüziv rejim",
+                "modeset": "Proqramı eksklüziv rejimdə başlat",
+                "topmost": "Bütün pəncərələrin üzərində",
+                "settings": "Ayarlar",
+                "pause": "Yeniləməni dayandır"
             }
         },
         "myan": {
@@ -341,7 +370,9 @@
                 "howitworks": "Bu necə işləyir?",
                 "banyandex": "Yandex-i blokla",
                 "clear": "Təmizlə",
-                "makutnah": "Məni bloklama!"
+                "makutnah": "Məni bloklama!",
+                "siteban": "MakuTweaker vasitəsilə Windows-a daxil edilmiş hosts mexanizmindən istifadə edərək ayrı-ayrı veb-saytlara və bütöv domenlərə girişi bloklaya bilərsiniz. Onları hər sətirdə bir-bir qeyd edin və proqram məhdudiyyətləri avtomatik tətbiq edəcək. Saytı və ya domeni blokdan çıxarmaq üçün onu siyahıdan silin və dəyişiklikləri yadda saxlayın.",
+                "sitebandone": "Bloklanmış saytların siyahısı uğurla yeniləndi."
             }
         },
         "ab": {
@@ -362,7 +393,11 @@
                 "cfg_error": "Faylı saxlayarkən xəta baş verdi.",
                 "cfg_error1": "Faylı oxuyarkən xəta baş verdi.",
                 "credL": "Versiya:\nİdeya və işlənmə:\nProqram ikonu:\nXüsusi təşəkkür:",
-                "atop": "Rəsmi sayt"
+                "atop": "Rəsmi sayt",
+                "winr": "Win+R menyusuna proqram işə salma əlavə et",
+                "winrinfo": "Siz \"İcra et\" (Win+R) pəncərəsində\nmakut, maku və ya mt yazaraq MakuTweaker-i işə sala biləcəksiniz.\n\nSiz həmçinin müəyyən səhifələri açmaq üçün işə salma arqumentləri əlavə edə bilərsiniz:\n/u - Windows Update\n/p - Məhsuldarlıq\n/s - Söndürmə taymeri\n/mgr - Tapşırıq Meneceri\n/pc - PC haqqında məlumat\n/win - Windows məlumatları\n\nSleşdən əlavə, minus işarəsindən istifadə edə və ya ümumiyyətlə heç bir işarə əlavə etməyə bilərsiniz.",
+                "disabletelemetry": "Analitika toplanmasını söndür",
+                "telemetryabt": "Proqramı mümkün qədər faydalı və rahat etmək üçün MakuTweaker az miqdarda texniki məlumat toplayır: hansı bölmələrdən və tənzimləmələrdən daha çox istifadə etdiyiniz, həmçinin MakuTweaker Benchmark-da prosessor testləri aparsanız, onların nəticələri. Bu statistika bizə hansı funksiyaların təkmilləşdirilməyə və ya düzəldilməyə ehtiyacı olduğunu, hansılarının isə diqqətdən kənarda qaldığını anlamağa kömək edir.\n\nMəxfiliyinizə böyük dəyər veririk. MakuTweaker heç vaxt şəxsi məlumatlarınızı və ya proqramın işi ilə əlaqəli olmayan hər hansı məlumatı toplamır. Biz sadəcə istifadəçilərimizin ehtiyaclarını daha yaxşı başa düşmək və layihəni düzgün istiqamətdə inkişaf etdirmək istəyirik.\n\nƏgər məlumat paylaşmaq istəmirsinizsə, sadəcə işarə qutusunu seçin. Bu halda MakuTweaker statistika toplamağı dayandıracaq və heç bir sorğu göndərməyəcək. İstifadənizin məxfiliyi tamamilə sizin nəzarətinizdə qalır."
             }
         },
         "tooltips": {
@@ -390,6 +425,85 @@
                 "MakuTweakerProcessMGR": "\"Proseslərin idarə edilməsi\" tabı Windows Tapşırıq Menecerinin ən yaxşı analoqudur.\n\n yanaşma maksimum dərəcədə dostanədir: onsuz da bitirilməsi mümkün olmayan sistem prosesləri gizlədilib. Yalnız istifadəçinin özünün işə saldığı proseslər göstərilir.\n\nBütün proseslər avtomatik olaraq daha çox istehlakdan az istehlaka doğru sıralanır. Həmçinin prosesləri göstərmək üçün minimum yaddaş istehlakı həddini təyin etmək olar - 50 meqabaytdan 2 giqabayta qədər. Bu, siyahını filtrləmək və yalnız ən \"ağır\" prosesləri - məsələn, montaj proqramları, virtual maşınlar və ya oyunları saxlamaq üçün rahatdır.\n\nMakuTweaker-də proseslərin idarə edilməsinin əsas xüsusiyyəti - aşağıda \"Yalnız donmuş prosesləri göstər\" qutucuğu var. Əgər Windows-da pəncərə donmuş və ağarmış kimi işarələnibsə, yalnız belə pəncərələrin göstərilməsini aktivləşdirərək donmuş prosesi tez tapıb bitirə bilərsiniz.\n\nHəmçinin prosesin üzərinə sağ düymə ilə basaraq kontekst menyusunu aça bilərsiniz. Tapşırıq menecerindən fərqli olaraq, orada dərhal prosesin \"Faylın yerləşdiyi yer\"-ni aça bilərsiniz. \"Prosesi bitir\" düyməsinə basdıqda isə dərhal bütün proseslər ağacı bitirilir.\n\nMakuTweaker-də operativ yaddaş istehlakının hesablanması sistemi tapşırıq menecerindən fərqlənir - MakuTweaker-də dəyərlər daha realistdir.\nSöhbət ondadır ki, proqram sistemin istifadə olunan resurslarını, həmçinin tapşırıq menecerinin gizlətdiyi tətbiqlər tərəfindən ayrılmış artıq yaddaşı nəzərə alır. Bunun sayəsində, məsələn, videoların önizlənməsi üçün operativ yaddaş ayıran montaj proqramlarının faktiki istehlakını öyrənmək olar. Bu, istənilən proqrama aiddir.",
                 "MakuTweakerProcessMGR1": "Kömək pəncərəsini açmaq üçün düyməyə basın.",
                 "ttl": "Rusiya mobil operatorları (məsələn - MTS, Beeline, MegaFon, Tele2, Yota) tez-tez smartfondan PC-yə limitsiz internet paylaşımını bloklayır və ya əlavə ödəniş tələb edir. Onlar bunu Windows-da standart olaraq 128, telefonlarda isə 64 olan TTL parametri ilə izləyirlər.\nTTL-in 65 dəyərində fiksə edilməsi ona gətirib çıxaracaq ki, telefondan keçərkən dəyər 1 vahid azalacaq və operator 64 dəyəri ilə standart \"smartfon\" paketi alacaq. O, şəbəkənin kompüterə deyil, guya başqa smartfona paylandığını görəcək, buna görə də bu, əlavə hesab ödəmə tələbindən xilas edə bilər.\n\nMakuTweaker bunun işləyəcəyinə qətiyyən zəmanət vermir.\nRF-də bu reyestr parametri populyarlıq qazanır.\nBunu MakuTweaker-in Rusiyadan olan istifadəçiləri əlavə etməyi xahiş ediblər."
+            }
+        },
+        "wininfo": {
+            "main": {
+                "label": "Windows məlumatları",
+                "status_on": "Aktivdir",
+                "status_off": "Deaktivdir",
+                "name": "Əməliyyat sistemi",
+                "version": "Versiya",
+                "edition": "Buraxılış",
+                "build": "Yığım",
+                "install_date": "Quraşdırılma tarixi",
+                "activation": "Aktivasiya vəziyyəti",
+                "locale_header": "Regional parametrlər",
+                "isolation_header": "Virtuallaşdırma və izolyasiya",
+                "protection_header": "Qoruma komponentləri",
+                "language": "Sistem dili",
+                "region": "Region",
+                "timezone": "Saat qurşağı",
+                "activated": "Aktivləşdirilib",
+                "not_activated": "Aktivləşdirilməyib",
+                "unknown": "Naməlum",
+                "not_supported": "Dəstəklənmir",
+                "present": "Mövcuddur",
+                "working": "İşləyir",
+                "status_off_or_not_found": "Tapılmadı / Deaktivdir",
+                "on_enforced": "Aktivdir (Enforced)",
+                "on_audit": "Qiymətləndirmə rejimi (Audit)",
+                "on_not_working": "Aktivdir (amma işləmir)",
+                "on_realtime": "Aktivdir (Real-Time)",
+                "coreisol": "Nüvə izolyasiyası",
+                "uac": "İstifadəçi hesabına nəzarət (UAC)",
+                "uac_off_no_prompt": "(Yüksəltməsiz) Deaktivdir",
+                "uac_medium": "Orta (Səviyyə {0})"
+            }
+        },
+        "monitoring": {
+            "main": {
+                "CPU": "Prosessor",
+                "GPU": "Videokart",
+                "RAM": "RAM",
+                "Network": "İnternet",
+                "Disk": "Disk",
+                "fetching": "Müəyyən edilir...",
+                "allnetwork": "Bütün şəbəkə adapterləri",
+                "alldrives": "Bütün disklər",
+                "other": "Digər",
+                "unknown": "Naməlum",
+                "sdc": "SD Kart",
+                "show": "Göstər",
+                "hide": "Gizlət",
+                "cpuusage": "Prosessor yükü",
+                "cpufreq": "Tezlik",
+                "proccount": "Proseslər",
+                "uptime": "İşləmə müddəti",
+                "gpuusage": "Qrafik çip yükü",
+                "gpumem": "Videoyaddaş istifadəsi",
+                "gpucod": "Kodlayıcı yükü",
+                "ram": "Yaddaş istifadəsi",
+                "rampafi": "Səhifələmə faylı",
+                "netload": "Qəbul",
+                "netusage": "Göndərmə",
+                "ipv4": "IPv4 ünvanı",
+                "ipad": "Xarici IP",
+                "mac": "MAC ünvanı",
+                "diskusage": "Disk yükü",
+                "readspeed": "Oxuma sürəti",
+                "writespeed": "Yazma sürəti",
+                "capacity": "Tutum",
+                "freespace": "Boş yer",
+                "typedisk": "Disk növü",
+                "totalwrites": "Cəmi oxunuşlar",
+                "totalreads": "Cəmi yazılışlar",
+                "state": "Vəziyyət",
+                "cpu_all": "Ümumi qrafik",
+                "cpu_cores": "Nüvələr qrafiki",
+                "cpu_threads": "Axınlar qrafiki",
+                "temp": "Temperatur",
+                "tdp": "Enerji sərfiyyatı"
             }
         }
     }

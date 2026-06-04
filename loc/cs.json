@@ -14,7 +14,8 @@
                 "perf": "Výkon",
                 "per": "Přizpůsobení",
                 "procmgr": "Správa procesů",
-                "pci": "Informace o PC"
+                "pci": "Informace o PC",
+                "wininfo": "Informace o Windows"
             },
             "lowtabs": {
                 "rexp": "Restartovat Průzkumník",
@@ -198,7 +199,9 @@
                 "oldbootloader": "Povolit starý zavaděč systému",
                 "advancedboot": "Pokročilé možnosti při každém spuštění systému",
                 "swap": "Vypnout stránkovací soubor",
-                "ttl": "Povolit obcházení limitů sdílení internetu (TTL 65)"
+                "ttl": "Povolit obcházení limitů sdílení internetu (TTL 65)",
+                "sitebantitle": "Blokování určitých webových stránek a domén",
+                "sitebanopen": "Otevřít"
             }
         },
         "sr": {
@@ -220,7 +223,9 @@
                 "smartscreen": "Vypnout funkci Smart Screen",
                 "chkdsk": "Nastavit časový limit pro Chkdsk na 1 minutu",
                 "reportbutton": "Zpráva",
-                "telemetry": "Vypnout veškerou telemetrii a sledování v systému"
+                "telemetry": "Vypnout veškerou telemetrii a sledování v systému",
+                "pipcache": "Vyčistit mezipaměť pip",
+                "status": "Probíhá čištění mezipaměti... To může chvíli trvat."
             },
             "status": {
                 "uacwarn": "Při zapnutí možnosti \"Vypnout Řízení uživatelských účtů (UAC)\", přestane ve Windows 11 fungovat přetahování (Drag-and-Drop) na hlavním panelu. MakuTweaker za tento problém nenese odpovědnost. Opravdu chcete pokračovat?"
@@ -303,15 +308,21 @@
                 "manu": "Výrobce:",
                 "capac": "Kapacita:",
                 "partnum": "Číslo dílu:",
-                "modeln": "Model",
+                "modeln": "Model zařízení",
                 "allvram": "Celková videopaměť",
                 "devicemanu": "Výrobce zařízení",
-                "tooltip": "Stiskněte F5 nebo Ctrl+S pro uložení obsahu stránky do souboru TXT."
+                "tooltip": "Stiskněte F5 nebo Ctrl+S pro uložení obsahu stránky do souboru TXT.",
+                "allstorage": "Kapacita všech úložišť",
+                "loading": "Získávání informací o parametrech počítače… To nezabere více než minutu.",
+                "freespace": "Volné místo:",
+                "save": "Uložit kompletní zprávu o parametrech PC do TXT souboru",
+                "save_done": "Zpráva o parametrech PC byla úspěšně vytvořena!",
+                "clipboard": "Zkopírovat stručnou zprávu o parametrech PC do schránky\n\nFormát:\nProcesor (Jádra/Vlákna)\nOperační paměť (Kapacita a typ DDR)\nHlavní grafická karta (Velikost videopaměti)\nModel zařízení / Základní deska"
             }
         },
         "pmgr": {
             "main": {
-                "label": "Správa procesů",
+                "label": "Správce úloh",
                 "endprocess": "Ukončit proces",
                 "onlyfrozen": "Pouze zamrzlé",
                 "compact": "Kompaktní zobrazení",
@@ -319,8 +330,8 @@
                 "process": "Proces",
                 "memuse": "Využití paměti",
                 "location": "Umístění souboru",
-                "excl": "Přidat do výjimek",
-                "exclinfo": "Zadejte názvy procesů oddělené čárkou:",
+                "excl": "Skrýt ze seznamu",
+                "exclinfo": "Zadejte názvy procesů, které chcete skrýt, oddělené čárkou.",
                 "excltitle": "Výjimky procesů",
                 "clear": "Vyčistit",
                 "save": "Uložit",
@@ -330,7 +341,25 @@
                 "from300mb": "od 300 МБ",
                 "from500mb": "od 500 МБ",
                 "from1000mb": "od 1 GB",
-                "from2000mb": "od 2 GB"
+                "from2000mb": "od 2 GB",
+                "monitoring": "Monitorování prostředků",
+                "backtoprocess": "Správa procesů",
+                "updspeed": "Rychlost aktualizace informací:",
+                "showsysproc": "Zobrazovat systémové a neukončitelné procesy",
+                "milisec": "ms.",
+                "search": "Vyhledávání procesů",
+                "viewtype": "Styl zobrazení procesů",
+                "friendly": "Přátelský",
+                "systematic": "Systémový",
+                "bothvar": "Obě varianty",
+                "onlymb": "Zobrazovat využití RAM pouze v megabajtech",
+                "taskmgr": "Nahradit Správce úloh stránkou \"Správa procesů\"",
+                "getback": "Ukončit exkluzivní režim",
+                "getfullscr": "Exkluzivní režim",
+                "modeset": "Spouštět program v exkluzivním režimu",
+                "topmost": "Vždy nahoře",
+                "settings": "Nastavení",
+                "pause": "Pozastavit aktualizaci"
             }
         },
         "myan": {
@@ -341,7 +370,9 @@
                 "howitworks": "Jak to funguje?",
                 "banyandex": "Zablokovat Yandex",
                 "clear": "Vyčistit",
-                "makutnah": "Neblokuj mě!"
+                "makutnah": "Neblokuj mě!",
+                "siteban": "Pomocí MakuTweaker můžete zablokovat přístup ke konkrétním webovým stránkám i celým doménám pomocí mechanismu hosts zabudovaného ve Windows. Uveďte je po jednom na řádek a program automaticky použije omezení. Chcete-li web nebo doménu odblokovat, odstraňte ji ze seznamu a uložte změny.",
+                "sitebandone": "Seznam blokovaných webů byl úspěšně aktualizován."
             }
         },
         "ab": {
@@ -362,7 +393,11 @@
                 "cfg_error": "Při ukládání souboru došlo k chybě.",
                 "cfg_error1": "Při čtení souboru došlo k chybě.",
                 "credL": "Verze:\nIdea a vývoj:\nIkona programu:\nZvláštní poděkování:",
-                "atop": "Oficiální web"
+                "atop": "Oficiální web",
+                "winr": "Přidat spuštění programu do Win+R",
+                "winrinfo": "Budete moci spouštět MakuTweaker přes okno \"Spustit\" (Win+R)\nzadáním makut, maku nebo mt.\n\nMůžete také přidávat argumenty pro spuštění určitých stránek:\n/u - Windows Update\n/p - Výkon\n/s - Časovač vypnutí\n/mgr - Správce úloh\n/pc - Informace o PC\n/win - Informace o Windows\n\nKromě lomítka můžete použít pomlčku nebo nepřidávat žádný znak.",
+                "disabletelemetry": "Zakázat sběr analytických dat",
+                "telemetryabt": "Aby byl program co nejužitečnější a nejpohodlnější, MakuTweaker shromažďuje malé množství technických údajů: které karty a tweaky používáte nejčastěji a také výsledky testů procesoru, pokud je provedete v MakuTweaker Benchmark. Tyto statistiky nám pomáhají pochopit, které funkce vyžadují vylepšení nebo opravu a kterým se naopak nevěnuje pozornost.\n\nVaše soukromí je pro nás velmi důležité. MakuTweaker nikdy neshromažďuje vaše osobní údaje ani žádné informace nesouvisející s fungováním programu. Chceme pouze lépe porozumět potřebám našich uživatelů, abychom mohli projekt rozvíjet správným směrem.\n\nPokud nechcete sdílet data, jednoduše zaškrtněte políčko. V takovém případě MakuTweaker přestane shromažďovat statistiky a nebude odesílat žádné požadavky. Soukromí vašeho používání zůstává plně pod vaší kontrolou."
             }
         },
         "tooltips": {
@@ -390,6 +425,85 @@
                 "MakuTweakerProcessMGR": "Karta \"Správa procesů\" - je tu nejlepší alternativou ke Správci úloh systému Windows.\n\nPřístup je maximálně uživatelsky přívětivý: systémové procesy, které stejně nelze ukončit, jsou skryté. Zobrazují se pouze ty procesy, které uživatel skutečně spustil sám.\n\nVšechny procesy jsou automaticky řazeny od nejvyšší spotřeby po nejnižší. Lze také nastavit minimální práh spotřeby paměti pro zobrazení procesů - od 50 megabajtů do 2 gigabajtů. To je užitečné pro odfiltrování seznamu a ponechání pouze \"těch nejnáročnějších\" procesů - jako jsou střižny videí, virtuální stroje nebo hry.\n\nHlavní předností správy procesů v MakuTweakeru je zaškrtávací políčko \"Zobrazit pouze zamrzlé procesy\" dole v okně. Pokud je okno ve Windows označeno jako neodpovídající a zbělá, můžete si zapnout zobrazení pouze těchto oken, abyste rychle našli proces, který zamrzl, a ukončili jej.\n\nKromě toho můžete kliknutím pravým tlačítkem na proces otevřít kontextovou nabídku. V něm lze, na rozdíl od standardního Správce úloh, okamžitě otevřít \"Umístění souboru\" daného procesu. A při volbě \"Ukončit proces\" - se automaticky ukončí celý strom procesů.\n\nSystém počítání spotřeby operační paměti v MakuTweakeru se liší od toho ve Správci úloh - V MakuTweakeru jsou hodnoty realističtější.\nJe to tím, že program zohledňuje skutečně využívané systémové prostředky a také nadbytečnou paměť rezervovanou aplikacemi, kterou Správce úloh skrývá. Díky tomu lze například zjistit skutečnou spotřebu programů pro střih videa, které si rezervují operační paměť pro náhledy klipů. To platí pro jakékoli programy.",
                 "MakuTweakerProcessMGR1": "Klikněte na tlačítko pro rozbalení okna nápovědy.",
                 "ttl": "Někteří mobilní operátoři, zejména v Rusku (např. MTS, Beeline, MegaFon, Tele2, Yota), často blokují sdílení neomezeného internetu ze smartphonu do PC nebo za něj vyžadují dodatečný poplatek. Sledují to pomocí parametru TTL,\nkterý je ve Windows standardně nastaven na 128, zatímco u telefonů na 64.\nPevné nastavení hodnoty TTL na 65 způsobí, že po průchodu telefonem se hodnota sníží o 1 a operátor obdrží standardní \"smartphonový\" paket s hodnotou 64. Uvidí tak, že síť je údajně sdílena do jiného smartphonu, nikoli do počítače, což vás může ušetřit nečekaných poplatků.\n\nMakuTweaker absolutně nezaručuje, že toto řešení bude fungovat.\nO jeho přidání požádali uživatelé MakuTweakeru z Ruska."
+            }
+        },
+        "wininfo": {
+            "main": {
+                "label": "Informace o Windows",
+                "status_on": "Zapnuto",
+                "status_off": "Vypnuto",
+                "name": "Operační systém",
+                "version": "Verze",
+                "edition": "Edice",
+                "build": "Build",
+                "install_date": "Datum instalace",
+                "activation": "Stav aktivace",
+                "locale_header": "Místní nastavení",
+                "isolation_header": "Virtualizace a izolace",
+                "protection_header": "Součásti ochrany",
+                "language": "Jazyk systému",
+                "region": "Region",
+                "timezone": "Časové pásmo",
+                "activated": "Aktivováno",
+                "not_activated": "Neaktivováno",
+                "unknown": "Neznámé",
+                "not_supported": "Nepodporováno",
+                "present": "Přítomno",
+                "working": "Funguje",
+                "status_off_or_not_found": "Nenalezeno / Vypnuto",
+                "on_enforced": "Zapnuto (Enforced)",
+                "on_audit": "Režim auditu (Audit)",
+                "on_not_working": "Zapnuto (ale nefunguje)",
+                "on_realtime": "Zapnuto (Real-Time)",
+                "coreisol": "Izolace jádra",
+                "uac": "Řízení uživatelských účtů (UAC)",
+                "uac_off_no_prompt": "(Bez zvýšení oprávnění) Vypnuto",
+                "uac_medium": "Střední (Úroveň {0})"
+            }
+        },
+        "monitoring": {
+            "main": {
+                "CPU": "Procesor",
+                "GPU": "Grafická karta",
+                "RAM": "RAM",
+                "Network": "Internet",
+                "Disk": "Disk",
+                "fetching": "Zjišťování...",
+                "allnetwork": "Všechny síťové adaptéry",
+                "alldrives": "Všechny disky",
+                "other": "Ostatní",
+                "unknown": "Neznámé",
+                "sdc": "SD karta",
+                "show": "Zobrazit",
+                "hide": "Skrýt",
+                "cpuusage": "Vytížení procesoru",
+                "cpufreq": "Frekvence",
+                "proccount": "Procesy",
+                "uptime": "Doba běhu",
+                "gpuusage": "Vytížení GPU",
+                "gpumem": "Využití videopaměti",
+                "gpucod": "Vytížení kodéru",
+                "ram": "Využití paměti",
+                "rampafi": "Odkládací soubor",
+                "netload": "Příjem",
+                "netusage": "Odesílání",
+                "ipv4": "IPv4 adresa",
+                "ipad": "Veřejná IP",
+                "mac": "MAC adresa",
+                "diskusage": "Zatížení disku",
+                "readspeed": "Rychlost čtení",
+                "writespeed": "Rychlost zápisu",
+                "capacity": "Kapacita",
+                "freespace": "Volné místo",
+                "typedisk": "Typ disku",
+                "totalwrites": "Celkem čtení",
+                "totalreads": "Celkem zápisů",
+                "state": "Stav",
+                "cpu_all": "Celkový graf",
+                "cpu_cores": "Graf jader",
+                "cpu_threads": "Graf vláken",
+                "temp": "Teplota",
+                "tdp": "Spotřeba energie"
             }
         }
     }

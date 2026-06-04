@@ -14,7 +14,8 @@
                 "perf": "Performance",
                 "per": "Personalization",
                 "procmgr": "Process Management",
-                "pci": "PC Information"
+                "pci": "PC Information",
+                "wininfo": "Windows Information"
             },
             "lowtabs": {
                 "rexp": "Restart Explorer",
@@ -198,7 +199,9 @@
                 "oldbootloader": "Enable Old OS Bootloader",
                 "advancedboot": "Additional Options on Each Boot",
                 "swap": "Disable Virtual Memory Page File",
-                "ttl": "Enable Internet Sharing Restriction Bypass (TTL 65)"
+                "ttl": "Enable Internet Sharing Restriction Bypass (TTL 65)",
+                "sitebantitle": "Block Specific Websites and Domains",
+                "sitebanopen": "Open"
             }
         },
         "sr": {
@@ -220,7 +223,9 @@
                 "smartscreen": "Disable Smart Screen",
                 "chkdsk": "Set Chkdsk Timeout to 1 Minute",
                 "reportbutton": "Report",
-                "telemetry": "Disable All Telemetry and tracking in the system"
+                "telemetry": "Disable All Telemetry and tracking in the system",
+                "pipcache": "Clear pip Cache",
+                "status": "Clearing Cache... This may take some time."
             },
             "status": {
                 "uacwarn": "When the \"Disable User Account Control\" option is enabled, Drag-and-Drop on the taskbar stops working in Windows 11. MakuTweaker is not related to this issue. Are you sure you want to continue?"
@@ -303,15 +308,21 @@
                 "manu": "Manufacturer:",
                 "capac": "Capacity:",
                 "partnum": "Part Number:",
-                "modeln": "Model",
+                "modeln": "Device Model",
                 "allvram": "Total VRAM",
                 "devicemanu": "Device Manufacturer",
-                "tooltip": "Press F5 or Ctrl+S to save the page content as a TXT file."
+                "tooltip": "Press F5 or Ctrl+S to save the page content as a TXT file.",
+                "allstorage": "Total Storage Capacity",
+                "loading": "Retrieving information about your PC specifications… This will take no more than a minute.",
+                "freespace": "Free:",
+                "save": "Save full PC specifications report to TXT file",
+                "save_done": "PC specifications report was successfully created!",
+                "clipboard": "Copy short PC specifications report to clipboard\n\nFormat:\nCPU (Cores/Threads)\nRAM (Capacity and DDR type)\nMain GPU (VRAM amount)\nDevice Model / Motherboard"
             }
         },
         "pmgr": {
             "main": {
-                "label": "Process Management",
+                "label": "Task Manager",
                 "endprocess": "End Process",
                 "onlyfrozen": "Only Frozen",
                 "compact": "Compact View",
@@ -319,8 +330,8 @@
                 "process": "Process",
                 "memuse": "Memory Usage",
                 "location": "File location",
-                "excl": "Add to exclusions",
-                "exclinfo": "Enter process names separated by commas:",
+                "excl": "Hide From List",
+                "exclinfo": "Enter the names of the processes you want to hide, separated by commas.",
                 "excltitle": "Process Exclusions",
                 "clear": "Clear",
                 "save": "Save",
@@ -330,7 +341,34 @@
                 "from300mb": "From 300 MB",
                 "from500mb": "From 500 MB",
                 "from1000mb": "From 1 GB",
-                "from2000mb": "From 2 GB"
+                "from2000mb": "From 2 GB",
+                "tabproc": "Processes",
+                "tabsvc": "Services",
+                "filtersearch": "Search by name or PID...",
+                "critical": "Critical",
+                "servicename": "Service",
+                "displayname": "Display name",
+                "status": "Status",
+                "starttype": "Startup type",
+                "count": "pcs.",
+                "monitoring": "Resource Monitoring",
+                "backtoprocess": "Process Management",
+                "updspeed": "Information refresh rate:",
+                "showsysproc": "Show system and non-terminable processes",
+                "milisec": "ms.",
+                "search": "Process Search",
+                "viewtype": "Process Display Style",
+                "friendly": "Friendly",
+                "systematic": "Systematic",
+                "bothvar": "Both Variants",
+                "onlymb": "Display RAM usage in MB only",
+                "taskmgr": "Replace Task Manager with the \"Process Management\" Window",
+                "getback": "Exit Exclusive Mode",
+                "getfullscr": "Exclusive Mode",
+                "modeset": "Launch program in exclusive mode",
+                "topmost": "Always on Top",
+                "settings": "Settings",
+                "pause": "Pause Update"
             }
         },
         "myan": {
@@ -341,7 +379,9 @@
                 "howitworks": "How does it work?",
                 "banyandex": "Block Yandex",
                 "clear": "Clear",
-                "makutnah": "Don't block me!"
+                "makutnah": "Don't block me!",
+                "siteban": "With MakuTweaker, you can block access to specific websites and entire domains using the hosts mechanism built into Windows. List them one per line, and the program will automatically apply the restrictions. To unblock a website or domain, remove it from the list and save the changes.",
+                "sitebandone": "The list of blocked websites has been successfully updated."
             }
         },
         "ab": {
@@ -362,7 +402,11 @@
                 "cfg_error": "An error occurred while saving the file.",
                 "cfg_error1": "An error occurred while reading the file.",
                 "credL": "Version:\nIdea and Development:\r\nProgram Icon:\r\nSpecial Thanks:",
-                "atop": "Official Website"
+                "atop": "Official Website",
+                "winr": "Add program launch to Win+R",
+                "winrinfo": "You will be able to launch MakuTweaker through the \"Run\" window (Win+R)\nby entering makut, maku, or mt.\n\nYou can also add arguments to launch specific pages:\n/u - Windows Update\n/p - Performance\n/s - Shutdown Timer\n/mgr - Task Manager\n/pc - PC Information\n/win - Windows Information\n\nBesides the slash, you can also use a dash or not add any symbol at all.",
+                "disabletelemetry": "Disable Analytics Collection",
+                "telemetryabt": "To make the program as useful and convenient as possible, MakuTweaker collects a small amount of technical data: which tabs and tweaks you use most often, as well as the results of your CPU tests if you run them in MakuTweaker Benchmark. These statistics help us understand which features need improvement or fixes and which ones receive little attention.\n\nWe deeply value your privacy. MakuTweaker never collects your personal data or any information unrelated to the operation of the program. We simply want to better understand the needs of our users so we can develop the project in the right direction.\n\nIf you do not want to share data, simply check the box. In that case, MakuTweaker will stop collecting statistics and will not send any requests. Your privacy remains completely under your control."
             }
         },
         "tooltips": {
@@ -391,6 +435,85 @@
                 "MakuTweakerProcessMGR1": "Click the button to expand the help window.",
                 "ttl": "Some mobile carriers, particularly in Russia (e.g., MTS, Beeline, MegaFon, Tele2, Yota) often block or charge an additional fee for sharing unlimited internet from a smartphone to a PC. They track this using the TTL parameter,\nwhich defaults to 128 on Windows and 64 on phones.\nFixing the TTL at 65 means that when passing through the phone, the value will decrease by 1, and the carrier will receive a standard \"smartphone\" packet with a value of 64. They will see that the network is supposedly being shared with another smartphone rather than a computer, so this can save you from unexpected charges.\n\nMakuTweaker makes absolutely no guarantee that this will work.\nIt was requested by MakuTweaker users from Russia."
             }
-        }
+        },
+        "wininfo": {
+            "main": {
+                "label": "Windows Information",
+                "status_on": "Enabled",
+                "status_off": "Disabled",
+                "name": "Operating System",
+                "version": "Version",
+                "edition": "Edition",
+                "build": "Build",
+                "install_date": "Install Date",
+                "activation": "Activation Status",
+                "locale_header": "Regional Settings",
+                "isolation_header": "Virtualization and Isolation",
+                "protection_header": "Protection Components",
+                "language": "System Language",
+                "region": "Region",
+                "timezone": "Time Zone",
+                "activated": "Activated",
+                "not_activated": "Not Activated",
+                "unknown": "Unknown",
+                "not_supported": "Not Supported",
+                "present": "Present",
+                "working": "Working",
+                "status_off_or_not_found": "Not Found / Disabled",
+                "on_enforced": "Enabled (Enforced)",
+                "on_audit": "Audit Mode (Audit)",
+                "on_not_working": "Enabled (but not working)",
+                "on_realtime": "Enabled (Real-Time)",
+                "coreisol": "Core Isolation",
+                "uac": "User Account Control (UAC)",
+                "uac_off_no_prompt": "(No Elevation) Disabled",
+                "uac_medium": "Medium (Level {0})"
+            }
+        },
+        "monitoring": {
+            "main": {
+                "CPU": "CPU",
+                "GPU": "GPU",
+                "RAM": "RAM",
+                "Network": "Network",
+                "Disk": "Drives",
+                "fetching": "Detecting...",
+                "allnetwork": "All Network Adapters",
+                "alldrives": "All Drives",
+                "other": "Other",
+                "unknown": "Unknown",
+                "sdc": "SD Card",
+                "show": "Show",
+                "hide": "Hide",
+                "cpuusage": "CPU Usage",
+                "cpufreq": "Frequency",
+                "proccount": "Processes",
+                "uptime": "Uptime",
+                "gpuusage": "GPU Usage",
+                "gpumem": "GPU Memory Usage",
+                "gpucod": "Encoder Usage",
+                "ram": "Memory Usage",
+                "rampafi": "Page File",
+                "netload": "Download",
+                "netusage": "Upload",
+                "ipv4": "IPv4 Address",
+                "ipad": "External IP",
+                "mac": "MAC Address",
+                "diskusage": "Disk Activity",
+                "readspeed": "Read Speed",
+                "writespeed": "Write Speed",
+                "capacity": "Capacity",
+                "freespace": "Free Space",
+                "typedisk": "Disk Type",
+                "totalwrites": "Total Writes",
+                "totalreads": "Total Reads",
+                "state": "Status",
+                "cpu_all": "Overall Graph",
+                "cpu_cores": "Core Graph",
+                "cpu_threads": "Thread Graph",
+                "temp": "Temperature",
+                "tdp": "TDP"
+            }
         }
     }
+}

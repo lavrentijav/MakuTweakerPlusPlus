@@ -14,7 +14,8 @@
                 "perf": "Performans",
                 "per": "Kişiselleştirme",
                 "procmgr": "İşlem Yönetimi",
-                "pci": "Bilgisayar Bilgileri"
+                "pci": "Bilgisayar Bilgileri",
+                "wininfo": "Windows Bilgileri"
             },
             "lowtabs": {
                 "rexp": "Explorer'ı Yeniden Başlat",
@@ -198,7 +199,9 @@
                 "oldbootloader": "Eski sistem önyükleyicisini etkinleştir",
                 "advancedboot": "Her sistem açılışında gelişmiş seçenekler",
                 "swap": "Disk belleği dosyasını (swap) devre dışı bırak",
-                "ttl": "İnternet paylaşım kısıtlamalarını aşmayı etkinleştir (TTL 65)"
+                "ttl": "İnternet paylaşım kısıtlamalarını aşmayı etkinleştir (TTL 65)",
+                "sitebantitle": "Belirli web sitelerini ve alan adlarını engelle",
+                "sitebanopen": "Aç"
             }
         },
         "sr": {
@@ -220,7 +223,9 @@
                 "smartscreen": "SmartScreen'i devre dışı bırak",
                 "chkdsk": "Chkdsk zaman aşımını 1 dakikaya ayarla",
                 "reportbutton": "Rapor",
-                "telemetry": "Sistemdeki tüm telemetri ve takibi devre dışı bırak"
+                "telemetry": "Sistemdeki tüm telemetri ve takibi devre dışı bırak",
+                "pipcache": "pip önbelleğini temizle",
+                "status": "Önbellek temizleniyor... Bu biraz zaman alabilir."
             },
             "status": {
                 "uacwarn": "\"Kullanıcı Hesabı Denetimini (UAC) devre dışı bırak\" seçeneğini etkinleştirdiğinizde, Windows 11'de görev çubuğuna sürükle-bırak özelliği çalışmayı durdurur. MakuTweaker'ın bu sorunla bir ilgisi yoktur. Devam etmek istiyor musunuz?"
@@ -303,15 +308,21 @@
                 "manu": "Üretici:",
                 "capac": "Kapasite:",
                 "partnum": "Parça numarası:",
-                "modeln": "Model",
+                "modeln": "Cihaz modeli",
                 "allvram": "Toplam video belleği",
                 "devicemanu": "Cihaz üreticisi",
-                "tooltip": "Sayfa içeriğini TXT dosyası olarak kaydetmek için F5 veya Ctrl+S tuşlarına basın."
+                "tooltip": "Sayfa içeriğini TXT dosyası olarak kaydetmek için F5 veya Ctrl+S tuşlarına basın.",
+                "allstorage": "Tüm depolama aygıtlarının kapasitesi",
+                "loading": "Bilgisayar özellikleri hakkında bilgi alınıyor… Bu işlem bir dakikadan uzun sürmeyecek.",
+                "freespace": "Boş:",
+                "save": "PC özelliklerinin tam raporunu TXT dosyasına kaydet",
+                "save_done": "PC özellikleri raporu başarıyla oluşturuldu!",
+                "clipboard": "Kısa PC özellikleri raporunu panoya kopyala\n\nFormat:\nİşlemci (Çekirdek/İş Parçacığı)\nRAM (Kapasite ve DDR türü)\nAna ekran kartı (Video belleği miktarı)\nCihaz modeli / Anakart"
             }
         },
         "pmgr": {
             "main": {
-                "label": "İşlem Yönetimi",
+                "label": "Görev Yöneticisi",
                 "endprocess": "Görevi sonlandır",
                 "onlyfrozen": "Yalnızca donanlar",
                 "compact": "Sıkışık görünüm",
@@ -319,8 +330,8 @@
                 "process": "Süreç",
                 "memuse": "Bellek kullanımı",
                 "location": "Dosya konumu",
-                "excl": "İstisnalara ekle",
-                "exclinfo": "İşlem adlarını virgülle ayırarak girin:",
+                "excl": "Listeden gizle",
+                "exclinfo": "Gizlemek istediğiniz işlem adlarını virgülle ayırarak girin.",
                 "excltitle": "İşlem istisnaları",
                 "clear": "Temizle",
                 "save": "Kaydet",
@@ -330,7 +341,25 @@
                 "from300mb": "> 300 MB",
                 "from500mb": "> 500 MB",
                 "from1000mb": "> 1 GB",
-                "from2000mb": "> 2 GB"
+                "from2000mb": "> 2 GB",
+                "monitoring": "Kaynak İzleme",
+                "backtoprocess": "Süreç Yönetimi",
+                "updspeed": "Bilgi güncelleme hızı:",
+                "showsysproc": "Sistem ve sonlandırılamayan süreçleri göster",
+                "milisec": "ms.",
+                "search": "Süreç Arama",
+                "viewtype": "İşlem görüntüleme stili",
+                "friendly": "Dostça",
+                "systematic": "Sistematik",
+                "bothvar": "Her iki seçenek",
+                "onlymb": "RAM kullanımını yalnızca megabayt cinsinden göster",
+                "taskmgr": "Görev Yöneticisini \"İşlem Yönetimi\" sayfasıyla değiştir",
+                "getback": "Özel moddan çık",
+                "getfullscr": "Özel mod",
+                "modeset": "Programı özel modda başlat",
+                "topmost": "Her zaman üstte",
+                "settings": "Ayarlar",
+                "pause": "Güncellemeyi duraklat"
             }
         },
         "myan": {
@@ -341,7 +370,9 @@
                 "howitworks": "Nasıl çalışır?",
                 "banyandex": "Yandex'i engelle",
                 "clear": "Temizle",
-                "makutnah": "Beni engelleme!"
+                "makutnah": "Beni engelleme!",
+                "siteban": "MakuTweaker ile Windows'a yerleşik hosts mekanizmasını kullanarak belirli web sitelerine ve tüm alan adlarına erişimi engelleyebilirsiniz. Bunları satır başına bir tane olacak şekilde listeleyin; program kısıtlamaları otomatik olarak uygulayacaktır. Bir web sitesinin veya alan adının engelini kaldırmak için onu listeden silin ve değişiklikleri kaydedin.",
+                "sitebandone": "Engellenen web siteleri listesi başarıyla güncellendi."
             }
         },
         "ab": {
@@ -362,7 +393,11 @@
                 "cfg_error": "Dosya kaydedilirken hata oluştu.",
                 "cfg_error1": "Dosya okunurken hata oluştu.",
                 "credL": "Sürüm:\nFikir ve geliştirme:\nProgram simgesi:\nÖzel teşekkürler:",
-                "atop": "Resmi web sitesi"
+                "atop": "Resmi web sitesi",
+                "winr": "Win+R'ye program başlatma ekle",
+                "winrinfo": "\"Çalıştır\" penceresi (Win+R) üzerinden\nmakut, maku veya mt yazarak MakuTweaker'i başlatabileceksiniz.\n\nBelirli sayfaları açmak için argümanlar da ekleyebilirsiniz:\n/u - Windows Update\n/p - Performans\n/s - Kapatma Zamanlayıcısı\n/mgr - Görev Yöneticisi\n/pc - Bilgisayar Bilgileri\n/win - Windows Bilgileri\n\nSlash işaretinin yanı sıra tire kullanabilir veya hiç işaret eklemeyebilirsiniz.",
+                "disabletelemetry": "Analitik veri toplamayı devre dışı bırak",
+                "telemetryabt": "Programı mümkün olduğunca kullanışlı ve rahat hale getirmek için MakuTweaker az miktarda teknik veri toplar: en sık kullandığınız sekmeler ve ince ayarlar ile MakuTweaker Benchmark'ta çalıştırırsanız işlemci testlerinizin sonuçları. Bu istatistikler, hangi özelliklerin geliştirilmesi veya düzeltilmesi gerektiğini ve hangilerinin daha az ilgi gördüğünü anlamamıza yardımcı olur.\n\nGizliliğinize büyük önem veriyoruz. MakuTweaker hiçbir zaman kişisel verilerinizi veya programın çalışmasıyla ilgisi olmayan herhangi bir bilgiyi toplamaz. Sadece kullanıcılarımızın ihtiyaçlarını daha iyi anlayarak projeyi doğru yönde geliştirmek istiyoruz.\n\nVeri paylaşmak istemiyorsanız, yalnızca onay kutusunu işaretleyin. Bu durumda MakuTweaker istatistik toplamayı durduracak ve hiçbir istek göndermeyecektir. Kullanım gizliliğiniz tamamen sizin kontrolünüz altında kalacaktır."
             }
         },
         "tooltips": {
@@ -390,6 +425,85 @@
                 "MakuTweakerProcessMGR": "\"İşlem Yönetimi\" sekmesi, Windows Görev Yöneticisi'nin en iyi alternatifidir.\n\nYaklaşım son derece kullanıcı dostudur: sonlandırılamayan sistem işlemleri gizlenmiştir. Sadece kullanıcının başlattığı işlemler görüntülenir.\n\nTüm işlemler otomatik olarak en yüksek tüketime göre sıralanır. Ayrıca, işlemleri görüntülemek için minimum bellek tüketim eşiği (50 MB'tan 2 GB'a kadar) belirleyebilirsiniz. Bu, düzenleme programları, sanal makineler veya oyunlar gibi en \"ağır\" işlemleri filtrelemek için kullanışlıdır.\n\nMakuTweaker'daki işlem yönetiminin ana özelliği, alttaki \"Sadece yanıt vermeyen işlemleri göster\" onay kutusudur. Windows'ta bir pencere yanıt vermiyorsa, sadece bu pencereleri görüntüleyerek donan işlemi hızlıca bulup sonlandırabilirsiniz.\n\nAyrıca, bir işleme sağ tıklayarak bağlam menüsünü açabilirsiniz. Görev Yöneticisi'nden farklı olarak, işlemin \"Dosya konumu\"nu doğrudan açabilirsiniz. \"Görevi sonlandır\"a tıkladığınızda, tüm işlem ağacı anında sonlandırılır.\n\nMakuTweaker'daki RAM tüketim hesaplama sistemi Görev Yöneticisi'nden farklıdır; MakuTweaker'daki değerler daha gerçekçidir.\nProgram, sistemin kullandığı kaynakları ve Görev Yöneticisi'nin gizlediği uygulamalar tarafından ayrılan gereksiz belleği hesaba katar. Bu sayede, video düzenleme programlarının önizleme için ayırdığı belleği görebilirsiniz. Bu, tüm programlar için geçerlidir.",
                 "MakuTweakerProcessMGR1": "Yardım penceresini genişletmek için düğmeye tıklayın.",
                 "ttl": "Rusya'daki mobil operatörler (MTS, Beeline, MegaFon, Tele2, Yota), akıllı telefondan bilgisayara sınırsız internet paylaşımını genellikle engeller veya ek ücret talep eder. Bunu, Windows'ta varsayılan olarak 128, telefonlarda ise 64 olan TTL parametresini izleyerek yaparlar.\nTTL'yi 65 değerine sabitlemek, telefon üzerinden geçerken değerin 1 azalmasına ve operatörün standart 64 değerine sahip bir \"akıllı telefon\" paketi görmesine neden olur. Operatör, ağın bilgisayara değil başka bir akıllı telefona paylaşıldığını düşünecektir.\n\nMakuTweaker bunun çalışacağını garanti etmez.\nRusya'da bu kayıt defteri parametresi popülerlik kazanmaktadır.\nMakuTweaker kullanıcıları tarafından eklenmesi istenmiştir."
+            }
+        },
+        "wininfo": {
+            "main": {
+                "label": "Windows Bilgileri",
+                "status_on": "Etkin",
+                "status_off": "Devre Dışı",
+                "name": "İşletim Sistemi",
+                "version": "Sürüm",
+                "edition": "Sürüm Türü",
+                "build": "Derleme",
+                "install_date": "Kurulum Tarihi",
+                "activation": "Etkinleştirme Durumu",
+                "locale_header": "Bölgesel Ayarlar",
+                "isolation_header": "Sanallaştırma ve İzolasyon",
+                "protection_header": "Koruma Bileşenleri",
+                "language": "Sistem Dili",
+                "region": "Bölge",
+                "timezone": "Saat Dilimi",
+                "activated": "Etkinleştirildi",
+                "not_activated": "Etkinleştirilmedi",
+                "unknown": "Bilinmiyor",
+                "not_supported": "Desteklenmiyor",
+                "present": "Mevcut",
+                "working": "Çalışıyor",
+                "status_off_or_not_found": "Bulunamadı / Devre Dışı",
+                "on_enforced": "Etkin (Enforced)",
+                "on_audit": "Denetim Modu (Audit)",
+                "on_not_working": "Etkin (ama çalışmıyor)",
+                "on_realtime": "Etkin (Real-Time)",
+                "coreisol": "Çekirdek İzolasyonu",
+                "uac": "Kullanıcı Hesabı Denetimi (UAC)",
+                "uac_off_no_prompt": "(Yükseltme olmadan) Devre Dışı",
+                "uac_medium": "Orta (Seviye {0})"
+            }
+        },
+        "monitoring": {
+            "main": {
+                "CPU": "İşlemci",
+                "GPU": "Ekran Kartı",
+                "RAM": "RAM",
+                "Network": "İnternet",
+                "Disk": "Disk",
+                "fetching": "Algılanıyor...",
+                "allnetwork": "Tüm Ağ Bağdaştırıcıları",
+                "alldrives": "Tüm Sürücüler",
+                "other": "Diğer",
+                "unknown": "Bilinmiyor",
+                "sdc": "SD Kart",
+                "show": "Göster",
+                "hide": "Gizle",
+                "cpuusage": "İşlemci Kullanımı",
+                "cpufreq": "Frekans",
+                "proccount": "İşlemler",
+                "uptime": "Çalışma Süresi",
+                "gpuusage": "GPU Kullanımı",
+                "gpumem": "Video Belleği Kullanımı",
+                "gpucod": "Kodlayıcı Kullanımı",
+                "ram": "Bellek Kullanımı",
+                "rampafi": "Sayfalama Dosyası",
+                "netload": "İndirme",
+                "netusage": "Yükleme",
+                "ipv4": "IPv4 Adresi",
+                "ipad": "Harici IP",
+                "mac": "MAC Adresi",
+                "diskusage": "Disk Etkinliği",
+                "readspeed": "Okuma Hızı",
+                "writespeed": "Yazma Hızı",
+                "capacity": "Kapasite",
+                "freespace": "Boş Alan",
+                "typedisk": "Disk Türü",
+                "totalwrites": "Toplam Okuma",
+                "totalreads": "Toplam Yazma",
+                "state": "Durum",
+                "cpu_all": "Genel Grafik",
+                "cpu_cores": "Çekirdek Grafiği",
+                "cpu_threads": "İş Parçacığı Grafiği",
+                "temp": "Sıcaklık",
+                "tdp": "Güç Tüketimi"
             }
         }
     }

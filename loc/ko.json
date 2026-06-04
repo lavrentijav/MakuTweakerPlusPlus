@@ -14,7 +14,8 @@
                 "perf": "성능",
                 "per": "개인 설정",
                 "procmgr": "프로세스 관리",
-                "pci": "PC 정보"
+                "pci": "PC 정보",
+                "wininfo": "Windows 정보"
             },
             "lowtabs": {
                 "rexp": "탐색기 다시 시작",
@@ -198,7 +199,9 @@
                 "oldbootloader": "기존 시스템 부트로더 활성화",
                 "advancedboot": "부팅 시마다 고급 옵션 표시",
                 "swap": "페이징 파일 비활성화",
-                "ttl": "인터넷 테더링 제한 우회 활성화 (TTL 65)"
+                "ttl": "인터넷 테더링 제한 우회 활성화 (TTL 65)",
+                "sitebantitle": "특정 웹사이트 및 도메인 차단",
+                "sitebanopen": "열기"
             }
         },
         "sr": {
@@ -220,7 +223,9 @@
                 "smartscreen": "SmartScreen 비활성화",
                 "chkdsk": "Chkdsk 타임아웃을 1분으로 설정",
                 "reportbutton": "보고서",
-                "telemetry": "모든 시스템 원격 분석 및 추적 비활성화"
+                "telemetry": "모든 시스템 원격 분석 및 추적 비활성화",
+                "pipcache": "pip 캐시 정리",
+                "status": "캐시를 정리하는 중입니다... 시간이 조금 걸릴 수 있습니다."
             },
             "status": {
                 "uacwarn": "'사용자 계정 컨트롤(UAC) 비활성화' 옵션을 켜면 Windows 11에서 작업 표시줄의 드래그 앤 드롭 기능이 작동하지 않습니다. MakuTweaker는 이 문제와 관련이 없습니다. 정말로 계속하시겠습니까?"
@@ -303,15 +308,21 @@
                 "manu": "제조사:",
                 "capac": "용량:",
                 "partnum": "부품 번호:",
-                "modeln": "모델",
+                "modeln": "장치 모델",
                 "allvram": "총 비디오 메모리",
                 "devicemanu": "장치 제조업체",
-                "tooltip": "페이지 내용을 TXT 파일로 저장하려면 F5 또는 Ctrl+S를 누르세요."
+                "tooltip": "페이지 내용을 TXT 파일로 저장하려면 F5 또는 Ctrl+S를 누르세요.",
+                "allstorage": "모든 저장 장치의 용량",
+                "loading": "PC 사양 정보를 가져오는 중입니다… 1분 이상 걸리지 않습니다.",
+                "freespace": "남은 공간:",
+                "save": "PC 사양 전체 보고서를 TXT 파일로 저장",
+                "save_done": "PC 사양 보고서가 성공적으로 생성되었습니다!",
+                "clipboard": "PC 사양 요약 보고서를 클립보드에 복사\n\n형식:\n프로세서 (코어/스레드)\nRAM (용량 및 DDR 유형)\n메인 그래픽 카드 (비디오 메모리 용량)\n장치 모델 / 메인보드"
             }
         },
         "pmgr": {
             "main": {
-                "label": "프로세스 관리",
+                "label": "작업 관리자",
                 "endprocess": "프로세스 끝내기",
                 "onlyfrozen": "응답 없는 항목만",
                 "compact": "간단히 보기",
@@ -319,8 +330,8 @@
                 "process": "프로세스",
                 "memuse": "메모리 사용량",
                 "location": "파일 위치",
-                "excl": "예외에 추가",
-                "exclinfo": "프로세스 이름을 쉼표로 구분하여 입력하세요:",
+                "excl": "목록에서 숨기기",
+                "exclinfo": "숨기려는 프로세스 이름을 쉼표로 구분하여 입력하세요.",
                 "excltitle": "프로세스 예외",
                 "clear": "지우기",
                 "save": "저장",
@@ -330,7 +341,25 @@
                 "from300mb": "300MB 이상",
                 "from500mb": "500MB 이상",
                 "from1000mb": "1GB 이상",
-                "from2000mb": "2GB 이상"
+                "from2000mb": "2GB 이상",
+                "monitoring": "리소스 모니터링",
+                "backtoprocess": "프로세스 관리",
+                "updspeed": "정보 업데이트 속도:",
+                "showsysproc": "시스템 및 종료할 수 없는 프로세스 표시",
+                "milisec": "ms",
+                "search": "프로세스 검색",
+                "viewtype": "프로세스 표시 스타일",
+                "friendly": "친화적",
+                "systematic": "시스템 방식",
+                "bothvar": "두 가지 모두",
+                "onlymb": "RAM 사용량을 메가바이트로만 표시",
+                "taskmgr": "작업 관리자를 \"프로세스 관리\" 페이지로 대체",
+                "getback": "전용 모드 종료",
+                "getfullscr": "전용 모드",
+                "modeset": "프로그램을 전용 모드로 실행",
+                "topmost": "항상 위",
+                "settings": "설정",
+                "pause": "업데이트 일시 중지"
             }
         },
         "myan": {
@@ -341,7 +370,9 @@
                 "howitworks": "어떻게 작동하나요?",
                 "banyandex": "Yandex 차단",
                 "clear": "지우기",
-                "makutnah": "나를 차단하지 마세요!"
+                "makutnah": "나를 차단하지 마세요!",
+                "siteban": "MakuTweaker를 사용하면 Windows에 내장된 hosts 메커니즘을 통해 특정 웹사이트 및 전체 도메인에 대한 접근을 차단할 수 있습니다. 한 줄에 하나씩 입력하면 프로그램이 자동으로 제한을 적용합니다. 웹사이트 또는 도메인의 차단을 해제하려면 목록에서 제거한 후 변경 사항을 저장하세요.",
+                "sitebandone": "차단된 웹사이트 목록이 성공적으로 업데이트되었습니다."
             }
         },
         "ab": {
@@ -362,7 +393,11 @@
                 "cfg_error": "파일 저장 중 오류가 발생했습니다.",
                 "cfg_error1": "파일 읽기 중 오류가 발생했습니다.",
                 "credL": "버전:\n아이디어 및 개발:\n프로그램 아이콘:\n특별 감사:",
-                "atop": "공식 웹사이트"
+                "atop": "공식 웹사이트",
+                "winr": "Win+R에 프로그램 실행 추가",
+                "winrinfo": "\"실행\" 창(Win+R)에서\nmakut, maku 또는 mt를 입력하여 MakuTweaker를 실행할 수 있습니다.\n\n특정 페이지를 실행하기 위한 인수를 추가할 수도 있습니다:\n/u - Windows Update\n/p - 성능\n/s - 종료 타이머\n/mgr - 작업 관리자\n/pc - PC 정보\n/win - Windows 정보\n\n슬래시 외에도 대시를 사용하거나 아무 기호도 추가하지 않을 수 있습니다.",
+                "disabletelemetry": "분석 데이터 수집 비활성화",
+                "telemetryabt": "프로그램을 최대한 유용하고 편리하게 만들기 위해 MakuTweaker는 소량의 기술 데이터를 수집합니다. 여기에는 사용자가 가장 자주 사용하는 탭과 트윅, 그리고 MakuTweaker Benchmark에서 CPU 테스트를 실행한 경우 그 결과가 포함됩니다. 이러한 통계는 어떤 기능이 개선이나 수정이 필요한지, 그리고 어떤 기능이 거의 사용되지 않는지를 이해하는 데 도움이 됩니다.\n\n저희는 사용자의 개인정보를 매우 중요하게 생각합니다. MakuTweaker는 사용자의 개인정보나 프로그램 운영과 관련 없는 어떠한 정보도 수집하지 않습니다. 저희는 단지 사용자들의 요구를 더 잘 이해하여 프로젝트를 올바른 방향으로 발전시키고자 합니다.\n\n데이터를 공유하고 싶지 않다면 체크박스를 선택하기만 하면 됩니다. 그러면 MakuTweaker는 통계 수집을 중단하고 어떠한 요청도 전송하지 않습니다. 사용자의 개인정보 보호는 전적으로 사용자의 통제하에 있습니다."
             }
         },
         "tooltips": {
@@ -390,6 +425,85 @@
                 "MakuTweakerProcessMGR": "'프로세스 관리' 탭은 Windows 작업 관리자의 최고의 대안입니다.\n\n시스템 프로세스는 숨겨져 있고 사용자가 직접 실행한 프로세스만 표시됩니다.\n\n프로세스는 메모리 사용량 순으로 정렬됩니다. 50MB에서 2GB까지 임계값을 설정하여 무거운 프로세스만 필터링할 수 있습니다.\n\n'응답 없는 프로세스만 표시' 옵션을 사용하면 멈춘 프로세스를 빠르게 찾아 종료할 수 있습니다.\n\n우클릭 메뉴에서 '파일 위치'를 바로 열 수 있으며, '프로세스 끝내기' 시 프로세스 트리 전체가 종료됩니다.\n\nMakuTweaker의 메모리 계산 방식은 작업 관리자보다 현실적입니다. 앱이 예약한 메모리까지 포함하여 실제 사용량을 보여줍니다.",
                 "MakuTweakerProcessMGR1": "도움말 창을 펼치려면 버튼을 클릭하십시오.",
                 "ttl": "러시아 이동통신사들은 스마트폰의 무제한 인터넷 테더링에 추가 요금을 요구하거나 차단합니다. 이는 Windows 기본 TTL(128)과 스마트폰(64)의 차이를 추적하기 때문입니다.\nTTL을 65로 고정하면 통신사는 스마트폰에서 나오는 신호로 인식하여 테더링 제한을 피할 수 있습니다.\n\nMakuTweaker는 이 방법이 항상 작동함을 보장하지 않습니다.\n러시아 사용자들의 요청으로 추가되었습니다."
+            }
+        },
+        "wininfo": {
+            "main": {
+                "label": "Windows 정보",
+                "status_on": "사용",
+                "status_off": "사용 안 함",
+                "name": "운영 체제",
+                "version": "버전",
+                "edition": "에디션",
+                "build": "빌드",
+                "install_date": "설치 날짜",
+                "activation": "정품 인증 상태",
+                "locale_header": "지역 설정",
+                "isolation_header": "가상화 및 격리",
+                "protection_header": "보호 구성 요소",
+                "language": "시스템 언어",
+                "region": "지역",
+                "timezone": "시간대",
+                "activated": "정품 인증됨",
+                "not_activated": "정품 인증되지 않음",
+                "unknown": "알 수 없음",
+                "not_supported": "지원되지 않음",
+                "present": "존재함",
+                "working": "작동 중",
+                "status_off_or_not_found": "찾을 수 없음 / 사용 안 함",
+                "on_enforced": "사용 (Enforced)",
+                "on_audit": "감사 모드 (Audit)",
+                "on_not_working": "사용 중 (하지만 작동하지 않음)",
+                "on_realtime": "사용 중 (Real-Time)",
+                "coreisol": "코어 격리",
+                "uac": "사용자 계정 컨트롤 (UAC)",
+                "uac_off_no_prompt": "(권한 상승 없음) 사용 안 함",
+                "uac_medium": "보통 (수준 {0})"
+            }
+        },
+        "monitoring": {
+            "main": {
+                "CPU": "프로세서",
+                "GPU": "그래픽 카드",
+                "RAM": "RAM",
+                "Network": "인터넷",
+                "Disk": "디스크",
+                "fetching": "감지 중...",
+                "allnetwork": "모든 네트워크 어댑터",
+                "alldrives": "모든 드라이브",
+                "other": "기타",
+                "unknown": "알 수 없음",
+                "sdc": "SD 카드",
+                "show": "표시",
+                "hide": "숨기기",
+                "cpuusage": "CPU 사용률",
+                "cpufreq": "주파수",
+                "proccount": "프로세스",
+                "uptime": "가동 시간",
+                "gpuusage": "GPU 사용률",
+                "gpumem": "비디오 메모리 사용량",
+                "gpucod": "인코더 사용률",
+                "ram": "메모리 사용량",
+                "rampafi": "페이지 파일",
+                "netload": "다운로드",
+                "netusage": "업로드",
+                "ipv4": "IPv4 주소",
+                "ipad": "외부 IP",
+                "mac": "MAC 주소",
+                "diskusage": "디스크 활동",
+                "readspeed": "읽기 속도",
+                "writespeed": "쓰기 속도",
+                "capacity": "용량",
+                "freespace": "여유 공간",
+                "typedisk": "디스크 유형",
+                "totalwrites": "총 읽기 횟수",
+                "totalreads": "총 쓰기 횟수",
+                "state": "상태",
+                "cpu_all": "전체 그래프",
+                "cpu_cores": "코어 그래프",
+                "cpu_threads": "스레드 그래프",
+                "temp": "온도",
+                "tdp": "전력 소비"
             }
         }
     }

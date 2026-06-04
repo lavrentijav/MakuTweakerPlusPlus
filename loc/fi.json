@@ -14,7 +14,8 @@
                 "perf": "Suorituskyky",
                 "per": "Personointi",
                 "procmgr": "Prosessien hallinta",
-                "pci": "PC-tiedot"
+                "pci": "PC-tiedot",
+                "wininfo": "Windows-tiedot"
             },
             "lowtabs": {
                 "rexp": "Käynnistä Resurssienhallinta uudelleen",
@@ -198,7 +199,9 @@
                 "oldbootloader": "Ota käyttöön vanha järjestelmän käynnistyslataaja",
                 "advancedboot": "Lisäasetukset jokaisella käynnistyksellä",
                 "swap": "Poista sivutustiedosto käytöstä",
-                "ttl": "Ota käyttöön internetin jakamisen rajoitusten ohitus (TTL 65)"
+                "ttl": "Ota käyttöön internetin jakamisen rajoitusten ohitus (TTL 65)",
+                "sitebantitle": "Tiettyjen verkkosivustojen ja verkkotunnusten estäminen",
+                "sitebanopen": "Avaa"
             }
         },
         "sr": {
@@ -220,7 +223,9 @@
                 "smartscreen": "Poista SmartScreen käytöstä",
                 "chkdsk": "Aseta Chkdsk-aikakatkaisuksi 1 minuutti",
                 "reportbutton": "Raportti",
-                "telemetry": "Poista kaikki telemetria ja seuranta järjestelmästä"
+                "telemetry": "Poista kaikki telemetria ja seuranta järjestelmästä",
+                "pipcache": "Tyhjennä pip-välimuisti",
+                "status": "Välimuistia tyhjennetään... Tämä voi kestää hetken."
             },
             "status": {
                 "uacwarn": "Kun \"Poista käyttäjätilien valvonta (UAC)\" on käytössä, Windows 11:n tehtäväpalkin raahaaminen (Drag-and-Drop) lakkaa toimimasta. MakuTweaker ei liity tähän ongelmaan. Haluatko varmasti jatkaa?"
@@ -303,15 +308,21 @@
                 "manu": "Valmistaja:",
                 "capac": "Kapasiteetti:",
                 "partnum": "Osanumero:",
-                "modeln": "Malli",
+                "modeln": "Laitteen malli",
                 "allvram": "Videomuistin kokonaismäärä",
                 "devicemanu": "Laitteen valmistaja",
-                "tooltip": "Paina F5 tai Ctrl+S tallentaaksesi sivun sisällön TXT-tiedostoksi."
+                "tooltip": "Paina F5 tai Ctrl+S tallentaaksesi sivun sisällön TXT-tiedostoksi.",
+                "allstorage": "Kaikkien tallennuslaitteiden kapasiteetti",
+                "loading": "Tietokoneen teknisten tietojen hakeminen… Tämä kestää enintään minuutin.",
+                "freespace": "Vapaana:",
+                "save": "Tallenna täydellinen PC:n teknisten tietojen raportti TXT-tiedostoon",
+                "save_done": "PC:n teknisten tietojen raportti luotiin onnistuneesti!",
+                "clipboard": "Kopioi lyhyt PC:n teknisten tietojen raportti leikepöydälle\n\nMuoto:\nSuoritin (Ytimet/Säikeet)\nRAM-muisti (Kapasiteetti ja DDR-tyyppi)\nPäänäytönohjain (Videomuistin määrä)\nLaitemalli / Emolevy"
             }
         },
         "pmgr": {
             "main": {
-                "label": "Prosessien hallinta",
+                "label": "Tehtävienhallinta",
                 "endprocess": "Lopeta prosessi",
                 "onlyfrozen": "Vain jäätyneet",
                 "compact": "Tiivistetty näkymä",
@@ -319,8 +330,8 @@
                 "process": "Prosessi",
                 "memuse": "Muistin käyttö",
                 "location": "Tiedoston sijainti",
-                "excl": "Lisää poikkeuksiin",
-                "exclinfo": "Anna prosessien nimet pilkuilla erotettuna:",
+                "excl": "Piilota listasta",
+                "exclinfo": "Anna piilotettavien prosessien nimet pilkuilla erotettuina.",
                 "excltitle": "Prosessipoikkeukset",
                 "clear": "Tyhjennä",
                 "save": "Tallenna",
@@ -330,7 +341,25 @@
                 "from300mb": "yli 300 MB",
                 "from500mb": "yli 500 MB",
                 "from1000mb": "yli 1 GB",
-                "from2000mb": "yli 2 GB"
+                "from2000mb": "yli 2 GB",
+                "monitoring": "Resurssien valvonta",
+                "backtoprocess": "Prosessien hallinta",
+                "updspeed": "Tietojen päivitysnopeus:",
+                "showsysproc": "Näytä järjestelmä- ja lopettamattomat prosessit",
+                "milisec": "ms.",
+                "search": "Prosessien haku",
+                "viewtype": "Prosessien näyttötyyli",
+                "friendly": "Ystävällinen",
+                "systematic": "Järjestelmällinen",
+                "bothvar": "Molemmat vaihtoehdot",
+                "onlymb": "Näytä RAM-muistin käyttö vain megatavuina",
+                "taskmgr": "Korvaa Tehtävienhallinta \"Prosessien hallinta\" -sivulla",
+                "getback": "Poistu eksklusiivisesta tilasta",
+                "getfullscr": "Eksklusiivinen tila",
+                "modeset": "Käynnistä ohjelma eksklusiivisessa tilassa",
+                "topmost": "Aina päällimmäisenä",
+                "settings": "Asetukset",
+                "pause": "Keskeytä päivitys"
             }
         },
         "myan": {
@@ -341,7 +370,9 @@
                 "howitworks": "Miten tämä toimii?",
                 "banyandex": "Estä Yandex",
                 "clear": "Tyhjennä",
-                "makutnah": "Älä estä minua!"
+                "makutnah": "Älä estä minua!",
+                "siteban": "MakuTweakerin avulla voit estää pääsyn yksittäisille verkkosivustoille ja kokonaisille verkkotunnuksille Windowsiin sisäänrakennetun hosts-mekanismin avulla. Lisää ne yksi riviä kohden, ja ohjelma ottaa rajoitukset automaattisesti käyttöön. Poistaaksesi eston verkkosivustolta tai verkkotunnukselta, poista se luettelosta ja tallenna muutokset.",
+                "sitebandone": "Estettyjen verkkosivustojen luettelo päivitettiin onnistuneesti."
             }
         },
         "ab": {
@@ -362,7 +393,11 @@
                 "cfg_error": "Virhe tallennettaessa tiedostoa.",
                 "cfg_error1": "Virhe luettaessa tiedostoa.",
                 "credL": "Versio:\nIdea ja kehitys:\nOhjelman kuvake:\nErityiskiitokset:",
-                "atop": "Virallinen sivusto"
+                "atop": "Virallinen sivusto",
+                "winr": "Lisää ohjelman käynnistys Win+R:ään",
+                "winrinfo": "Voit käynnistää MakuTweakerin \"Suorita\"-ikkunan (Win+R)\nkautta kirjoittamalla makut, maku tai mt.\n\nVoit myös lisätä argumentteja tiettyjen sivujen avaamiseen:\n/u - Windows Update\n/p - Suorituskyky\n/s - Sammutusajastin\n/mgr - Tehtävienhallinta\n/pc - PC-tiedot\n/win - Windows-tiedot\n\nKauttaviivan lisäksi voit käyttää miinusmerkkiä tai olla lisäämättä mitään merkkiä.",
+                "disabletelemetry": "Poista analytiikan keruu käytöstä",
+                "telemetryabt": "Jotta ohjelma olisi mahdollisimman hyödyllinen ja helppokäyttöinen, MakuTweaker kerää pienen määrän teknisiä tietoja: mitä välilehtiä ja säätöjä käytät useimmin sekä suorittimen testituloksia, jos suoritat niitä MakuTweaker Benchmarkissa. Nämä tilastot auttavat meitä ymmärtämään, mitkä ominaisuudet tarvitsevat parannuksia tai korjauksia ja mitkä jäävät vähälle huomiolle.\n\nArvostamme yksityisyyttäsi suuresti. MakuTweaker ei koskaan kerää henkilökohtaisia tietojasi tai mitään ohjelman toimintaan liittymättömiä tietoja. Haluamme vain ymmärtää käyttäjiemme tarpeita paremmin, jotta voimme kehittää projektia oikeaan suuntaan.\n\nJos et halua jakaa tietoja, valitse vain valintaruutu. Tällöin MakuTweaker lopettaa tilastojen keräämisen eikä lähetä mitään pyyntöjä. Käyttösi yksityisyys pysyy täysin omassa hallinnassasi."
             }
         },
         "tooltips": {
@@ -390,6 +425,85 @@
                 "MakuTweakerProcessMGR": "Prosessien hallinta -välilehti on paras vastine Windowsin Tehtävienhallinnalle.\n\nLähestymistapa on mahdollisimman käyttäjäystävällinen: järjestelmäprosessit, joita ei joka tapauksessa voi lopettaa, on piilotettu. Vain ne prosessit näytetään, jotka käyttäjä on itse käynnistänyt.\n\nKaikki prosessit lajitellaan automaattisesti suurimmasta kulutuksesta pienimpään. Voit myös asettaa vähimmäiskynnyksen muistinkulutukselle prosessien näyttämiseksi - 50 megatavusta 2 gigatavuun. Tämä on kätevää listan suodattamiseksi ja vain \"raskaimpien\" prosessien jättämiseksi - esimerkiksi editointiohjelmat, virtuaalikoneet tai pelit.\n\nMakuTweakerin prosessien hallinnan pääominaisuus on alareunassa oleva valintaruutu \"Näytä vain jumiutuneet prosessit\". Jos Windowsissa ikkuna on merkitty jumiutuneeksi ja valkoiseksi, voit ottaa käyttöön vain tällaisten ikkunoiden näyttämisen löytääksesi nopeasti jumiutuneen prosessin ja lopettaaksesi sen.\n\nLisäksi klikkaamalla prosessia hiiren oikealla painikkeella voit avata kontekstivalikon. Siinä, toisin kuin Tehtävienhallinnassa, voit avata suoraan prosessin \"Tiedoston sijainnin\". Ja painamalla \"Lopeta prosessi\" - koko prosessipuu lopetetaan välittömästi.\n\nRAM-muistin kulutuksen laskentajärjestelmä MakuTweakerissa eroaa Tehtävienhallinnasta - MakuTweakerissa arvot ovat realistisempia.\nOhjelma ottaa huomioon käytetyt järjestelmäresurssit sekä sovellusten varaaman ylimääräisen muistin, jonka Tehtävienhallinta piilottaa. Tämän ansiosta voit esimerkiksi selvittää editointiohjelmien todellisen kulutuksen, jotka varaavat RAM-muistia videoiden esikatselua varten. Tämä pätee kaikkiin ohjelmiin.",
                 "MakuTweakerProcessMGR1": "Paina painiketta avataksesi ohjeikkunan.",
                 "ttl": "Venäjän mobiilioperaattorit (esim. MTS, Beeline, MegaFon, Tele2, Yota) estävät usein rajoittamattoman internetin jakamisen älypuhelimesta PC:lle tai vaativat siitä lisämaksun. He seuraavat tätä TTL-parametrin perusteella, joka on Windowsissa oletuksena 128 ja puhelimissa 64.\nTTL:n lukitseminen arvoon 65 johtaa siihen, että puhelimen läpi kulkiessa arvo pienenee 1:llä, ja operaattori saa tavallisen \"älypuhelinpaketin\" arvolla 64. He näkevät, että verkkoa jaetaan muka toiselle älypuhelimelle, ei tietokoneelle, joten tämä voi pelastaa ylimääräisiltä laskuilta.\n\nMakuTweaker ei takaa, että tämä toimii.\nVenäjällä tämä rekisteriparametri on yleistymässä.\nVenäläiset MakuTweaker-käyttäjät pyysivät sen lisäämistä."
+            }
+        },
+        "wininfo": {
+            "main": {
+                "label": "Windows-tiedot",
+                "status_on": "Käytössä",
+                "status_off": "Poistettu käytöstä",
+                "name": "Käyttöjärjestelmä",
+                "version": "Versio",
+                "edition": "Versio",
+                "build": "Koontiversio",
+                "install_date": "Asennuspäivä",
+                "activation": "Aktivointitila",
+                "locale_header": "Alueasetukset",
+                "isolation_header": "Virtualisointi ja eristys",
+                "protection_header": "Suojauskomponentit",
+                "language": "Järjestelmän kieli",
+                "region": "Alue",
+                "timezone": "Aikavyöhyke",
+                "activated": "Aktivoitu",
+                "not_activated": "Ei aktivoitu",
+                "unknown": "Tuntematon",
+                "not_supported": "Ei tuettu",
+                "present": "Läsnä",
+                "working": "Toimii",
+                "status_off_or_not_found": "Ei löytynyt / Poistettu käytöstä",
+                "on_enforced": "Käytössä (Enforced)",
+                "on_audit": "Arviointitila (Audit)",
+                "on_not_working": "Käytössä (mutta ei toimi)",
+                "on_realtime": "Käytössä (Real-Time)",
+                "coreisol": "Ytimen eristys",
+                "uac": "Käyttäjätilien valvonta (UAC)",
+                "uac_off_no_prompt": "(Ilman korotusta) Poistettu käytöstä",
+                "uac_medium": "Keskitaso (Taso {0})"
+            }
+        },
+        "monitoring": {
+            "main": {
+                "CPU": "Suoritin",
+                "GPU": "Näytönohjain",
+                "RAM": "RAM",
+                "Network": "Internet",
+                "Disk": "Levy",
+                "fetching": "Tunnistetaan...",
+                "allnetwork": "Kaikki verkkosovittimet",
+                "alldrives": "Kaikki asemat",
+                "other": "Muut",
+                "unknown": "Tuntematon",
+                "sdc": "SD-kortti",
+                "show": "Näytä",
+                "hide": "Piilota",
+                "cpuusage": "Suorittimen käyttö",
+                "cpufreq": "Taajuus",
+                "proccount": "Prosessit",
+                "uptime": "Käyttöaika",
+                "gpuusage": "GPU:n käyttö",
+                "gpumem": "Videomuistin käyttö",
+                "gpucod": "Kooderin käyttö",
+                "ram": "Muistin käyttö",
+                "rampafi": "Sivutustiedosto",
+                "netload": "Lataus",
+                "netusage": "Lähetys",
+                "ipv4": "IPv4-osoite",
+                "ipad": "Ulkoinen IP",
+                "mac": "MAC-osoite",
+                "diskusage": "Levyn kuormitus",
+                "readspeed": "Lukunopeus",
+                "writespeed": "Kirjoitusnopeus",
+                "capacity": "Kapasiteetti",
+                "freespace": "Vapaana",
+                "typedisk": "Levyn tyyppi",
+                "totalwrites": "Lukuja yhteensä",
+                "totalreads": "Kirjoituksia yhteensä",
+                "state": "Tila",
+                "cpu_all": "Yleiskaavio",
+                "cpu_cores": "Ydinkaavio",
+                "cpu_threads": "Säiekaavio",
+                "temp": "Lämpötila",
+                "tdp": "Virrankulutus"
             }
         }
     }

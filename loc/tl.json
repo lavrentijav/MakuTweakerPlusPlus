@@ -14,7 +14,8 @@
                 "perf": "Performance",
                 "per": "Personalization",
                 "procmgr": "Pamamahala ng Proseso",
-                "pci": "Impormasyon ng PC"
+                "pci": "Impormasyon ng PC",
+                "wininfo": "Impormasyon ng Windows"
             },
             "lowtabs": {
                 "rexp": "I-restart ang Explorer",
@@ -198,7 +199,9 @@
                 "oldbootloader": "I-enable ang lumang bootloader",
                 "advancedboot": "Advanced na mga opsyon sa bawat boot",
                 "swap": "I-disable ang paging file",
-                "ttl": "I-enable ang bypass ng internet tethering (TTL 65)"
+                "ttl": "I-enable ang bypass ng internet tethering (TTL 65)",
+                "sitebantitle": "I-block ang mga partikular na website at domain",
+                "sitebanopen": "Buksan"
             }
         },
         "sr": {
@@ -220,7 +223,9 @@
                 "smartscreen": "I-disable ang Smart Screen",
                 "chkdsk": "I-set ang timeout para sa Chkdsk sa 1 minuto",
                 "reportbutton": "Ulat",
-                "telemetry": "I-disable ang lahat ng telemetry at pagsubaybay sa system"
+                "telemetry": "I-disable ang lahat ng telemetry at pagsubaybay sa system",
+                "pipcache": "I-clear ang pip cache",
+                "status": "Nililinis ang cache... Maaaring magtagal ito nang kaunti."
             },
             "status": {
                 "uacwarn": "Kapag na-enable ang \"I-disable ang User Account Control (UAC)\", ang Drag-and-Drop sa taskbar ay titigil sa paggana sa Windows 11. Ang MakuTweaker ay walang kinalaman sa problemang ito. Sigurado ka bang gusto mong magpatuloy?"
@@ -303,15 +308,21 @@
                 "manu": "Manufacturer:",
                 "capac": "Laki:",
                 "partnum": "Part number:",
-                "modeln": "Modelo",
+                "modeln": "Modelo ng device",
                 "allvram": "Kabuuang video memory",
                 "devicemanu": "Tagagawa ng device",
-                "tooltip": "Pindutin ang F5 o Ctrl+S upang i-save ang nilalaman ng pahina bilang TXT file."
+                "tooltip": "Pindutin ang F5 o Ctrl+S upang i-save ang nilalaman ng pahina bilang TXT file.",
+                "allstorage": "Kabuuang kapasidad ng lahat ng storage",
+                "loading": "Kinukuha ang impormasyon tungkol sa mga detalye ng PC… Hindi ito aabot ng higit sa isang minuto.",
+                "freespace": "Libre:",
+                "save": "I-save ang buong ulat ng mga detalye ng PC sa TXT file",
+                "save_done": "Matagumpay na nalikha ang ulat ng mga detalye ng PC!",
+                "clipboard": "Kopyahin ang maikling ulat ng mga detalye ng PC sa clipboard\n\nFormat:\nProcessor (Cores/Threads)\nRAM (Kapasidad at uri ng DDR)\nPangunahing graphics card (Laki ng video memory)\nModelo ng device / Motherboard"
             }
         },
         "pmgr": {
             "main": {
-                "label": "Pamamahala ng Proseso",
+                "label": "Task Manager",
                 "endprocess": "Tapusin ang proseso",
                 "onlyfrozen": "Mga naka-freeze lang",
                 "compact": "Compact na view",
@@ -319,8 +330,8 @@
                 "process": "Proseso",
                 "memuse": "Paggamit ng memory",
                 "location": "Lokasyon ng file",
-                "excl": "Idagdag sa mga exception",
-                "exclinfo": "Ilagay ang mga pangalan ng proseso na pinaghihiwalay ng kuwit:",
+                "excl": "Itago sa listahan",
+                "exclinfo": "Ilagay ang mga pangalan ng prosesong gusto mong itago, na pinaghihiwalay ng kuwit.",
                 "excltitle": "Mga exception ng proseso",
                 "clear": "I-clear",
                 "save": "I-save",
@@ -330,7 +341,25 @@
                 "from300mb": "mula 300 MB",
                 "from500mb": "mula 500 MB",
                 "from1000mb": "mula 1 GB",
-                "from2000mb": "mula 2 GB"
+                "from2000mb": "mula 2 GB",
+                "monitoring": "Pagsubaybay ng mga Resource",
+                "backtoprocess": "Pamamahala ng mga Proseso",
+                "updspeed": "Bilis ng pag-update ng impormasyon:",
+                "showsysproc": "Ipakita ang mga system at hindi matatapos na proseso",
+                "milisec": "ms.",
+                "search": "Paghahanap ng Proseso",
+                "viewtype": "Estilo ng pagpapakita ng proseso",
+                "friendly": "Magiliw",
+                "systematic": "Sistematiko",
+                "bothvar": "Parehong bersyon",
+                "onlymb": "Ipakita ang paggamit ng RAM sa megabytes lamang",
+                "taskmgr": "Palitan ang Task Manager ng pahinang \"Pamamahala ng Proseso\"",
+                "getback": "Lumabas sa eksklusibong mode",
+                "getfullscr": "Eksklusibong mode",
+                "modeset": "Ilunsad ang programa sa eksklusibong mode",
+                "topmost": "Laging nasa itaas",
+                "settings": "Mga Setting",
+                "pause": "I-pause ang pag-update"
             }
         },
         "myan": {
@@ -341,7 +370,9 @@
                 "howitworks": "Paano ito gumagana?",
                 "banyandex": "I-block ang Yandex",
                 "clear": "I-clear",
-                "makutnah": "Huwag mo akong i-block!"
+                "makutnah": "Huwag mo akong i-block!",
+                "siteban": "Sa pamamagitan ng MakuTweaker, maaari mong i-block ang access sa mga partikular na website at buong domain gamit ang hosts mechanism na nakapaloob sa Windows. Ilagay ang mga ito nang tig-iisa bawat linya at awtomatikong ilalapat ng programa ang mga paghihigpit. Upang i-unblock ang isang website o domain, alisin ito sa listahan at i-save ang mga pagbabago.",
+                "sitebandone": "Matagumpay na na-update ang listahan ng mga naka-block na website."
             }
         },
         "ab": {
@@ -362,7 +393,11 @@
                 "cfg_error": "Nagkaroon ng error habang sine-save ang file.",
                 "cfg_error1": "Nagkaroon ng error habang binabasa ang file.",
                 "credL": "Bersyon:\nIdeya at pagbuo:\nIcon ng programa:\nEspesyal na pasasalamat:",
-                "atop": "Opisyal na website"
+                "atop": "Opisyal na website",
+                "winr": "Idagdag ang paglulunsad ng programa sa Win+R",
+                "winrinfo": "Maaari mong buksan ang MakuTweaker gamit ang \"Run\" window (Win+R)\nsa pamamagitan ng paglalagay ng makut, maku, o mt.\n\nMaaari ka ring magdagdag ng mga argumento upang buksan ang ilang partikular na pahina:\n/u - Windows Update\n/p - Performance\n/s - Shutdown Timer\n/mgr - Task Manager\n/pc - Impormasyon ng PC\n/win - Impormasyon ng Windows\n\nBukod sa slash, maaari ring gumamit ng gitling o huwag nang magdagdag ng anumang simbolo.",
+                "disabletelemetry": "I-disable ang pagkolekta ng analytics",
+                "telemetryabt": "Upang gawing mas kapaki-pakinabang at mas maginhawa ang programa, nangongolekta ang MakuTweaker ng maliit na halaga ng teknikal na datos: kung aling mga tab at tweak ang pinakamadalas mong ginagamit, pati na rin ang mga resulta ng iyong CPU tests kung isasagawa mo ang mga ito sa MakuTweaker Benchmark. Ang mga estadistikang ito ay tumutulong sa amin na maunawaan kung aling mga tampok ang nangangailangan ng pagpapabuti o pag-aayos at kung alin ang hindi gaanong nabibigyan ng pansin.\n\nLubos naming pinahahalagahan ang iyong privacy. Hindi kailanman kinokolekta ng MakuTweaker ang iyong personal na datos o anumang impormasyong walang kaugnayan sa pagpapatakbo ng programa. Nais lamang naming mas maunawaan ang mga pangangailangan ng aming mga gumagamit upang mapaunlad ang proyekto sa tamang direksyon.\n\nKung ayaw mong magbahagi ng datos, lagyan lamang ng tsek ang kahon. Sa kasong iyon, titigil ang MakuTweaker sa pagkolekta ng mga estadistika at hindi magpapadala ng anumang kahilingan. Ang privacy ng iyong paggamit ay mananatiling ganap na nasa iyong kontrol."
             }
         },
         "tooltips": {
@@ -390,6 +425,85 @@
                 "MakuTweakerProcessMGR": "Ang tab na \"Pamamahala ng Proseso\" ay ang pinakamahusay na alternatibo sa Windows Task Manager.\n\nAng approach ay user-friendly: ang mga system process na hindi dapat tapusin ay nakatago. Tanging ang mga prosesong sinimulan ng user ang ipinapakita.\n\nLahat ng proseso ay awtomatikong naka-sort ayon sa konsumo. Maaari ka ring mag-set ng minimum threshold para sa memory usage - mula 50 MB hanggang 2 GB. Ito ay maginhawa para i-filter ang listahan at ipakita lamang ang mga \"mabibigat\" na proseso.\n\nAng pangunahing feature ng MakuTweaker process manager ay ang checkbox na \"Ipakita lamang ang mga frozen na proseso\". Kung ang isang window ay naka-marka bilang frozen, maaari mong i-filter ang listahan para mahanap at tapusin ito agad.\n\nSa pamamagitan ng pag-right click sa isang proseso, maaari mong buksan ang \"Lokasyon ng file\". At kapag pinindot ang \"Tapusin ang proseso\", ang buong process tree ay matatapos.\n\nAng paraan ng pagbilang ng RAM sa MakuTweaker ay mas realistic kaysa sa Task Manager dahil isinasaalang-alang nito ang mga reserbadong memory na madalas itago ng Task Manager.",
                 "MakuTweakerProcessMGR1": "I-click ang button para palawakin ang help window.",
                 "ttl": "Ang mga mobile operator ay madalas na nag-a-apply ng limitasyon o dagdag na bayad para sa internet tethering. Sinusubaybayan nila ito sa pamamagitan ng TTL parameter, na default na 128 sa Windows at 64 sa mga phone.\nAng pag-fix ng TTL sa 65 ay magreresulta sa pagbaba nito sa 64 pagdaan sa phone, kaya iisipin ng operator na ang internet ay ginagamit sa isang smartphone.\n\nAng MakuTweaker ay hindi nagbibigay ng garantiya na gagana ito, ngunit ang parameter na ito ay popular sa Russia."
+            }
+        },
+        "wininfo": {
+            "main": {
+                "label": "Impormasyon ng Windows",
+                "status_on": "Naka-enable",
+                "status_off": "Naka-disable",
+                "name": "Operating System",
+                "version": "Bersyon",
+                "edition": "Edisyon",
+                "build": "Build",
+                "install_date": "Petsa ng Pag-install",
+                "activation": "Katayuan ng Aktivasyon",
+                "locale_header": "Mga Rehiyonal na Setting",
+                "isolation_header": "Virtualization at Isolation",
+                "protection_header": "Mga Bahagi ng Proteksyon",
+                "language": "Wika ng System",
+                "region": "Rehiyon",
+                "timezone": "Time Zone",
+                "activated": "Aktibado",
+                "not_activated": "Hindi Aktibado",
+                "unknown": "Hindi Kilala",
+                "not_supported": "Hindi Sinusuportahan",
+                "present": "Nariyan",
+                "working": "Gumagana",
+                "status_off_or_not_found": "Hindi Natagpuan / Naka-disable",
+                "on_enforced": "Naka-enable (Enforced)",
+                "on_audit": "Audit Mode (Audit)",
+                "on_not_working": "Naka-enable (pero hindi gumagana)",
+                "on_realtime": "Naka-enable (Real-Time)",
+                "coreisol": "Core Isolation",
+                "uac": "User Account Control (UAC)",
+                "uac_off_no_prompt": "(Walang Elevation) Naka-disable",
+                "uac_medium": "Katamtaman (Antas {0})"
+            }
+        },
+        "monitoring": {
+            "main": {
+                "CPU": "CPU",
+                "GPU": "GPU",
+                "RAM": "RAM",
+                "Network": "Internet",
+                "Disk": "Disk",
+                "fetching": "Tinutukoy...",
+                "allnetwork": "Lahat ng Network Adapter",
+                "alldrives": "Lahat ng Drive",
+                "other": "Iba pa",
+                "unknown": "Hindi Alam",
+                "sdc": "SD Card",
+                "show": "Ipakita",
+                "hide": "Itago",
+                "cpuusage": "Paggamit ng CPU",
+                "cpufreq": "Dalas",
+                "proccount": "Mga Proseso",
+                "uptime": "Oras ng Pagpapatakbo",
+                "gpuusage": "Paggamit ng GPU",
+                "gpumem": "Paggamit ng Video Memory",
+                "gpucod": "Paggamit ng Encoder",
+                "ram": "Paggamit ng Memorya",
+                "rampafi": "Page File",
+                "netload": "Pag-download",
+                "netusage": "Pag-upload",
+                "ipv4": "IPv4 Address",
+                "ipad": "Panlabas na IP",
+                "mac": "MAC Address",
+                "diskusage": "Aktibidad ng Disk",
+                "readspeed": "Bilis ng Pagbasa",
+                "writespeed": "Bilis ng Pagsulat",
+                "capacity": "Kapasidad",
+                "freespace": "Libreng Espasyo",
+                "typedisk": "Uri ng Disk",
+                "totalwrites": "Kabuuang Pagbasa",
+                "totalreads": "Kabuuang Pagsulat",
+                "state": "Katayuan",
+                "cpu_all": "Pangkalahatang Graph",
+                "cpu_cores": "Graph ng mga Core",
+                "cpu_threads": "Graph ng mga Thread",
+                "temp": "Temperatura",
+                "tdp": "Konsumo ng Kuryente"
             }
         }
     }

@@ -14,7 +14,8 @@
                 "perf": "Jõudlus",
                 "per": "Personalisatsioon",
                 "procmgr": "Protsessi juhtimine",
-                "pci": "Info arvuti kohta"
+                "pci": "Info arvuti kohta",
+                "wininfo": "Windowsi teave"
             },
             "lowtabs": {
                 "rexp": "Taaskäivita failihaldur",
@@ -198,7 +199,9 @@
                 "oldbootloader": "Luba vana Windowsi alglaadur",
                 "advancedboot": "Kuva iga käivituse ajal täpsemad alglaadimisvalikud",
                 "swap": "Keela saalefail",
-                "ttl": "Luba interneti jagamise piirangute ümbersõit (TTL 65)"
+                "ttl": "Luba interneti jagamise piirangute ümbersõit (TTL 65)",
+                "sitebantitle": "Kindlate veebisaitide ja domeenide blokeerimine",
+                "sitebanopen": "Ava"
             }
         },
         "sr": {
@@ -220,7 +223,9 @@
                 "smartscreen": "Keela SmartScreen",
                 "chkdsk": "Määra Chkdsk taimeriks 1 minut",
                 "reportbutton": "Aruanne",
-                "telemetry": "Keela kogu telemeetria ja jälgimine süsteemis"
+                "telemetry": "Keela kogu telemeetria ja jälgimine süsteemis",
+                "pipcache": "Tühjenda pip vahemälu",
+                "status": "Vahemälu puhastatakse... See võib võtta veidi aega."
             },
             "status": {
                 "uacwarn": "Kui lubate valiku \"Keela kasutajakonto kontroll (UAC)\", ei tööta Windows 11-s enam failide lohistamine tegumiribale. See ei ole seotud MakuTweakeriga. Kas soovite jätkata?"
@@ -303,15 +308,21 @@
                 "manu": "Tootja:",
                 "capac": "Maht:",
                 "partnum": "Tootekood:",
-                "modeln": "Mudel",
+                "modeln": "Seadme mudel",
                 "allvram": "Kogu videomälu",
                 "devicemanu": "Seadme tootja",
-                "tooltip": "Vajutage F5 või Ctrl+S, et salvestada lehe sisu TXT-failina."
+                "tooltip": "Vajutage F5 või Ctrl+S, et salvestada lehe sisu TXT-failina.",
+                "allstorage": "Kõigi andmekandjate maht",
+                "loading": "Arvuti tehniliste andmete hankimine… See ei võta kauem kui minut.",
+                "freespace": "Vaba:",
+                "save": "Salvesta täielik arvuti spetsifikatsioonide aruanne TXT-faili",
+                "save_done": "Arvuti spetsifikatsioonide aruanne loodi edukalt!",
+                "clipboard": "Kopeeri lühike arvuti spetsifikatsioonide aruanne lõikelauale\n\nVorming:\nProtsessor (Tuumad/Lõimed)\nMuutmälu (Maht ja DDR-tüüp)\nPeamine videokaart (Videomälu maht)\nSeadme mudel / Emaplaat"
             }
         },
         "pmgr": {
             "main": {
-                "label": "Protsessi juhtimine",
+                "label": "Tegumihaldur",
                 "endprocess": "Lõpeta protsess",
                 "onlyfrozen": "Ainult külmunud",
                 "compact": "Kompaktne vaade",
@@ -319,8 +330,8 @@
                 "process": "Protsess",
                 "memuse": "Mälukasutus",
                 "location": "Faili asukoht",
-                "excl": "Lisa eranditesse",
-                "exclinfo": "Sisestage protsesside nimed komadega eraldatult:",
+                "excl": "Peida nimekirjast",
+                "exclinfo": "Sisestage peidetavate protsesside nimed komadega eraldatult.",
                 "excltitle": "Protsesside erandid",
                 "clear": "Tühjenda",
                 "save": "Salvesta",
@@ -330,7 +341,25 @@
                 "from300mb": "alates 300 MB",
                 "from500mb": "alates 500 MB",
                 "from1000mb": "alates 1 GB",
-                "from2000mb": "alates 2 GB"
+                "from2000mb": "alates 2 GB",
+                "monitoring": "Ressursside jälgimine",
+                "backtoprocess": "Protsesside haldamine",
+                "updspeed": "Teabe värskendamise kiirus:",
+                "showsysproc": "Kuva süsteemi- ja mittelõpetatavad protsessid",
+                "milisec": "ms.",
+                "search": "Protsesside otsing",
+                "viewtype": "Protsesside kuvamise stiil",
+                "friendly": "Sõbralik",
+                "systematic": "Süsteemne",
+                "bothvar": "Mõlemad variandid",
+                "onlymb": "Kuva RAM-i kasutus ainult megabaididena",
+                "taskmgr": "Asenda Tegumihaldur lehega \"Protsessi juhtimine\"",
+                "getback": "Välju eksklusiivsest režiimist",
+                "getfullscr": "Eksklusiivne režiim",
+                "modeset": "Käivita programm eksklusiivses režiimis",
+                "topmost": "Alati peal",
+                "settings": "Seaded",
+                "pause": "Peata värskendamine"
             }
         },
         "myan": {
@@ -341,7 +370,9 @@
                 "howitworks": "Kuidas see töötab?",
                 "banyandex": "Blokeeri Yandex",
                 "clear": "Tühjenda",
-                "makutnah": "Ära blokeeri mind!"
+                "makutnah": "Ära blokeeri mind!",
+                "siteban": "MakuTweakeri abil saate blokeerida juurdepääsu üksikutele veebisaitidele ja tervetele domeenidele, kasutades Windowsi sisseehitatud hosts-mehhanismi. Sisestage need üks rea kohta ja programm rakendab piirangud automaatselt. Veebisaidi või domeeni blokeeringu eemaldamiseks kustutage see loendist ja salvestage muudatused.",
+                "sitebandone": "Blokeeritud veebisaitide loend on edukalt uuendatud."
             }
         },
         "ab": {
@@ -362,7 +393,11 @@
                 "cfg_error": "Faili salvestamisel tekkis viga.",
                 "cfg_error1": "Faili lugemisel tekkis viga.",
                 "credL": "Versioon:\nIdee ja arendus:\nProgrammi ikoon:\nEriline tänu:",
-                "atop": "Ametlik veebisait"
+                "atop": "Ametlik veebisait",
+                "winr": "Lisa programmi käivitamine Win+R-i",
+                "winrinfo": "Saate käivitada MakuTweakeri akna \"Run\" (Win+R) kaudu,\nsisestades makut, maku või mt.\n\nSamuti saate lisada argumente kindlate lehtede avamiseks:\n/u - Windows Update\n/p - Jõudlus\n/s - Väljalülitamise taimer\n/mgr - Tegumihaldur\n/pc - Info arvuti kohta\n/win - Windowsi teave\n\nLisaks kaldkriipsule saate kasutada miinusmärki või üldse mitte ühtegi märki lisada.",
+                "disabletelemetry": "Keela analüütika kogumine",
+                "telemetryabt": "Et muuta programm võimalikult kasulikuks ja mugavaks, kogub MakuTweaker väikese hulga tehnilisi andmeid: milliseid vahelehti ja sätteid kasutate kõige sagedamini ning protsessori testide tulemusi, kui käivitate need MakuTweaker Benchmarkis. See statistika aitab meil mõista, millised funktsioonid vajavad täiustamist või parandamist ja millised jäävad vähem tähelepanu alla.\n\nHindame kõrgelt teie privaatsust. MakuTweaker ei kogu kunagi teie isikuandmeid ega teavet, mis ei ole seotud programmi tööga. Soovime lihtsalt paremini mõista oma kasutajate vajadusi, et arendada projekti õiges suunas.\n\nKui te ei soovi andmeid jagada, märkige lihtsalt ruut. Sel juhul lõpetab MakuTweaker statistika kogumise ega saada ühtegi päringut. Teie kasutamise privaatsus jääb täielikult teie kontrolli alla."
             }
         },
         "tooltips": {
@@ -390,6 +425,85 @@
                 "MakuTweakerProcessMGR": "Vahekaart \"Protsessi juhtimine\" - on parim analoog Windowsi ülesannete haldurile.\nLahendus on võimalikult kasutajasõbralik: süsteemiprotsessid, mida niikuinii ei saa lõpetada, on peidetud. Näidatakse ainult neid protsesse, mille kasutaja on ise käivitanud.\nKõik protsessid sorteeritakse automaatselt suuremast mälukasutusest väiksema poole. Samuti on võimalik määrata protsesside kuvamiseks minimaalne mälukasutuse künnis – alates 50 megabaitist kuni 2 gigabaitini. See on mugav, et filtreerida nimekirja ja jätta alles ainult kõige \"raskemad\"  protsessid – näiteks monteerimisprogrammid, virtuaalmasinad või mängud. \nMakuTweakeri protsesside haldamise peamine trikk on allosas olev märkeruut\"Kuva ainult hangunud protsessid\". Kui Windowsis on aken märgitud hangununa ja muutunud valgeks, saab sisse lülitada ainult selliste akende kuvamise, et kiiresti leida hangunud protsess ja see lõpetada.\nSamuti saate protsessi parema hiireklõpsuga avada kontekstimenüü. Selles saab erinevalt ülesannete haldurist kohe avada protsessi \"Faili asukoha\". Ja kui vajutada \"Lõpeta protsess\" - lõpetatakse kohe kogu protsesside puu.\n\nMakuTweakeris kasutatava operatiivmälu tarbimise arvestussüsteem erineb ülesannete haldurist - MakuTweakeris on väärtused realistlikumad.\nAsi on selles, et programm võtab arvesse kasutatavaid süsteemiressursse, aga ka rakenduste poolt reserveeritud üleliigset mälu, mida ülesannete haldur varjab. Tänu sellele on näiteks võimalik teada saada videomontaažiprogrammide tegelikku mälukasutust, mis reserveerivad operatiivmälu videoklippide eelvaatamiseks. See kehtib mis tahes programmide kohta.",
                 "MakuTweakerProcessMGR1": "Klõpsake nuppu, et avada abiakna.",
                 "ttl": "Venemaa mobiilsideoperaatorid (nt MTS, Beeline, MegaFon, Tele2, Yota) blokeerivad sageli või nõuavad lisatasu piiramatu interneti jagamise eest nutitelefonilt arvutile. Nad jälgivad seda TTL-parameetri abil, mille vaikimisi väärtus on Windowsis 128 ja telefonides 64. TTL-i väärtuse fikseerimine 65-le toob kaasa selle, et telefoni läbimisel väheneb väärtus 1 võrra ja operaator saab standardse „nutitelefoni” paketi väärtusega 64. Ta näeb, et võrk jagatakse väidetavalt teisele nutitelefonile, mitte arvutile, mistõttu võib see päästa liigsest nõudest arve tasuda.\nMakuTweaker ei garanteeri mingil juhul, et see toimib.\nVenemaal on see registri parameeter muutumas üha populaarsemaks.\nSelle lisamist palusid MakuTweakeri kasutajad Venemaalt."
+            }
+        },
+        "wininfo": {
+            "main": {
+                "label": "Windowsi teave",
+                "status_on": "Lubatud",
+                "status_off": "Keelatud",
+                "name": "Operatsioonisüsteem",
+                "version": "Versioon",
+                "edition": "Väljaanne",
+                "build": "Järk",
+                "install_date": "Paigaldamise kuupäev",
+                "activation": "Aktiveerimise olek",
+                "locale_header": "Piirkondlikud sätted",
+                "isolation_header": "Virtualiseerimine ja isoleerimine",
+                "protection_header": "Kaitse komponendid",
+                "language": "Süsteemi keel",
+                "region": "Piirkond",
+                "timezone": "Ajavöönd",
+                "activated": "Aktiveeritud",
+                "not_activated": "Pole aktiveeritud",
+                "unknown": "Tundmatu",
+                "not_supported": "Pole toetatud",
+                "present": "Olemas",
+                "working": "Töötab",
+                "status_off_or_not_found": "Ei leitud / Keelatud",
+                "on_enforced": "Lubatud (Enforced)",
+                "on_audit": "Hindamisrežiim (Audit)",
+                "on_not_working": "Lubatud (kuid ei tööta)",
+                "on_realtime": "Lubatud (Real-Time)",
+                "coreisol": "Tuuma isolatsioon",
+                "uac": "Kasutajakonto kontroll (UAC)",
+                "uac_off_no_prompt": "(Ilma kõrgenduseta) Keelatud",
+                "uac_medium": "Keskmine (Tase {0})"
+            }
+        },
+        "monitoring": {
+            "main": {
+                "CPU": "Protsessor",
+                "GPU": "Videokaart",
+                "RAM": "RAM",
+                "Network": "Internet",
+                "Disk": "Ketas",
+                "fetching": "Tuvastamine...",
+                "allnetwork": "Kõik võrguadapterid",
+                "alldrives": "Kõik kettad",
+                "other": "Muu",
+                "unknown": "Tundmatu",
+                "sdc": "SD-kaart",
+                "show": "Näita",
+                "hide": "Peida",
+                "cpuusage": "Protsessori koormus",
+                "cpufreq": "Sagedus",
+                "proccount": "Protsessid",
+                "uptime": "Tööaeg",
+                "gpuusage": "GPU koormus",
+                "gpumem": "Videomälu kasutus",
+                "gpucod": "Kodeerija koormus",
+                "ram": "Mälukasutus",
+                "rampafi": "Leheküljefail",
+                "netload": "Allalaadimine",
+                "netusage": "Üleslaadimine",
+                "ipv4": "IPv4 aadress",
+                "ipad": "Väline IP",
+                "mac": "MAC aadress",
+                "diskusage": "Ketta koormus",
+                "readspeed": "Lugemiskiirus",
+                "writespeed": "Kirjutamiskiirus",
+                "capacity": "Maht",
+                "freespace": "Vaba",
+                "typedisk": "Ketta tüüp",
+                "totalwrites": "Kokku lugemisi",
+                "totalreads": "Kokku kirjutamisi",
+                "state": "Olek",
+                "cpu_all": "Üldgraafik",
+                "cpu_cores": "Tuumade graafik",
+                "cpu_threads": "Lõimede graafik",
+                "temp": "Temperatuur",
+                "tdp": "Energiatarve"
             }
         }
     }

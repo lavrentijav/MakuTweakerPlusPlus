@@ -14,7 +14,8 @@
                 "perf": "效能",
                 "per": "個人化",
                 "procmgr": "處理程序管理",
-                "pci": "電腦資訊"
+                "pci": "電腦資訊",
+                "wininfo": "Windows 資訊"
             },
             "lowtabs": {
                 "rexp": "重新啟動檔案總管",
@@ -198,7 +199,9 @@
                 "oldbootloader": "啟用傳統系統開機載入程式",
                 "advancedboot": "每次開機時顯示進階選項",
                 "swap": "停用分頁檔",
-                "ttl": "啟用網路共享限制繞過 (TTL 65)"
+                "ttl": "啟用網路共享限制繞過 (TTL 65)",
+                "sitebantitle": "封鎖特定網站和網域",
+                "sitebanopen": "開啟"
             }
         },
         "sr": {
@@ -220,7 +223,9 @@
                 "smartscreen": "停用 SmartScreen",
                 "chkdsk": "將 Chkdsk 超時設定為 1 分鐘",
                 "reportbutton": "報告",
-                "telemetry": "停用系統中所有遙測與追蹤"
+                "telemetry": "停用系統中所有遙測與追蹤",
+                "pipcache": "清除 pip 快取",
+                "status": "正在清除快取... 這可能需要一些時間。"
             },
             "status": {
                 "uacwarn": "啟用「停用使用者帳戶控制 (UAC)」選項後，Windows 11 的工作列拖放功能將會失效。MakuTweaker 與此問題無關。您確定要繼續嗎？"
@@ -303,15 +308,21 @@
                 "manu": "製造商:",
                 "capac": "容量:",
                 "partnum": "零件編號:",
-                "modeln": "型號",
+                "modeln": "裝置型號",
                 "allvram": "總顯示記憶體",
                 "devicemanu": "設備製造商",
-                "tooltip": "按下 F5 或 Ctrl+S 以將頁面內容儲存為 TXT 檔案。"
+                "tooltip": "按下 F5 或 Ctrl+S 以將頁面內容儲存為 TXT 檔案。",
+                "allstorage": "所有儲存裝置的容量",
+                "loading": "正在取得電腦規格資訊… 這不會超過一分鐘。",
+                "freespace": "可用空間：",
+                "save": "將完整的電腦規格報告儲存為 TXT 檔案",
+                "save_done": "電腦規格報告已成功建立！",
+                "clipboard": "將簡短的電腦規格報告複製到剪貼簿\n\n格式：\n處理器（核心/執行緒）\n記憶體（容量與 DDR 類型）\n主要顯示卡（顯示記憶體容量）\n裝置型號 / 主機板"
             }
         },
         "pmgr": {
             "main": {
-                "label": "處理程序管理",
+                "label": "工作管理員",
                 "endprocess": "結束處理程序",
                 "onlyfrozen": "僅顯示當機項",
                 "compact": "緊湊檢視",
@@ -319,8 +330,8 @@
                 "process": "進程",
                 "memuse": "記憶體佔용",
                 "location": "檔案位置",
-                "excl": "新增到例外",
-                "exclinfo": "輸入以逗號分隔的程序名稱：",
+                "excl": "從清單中隱藏",
+                "exclinfo": "請輸入您想隱藏的程序名稱，並以逗號分隔。",
                 "excltitle": "程序例外",
                 "clear": "清除",
                 "save": "儲存",
@@ -330,7 +341,25 @@
                 "from300mb": "300 MB 以上",
                 "from500mb": "500 MB 以上",
                 "from1000mb": "1 GB 以上",
-                "from2000mb": "2 GB 以上"
+                "from2000mb": "2 GB 以上",
+                "monitoring": "資源監控",
+                "backtoprocess": "程序管理",
+                "updspeed": "資訊更新速度：",
+                "showsysproc": "顯示系統及無法終止的程序",
+                "milisec": "毫秒",
+                "search": "搜尋程序",
+                "viewtype": "程序顯示樣式",
+                "friendly": "友善",
+                "systematic": "系統式",
+                "bothvar": "兩種版本",
+                "onlymb": "僅以 MB 顯示記憶體佔用",
+                "taskmgr": "以「處理程序管理」頁面取代工作管理員",
+                "getback": "退出獨佔模式",
+                "getfullscr": "獨佔模式",
+                "modeset": "以獨佔模式啟動程式",
+                "topmost": "置頂顯示",
+                "settings": "設定",
+                "pause": "暫停更新"
             }
         },
         "myan": {
@@ -341,7 +370,9 @@
                 "howitworks": "這是如何運作的？",
                 "banyandex": "封鎖 Yandex",
                 "clear": "清除",
-                "makutnah": "不要封鎖我！"
+                "makutnah": "不要封鎖我！",
+                "siteban": "透過 MakuTweaker，您可以使用 Windows 內建的 hosts 機制封鎖對特定網站及整個網域的存取。請每行輸入一個項目，程式將自動套用限制。若要解除封鎖網站或網域，請將其從清單中移除並儲存變更。",
+                "sitebandone": "已成功更新封鎖網站清單。"
             }
         },
         "ab": {
@@ -362,7 +393,11 @@
                 "cfg_error": "儲存檔案時發生錯誤。",
                 "cfg_error1": "讀取檔案時發生錯誤。",
                 "credL": "版本\n構思與開發:\n程式圖示:\n特別感謝:",
-                "atop": "官方網站"
+                "atop": "官方網站",
+                "winr": "將程式啟動新增到 Win+R",
+                "winrinfo": "您將能夠透過「執行」視窗 (Win+R)\n輸入 makut、maku 或 mt 來啟動 MakuTweaker。\n\n您也可以新增參數來開啟特定頁面：\n/u - Windows Update\n/p - 效能\n/s - 關機計時器\n/mgr - 工作管理員\n/pc - 電腦資訊\n/win - Windows 資訊\n\n除了斜線之外，您也可以使用減號，或者完全不加任何符號。",
+                "disabletelemetry": "停用分析資料收集",
+                "telemetryabt": "為了讓程式盡可能實用且方便，MakuTweaker 會收集少量技術資料：您最常使用的分頁與調整項目，以及您在 MakuTweaker Benchmark 中執行的處理器測試結果。這些統計資料可幫助我們了解哪些功能需要改進或修正，以及哪些功能較少受到關注。\n\n我們非常重視您的隱私。MakuTweaker 絕不會收集您的個人資料或任何與程式運作無關的資訊。我們只是希望更深入了解使用者的需求，以便朝正確的方向發展專案。\n\n如果您不想分享資料，只需勾選此選項即可。在這種情況下，MakuTweaker 將停止收集統計資料，且不會傳送任何請求。您的使用隱私始終完全由您掌控。"
             }
         },
         "tooltips": {
@@ -390,6 +425,85 @@
                 "MakuTweakerProcessMGR": "「處理程序管理」索引標籤是 Windows 工作管理員的最佳替代方案。\n\n設計非常友善：無法結束的系統處理程序會被隱藏。僅顯示使用者自行啟動的處理程序。\n\n所有處理程序會自動按資源消耗量排序。您也可以設定顯示處理程序的最低記憶體閾值（從 50 MB 到 2 GB）。這有助於過濾清單，僅保留最「吃資源」的處理程序，例如剪輯軟體、虛擬機器或遊戲。\n\nMakuTweaker 處理程序管理的主要特色是下方有一個「僅顯示無回應的處理程序」核取方塊。如果 Windows 視窗標記為無回應且變白，您可以啟用此選項，快速找到並結束該處理程序。\n\n此外，在處理程序上按右鍵可開啟右鍵選單。與工作管理員不同，您可以直接開啟處理程序的「檔案位置」。點擊「結束處理程序」時，會直接結束整個處理程序樹狀結構。\n\nMakuTweaker 的記憶體消耗計算方式與工作管理員不同，數值更為真實。\n這是因為程式考慮了系統使用的資源，以及應用程式預留但工作管理員隱藏的記憶體。因此，您可以得知剪輯軟體為預覽影片所預留的實際記憶體消耗。這適用於任何程式。",
                 "MakuTweakerProcessMGR1": "點擊按鈕以展開說明視窗。",
                 "ttl": "俄羅斯行動電信商（例如 MTS, Beeline, MegaFon, Tele2, Yota）經常封鎖或要求額外費用以分享智慧型手機的無限網路給電腦。他們透過 TTL 參數進行追蹤，Windows 預設為 128，而手機為 64。\n將 TTL 固定為 65 會導致封包經過手機時數值減 1，電信商收到的將是標準的「手機」封包（數值 64）。他們會認為網路是分享給另一支手機而非電腦，這可能有助於避免額外的費用要求。\n\nMakuTweaker 不保證此方法一定有效。\n此登錄檔參數在俄羅斯非常流行。\n這是 MakuTweaker 的俄羅斯使用者要求加入的功能。"
+            }
+        },
+        "wininfo": {
+            "main": {
+                "label": "Windows 資訊",
+                "status_on": "已啟用",
+                "status_off": "已停用",
+                "name": "作業系統",
+                "version": "版本",
+                "edition": "版本類型",
+                "build": "組建",
+                "install_date": "安裝日期",
+                "activation": "啟用狀態",
+                "locale_header": "區域設定",
+                "isolation_header": "虛擬化與隔離",
+                "protection_header": "保護元件",
+                "language": "系統語言",
+                "region": "地區",
+                "timezone": "時區",
+                "activated": "已啟用",
+                "not_activated": "未啟用",
+                "unknown": "未知",
+                "not_supported": "不支援",
+                "present": "存在",
+                "working": "運作中",
+                "status_off_or_not_found": "未找到 / 已停用",
+                "on_enforced": "已啟用 (Enforced)",
+                "on_audit": "評估模式 (Audit)",
+                "on_not_working": "已啟用 (但未運作)",
+                "on_realtime": "已啟用 (Real-Time)",
+                "coreisol": "核心隔離",
+                "uac": "使用者帳戶控制 (UAC)",
+                "uac_off_no_prompt": "(無提升權限) 已停用",
+                "uac_medium": "中等 (等級 {0})"
+            }
+        },
+        "monitoring": {
+            "main": {
+                "CPU": "處理器",
+                "GPU": "顯示卡",
+                "RAM": "記憶體",
+                "Network": "網際網路",
+                "Disk": "磁碟",
+                "fetching": "偵測中...",
+                "allnetwork": "所有網路介面卡",
+                "alldrives": "所有磁碟機",
+                "other": "其他",
+                "unknown": "未知",
+                "sdc": "SD 卡",
+                "show": "顯示",
+                "hide": "隱藏",
+                "cpuusage": "處理器使用率",
+                "cpufreq": "頻率",
+                "proccount": "程序",
+                "uptime": "運行時間",
+                "gpuusage": "GPU 使用率",
+                "gpumem": "顯示記憶體使用量",
+                "gpucod": "編碼器使用率",
+                "ram": "記憶體使用量",
+                "rampafi": "分頁檔",
+                "netload": "下載",
+                "netusage": "上傳",
+                "ipv4": "IPv4 位址",
+                "ipad": "外部 IP",
+                "mac": "MAC 位址",
+                "diskusage": "磁碟活動",
+                "readspeed": "讀取速度",
+                "writespeed": "寫入速度",
+                "capacity": "容量",
+                "freespace": "可用空間",
+                "typedisk": "磁碟類型",
+                "totalwrites": "總讀取次數",
+                "totalreads": "總寫入次數",
+                "state": "狀態",
+                "cpu_all": "總體圖表",
+                "cpu_cores": "核心圖表",
+                "cpu_threads": "執行緒圖表",
+                "temp": "溫度",
+                "tdp": "功耗"
             }
         }
     }

@@ -14,7 +14,8 @@
                 "perf": "Wydajność",
                 "per": "Personalizacja",
                 "procmgr": "Zarządzanie procesami",
-                "pci": "Informacja o PC"
+                "pci": "Informacja o PC",
+                "wininfo": "Informacje o Windows"
             },
             "lowtabs": {
                 "rexp": "Zrestartuj eksplorera",
@@ -198,7 +199,9 @@
                 "oldbootloader": "Włącz stary bootloader systemu Windows",
                 "advancedboot": "Dodatkowe opcje przy każdym uruchomieniu",
                 "swap": "Wyłącz wirtualny plik stronicowania(Page File)",
-                "ttl": "Włącz obejście ograniczeń udostępniania internetu (TTL 65)"
+                "ttl": "Włącz obejście ograniczeń udostępniania internetu (TTL 65)",
+                "sitebantitle": "Blokowanie określonych witryn i domen",
+                "sitebanopen": "Otwórz"
             }
         },
         "sr": {
@@ -220,7 +223,9 @@
                 "smartscreen": "Wyłącz Smart Screen",
                 "chkdsk": "Ustaw timeout Chkdsk na 1 minutę",
                 "reportbutton": "Report",
-                "telemetry": "Wyłącz telemetrię i zbieranie danych"
+                "telemetry": "Wyłącz telemetrię i zbieranie danych",
+                "pipcache": "Wyczyść pamięć podręczną pip",
+                "status": "Trwa czyszczenie pamięci podręcznej... To może chwilę potrwać."
             },
             "status": {
                 "uacwarn": "Gdy opcja \"Wyłącz kontrolę konta użytkownika (UAC)\" jest włączona, funkcja przeciągnij i upuść(Drag-and-Drop) na pasku zadań przestaje działać w systemie Windows 11. MakuTweaker nie ma związku z tym błędem. Czy na pewno chcesz kontynuować?"
@@ -303,15 +308,21 @@
                 "manu": "Producent:",
                 "capac": "Pojemność:",
                 "partnum": "Numer części:",
-                "modeln": "Model",
+                "modeln": "Model urządzenia",
                 "allvram": "Całkowita pamięć wideo",
                 "devicemanu": "Producent urządzenia",
-                "tooltip": "Naciśnij F5 lub Ctrl+S, aby zapisać zawartość strony jako plik TXT."
+                "tooltip": "Naciśnij F5 lub Ctrl+S, aby zapisać zawartość strony jako plik TXT.",
+                "allstorage": "Łączna pojemność wszystkich dysków",
+                "loading": "Pobieranie informacji o specyfikacji komputera… To nie zajmie więcej niż minutę.",
+                "freespace": "Wolne:",
+                "save": "Zapisz pełny raport specyfikacji komputera do pliku TXT",
+                "save_done": "Raport specyfikacji komputera został pomyślnie utworzony!",
+                "clipboard": "Skopiuj krótki raport specyfikacji komputera do schowka\n\nFormat:\nProcesor (Rdzenie/Wątki)\nPamięć RAM (Pojemność i typ DDR)\nGłówna karta graficzna (Ilość pamięci wideo)\nModel urządzenia / Płyta główna"
             }
         },
         "pmgr": {
             "main": {
-                "label": "Zarządzanie procesami",
+                "label": "Menedżer zadań",
                 "endprocess": "Zakończ proces",
                 "onlyfrozen": "Tylko zawieszone",
                 "compact": "Widok kompaktowy",
@@ -319,8 +330,8 @@
                 "process": "Proces",
                 "memuse": "Użycie pamięci",
                 "location": "Lokalizacja pliku",
-                "excl": "Dodaj do wyjątków",
-                "exclinfo": "Wprowadź nazwy procesów oddzielone przecinkami:",
+                "excl": "Ukryj z listy",
+                "exclinfo": "Wprowadź nazwy procesów, które chcesz ukryć, oddzielając je przecinkami.",
                 "excltitle": "Wyjątki procesów",
                 "clear": "Wyczyść",
                 "save": "Zapisz",
@@ -330,7 +341,25 @@
                 "from300mb": "Od 300 MB",
                 "from500mb": "Od 500 MB",
                 "from1000mb": "Od 1 GB",
-                "from2000mb": "Od 2 GB"
+                "from2000mb": "Od 2 GB",
+                "monitoring": "Monitorowanie zasobów",
+                "backtoprocess": "Zarządzanie procesami",
+                "updspeed": "Szybkość odświeżania informacji:",
+                "showsysproc": "Pokaż procesy systemowe i niemożliwe do zakończenia",
+                "milisec": "ms.",
+                "search": "Wyszukiwanie procesów",
+                "viewtype": "Styl wyświetlania procesów",
+                "friendly": "Przyjazny",
+                "systematic": "Systemowy",
+                "bothvar": "Obie wersje",
+                "onlymb": "Wyświetlaj zużycie pamięci RAM tylko w megabajtach",
+                "taskmgr": "Zastąp Menedżera zadań stroną \"Zarządzanie procesami\"",
+                "getback": "Wyjdź z trybu wyłączności",
+                "getfullscr": "Tryb wyłączności",
+                "modeset": "Uruchamiaj program w trybie wyłączności",
+                "topmost": "Zawsze na wierzchu",
+                "settings": "Ustawienia",
+                "pause": "Wstrzymaj odświeżanie"
             }
         },
         "myan": {
@@ -341,7 +370,9 @@
                 "howitworks": "Jak to działa?",
                 "banyandex": "Zablokuj Yandex",
                 "clear": "Wyczyść",
-                "makutnah": "Nie blokuj mnie!"
+                "makutnah": "Nie blokuj mnie!",
+                "siteban": "Za pomocą MakuTweaker możesz zablokować dostęp do określonych stron internetowych i całych domen, korzystając z mechanizmu hosts wbudowanego w system Windows. Wpisz je po jednej w wierszu, a program automatycznie zastosuje ograniczenia. Aby odblokować stronę lub domenę, usuń ją z listy i zapisz zmiany.",
+                "sitebandone": "Lista zablokowanych stron internetowych została pomyślnie zaktualizowana."
             }
         },
         "ab": {
@@ -362,7 +393,11 @@
                 "cfg_error": "Wystąpił błąd podczas zapisywania pliku.",
                 "cfg_error1": "Wystąpił błąd podczas odczytu pliku.",
                 "credL": "Wersja:\nPomysł i wykonanie:\r\nIkona programu:\r\nPodziękowania:",
-                "atop": "Oficjalna strona internetowa"
+                "atop": "Oficjalna strona internetowa",
+                "winr": "Dodaj uruchamianie programu do Win+R",
+                "winrinfo": "Będziesz mógł uruchomić MakuTweaker przez okno \"Uruchom\" (Win+R),\nwpisując makut, maku lub mt.\n\nMożesz także dodawać argumenty do uruchamiania określonych stron:\n/u - Windows Update\n/p - Wydajność\n/s - Timer wyłączania\n/mgr - Menedżer zadań\n/pc - Informacje o komputerze\n/win - Informacje o Windows\n\nOprócz ukośnika możesz użyć myślnika lub w ogóle nie dodawać żadnego znaku.",
+                "disabletelemetry": "Wyłącz zbieranie danych analitycznych",
+                "telemetryabt": "Aby program był jak najbardziej użyteczny i wygodny, MakuTweaker zbiera niewielką ilość danych technicznych: z których kart i modyfikacji korzystasz najczęściej oraz wyniki testów procesora, jeśli uruchamiasz je w MakuTweaker Benchmark. Statystyki te pomagają nam zrozumieć, które funkcje wymagają ulepszeń lub poprawek, a które są używane rzadko.\n\nBardzo cenimy Twoją prywatność. MakuTweaker nigdy nie zbiera Twoich danych osobowych ani żadnych informacji niezwiązanych z działaniem programu. Chcemy jedynie lepiej zrozumieć potrzeby naszych użytkowników, aby rozwijać projekt we właściwym kierunku.\n\nJeśli nie chcesz udostępniać danych, po prostu zaznacz pole wyboru. W takim przypadku MakuTweaker przestanie zbierać statystyki i nie będzie wysyłać żadnych żądań. Prywatność korzystania z programu pozostaje całkowicie pod Twoją kontrolą."
             }
         },
         "tooltips": {
@@ -391,6 +426,85 @@
                 "MakuTweakerProcessMGR1": "Kliknij przycisk, aby rozwinąć okno pomocy.",
                 "ttl": "Niektórzy operatorzy komórkowi, szczególnie w Rosji (np. MTS, Beeline, MegaFon, Tele2, Yota), często blokują lub pobierają dodatkową opłatę za udostępnianie nielimitowanego internetu ze smartfona na komputer. Wykrywają to za pomocą parametru TTL,\nktóry domyślnie wynosi 128 w Windows i 64 w telefonach.\nUstawienie TTL na 65 oznacza, że po przejściu przez telefon wartość zmniejszy się o 1 i operator otrzyma standardowy pakiet \"smartfona\" o wartości 64. Operator uzna wtedy, że internet jest udostępniany innemu smartfonowi, a nie komputerowi, co może uchronić przed dodatkowymi opłatami.\n\nMakuTweaker nie daje żadnej gwarancji, że to zadziała.\nFunkcja została dodana na prośbę użytkowników MakuTweaker z Rosji."
             }
-        }
+        },
+        "wininfo": {
+            "main": {
+                "label": "Informacje o Windows",
+                "status_on": "Włączone",
+                "status_off": "Wyłączone",
+                "name": "System operacyjny",
+                "version": "Wersja",
+                "edition": "Edycja",
+                "build": "Kompilacja",
+                "install_date": "Data instalacji",
+                "activation": "Stan aktywacji",
+                "locale_header": "Ustawienia regionalne",
+                "isolation_header": "Wirtualizacja i izolacja",
+                "protection_header": "Składniki ochrony",
+                "language": "Język systemu",
+                "region": "Region",
+                "timezone": "Strefa czasowa",
+                "activated": "Aktywowany",
+                "not_activated": "Nieaktywowany",
+                "unknown": "Nieznane",
+                "not_supported": "Nieobsługiwane",
+                "present": "Obecne",
+                "working": "Działa",
+                "status_off_or_not_found": "Nie znaleziono / Wyłączone",
+                "on_enforced": "Włączone (Enforced)",
+                "on_audit": "Tryb oceny (Audit)",
+                "on_not_working": "Włączone (ale nie działa)",
+                "on_realtime": "Włączone (Real-Time)",
+                "coreisol": "Izolacja rdzenia",
+                "uac": "Kontrola konta użytkownika (UAC)",
+                "uac_off_no_prompt": "(Bez podniesienia uprawnień) Wyłączone",
+                "uac_medium": "Średni (Poziom {0})"
+            }
+        },
+        "monitoring": {
+            "main": {
+                "CPU": "Procesor",
+                "GPU": "Karta graficzna",
+                "RAM": "RAM",
+                "Network": "Internet",
+                "Disk": "Dysk",
+                "fetching": "Wykrywanie...",
+                "allnetwork": "Wszystkie karty sieciowe",
+                "alldrives": "Wszystkie dyski",
+                "other": "Inne",
+                "unknown": "Nieznane",
+                "sdc": "Karta SD",
+                "show": "Pokaż",
+                "hide": "Ukryj",
+                "cpuusage": "Użycie procesora",
+                "cpufreq": "Częstotliwość",
+                "proccount": "Procesy",
+                "uptime": "Czas pracy",
+                "gpuusage": "Użycie GPU",
+                "gpumem": "Użycie pamięci wideo",
+                "gpucod": "Użycie enkodera",
+                "ram": "Użycie pamięci",
+                "rampafi": "Plik stronicowania",
+                "netload": "Pobieranie",
+                "netusage": "Wysyłanie",
+                "ipv4": "Adres IPv4",
+                "ipad": "Zewnętrzny IP",
+                "mac": "Adres MAC",
+                "diskusage": "Obciążenie dysku",
+                "readspeed": "Prędkość odczytu",
+                "writespeed": "Prędkość zapisu",
+                "capacity": "Pojemność",
+                "freespace": "Wolne miejsce",
+                "typedisk": "Typ dysku",
+                "totalwrites": "Łączna liczba odczytów",
+                "totalreads": "Łączna liczba zapisów",
+                "state": "Stan",
+                "cpu_all": "Wykres ogólny",
+                "cpu_cores": "Wykres rdzeni",
+                "cpu_threads": "Wykres wątków",
+                "temp": "Temperatura",
+                "tdp": "Pobór mocy"
+            }
         }
     }
+}

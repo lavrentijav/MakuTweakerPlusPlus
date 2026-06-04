@@ -14,7 +14,8 @@
                 "perf": "Performa",
                 "per": "Personalisasi",
                 "procmgr": "Manajemen proses",
-                "pci": "Informasi PC"
+                "pci": "Informasi PC",
+                "wininfo": "Informasi Windows"
             },
             "lowtabs": {
                 "rexp": "Mulai ulang Explorer",
@@ -198,7 +199,9 @@
                 "oldbootloader": "Aktifkan pemuat sistem lama",
                 "advancedboot": "Parameter tambahan pada setiap pemuatan sistem",
                 "swap": "Nonaktifkan file swap",
-                "ttl": "Aktifkan bypass batasan tethering internet (TTL 65)"
+                "ttl": "Aktifkan bypass batasan tethering internet (TTL 65)",
+                "sitebantitle": "Blokir situs web dan domain tertentu",
+                "sitebanopen": "Buka"
             }
         },
         "sr": {
@@ -220,7 +223,9 @@
                 "smartscreen": "Nonaktifkan Smart Screen",
                 "chkdsk": "Atur batas waktu Chkdsk ke 1 menit",
                 "reportbutton": "Laporan",
-                "telemetry": "Nonaktifkan semua telemetri dan pelacakan di sistem"
+                "telemetry": "Nonaktifkan semua telemetri dan pelacakan di sistem",
+                "pipcache": "Bersihkan cache pip",
+                "status": "Sedang membersihkan cache... Ini mungkin memerlukan beberapa waktu."
             },
             "status": {
                 "uacwarn": "Saat mengaktifkan opsi \"Nonaktifkan Kontrol Akun Pengguna (UAC)\", fitur seret-dan-lepas (Drag-and-Drop) pada bilah tugas di Windows 11 akan berhenti berfungsi. MakuTweaker tidak bertanggung jawab atas masalah ini. Apakah Anda benar-benar ingin melanjutkan?"
@@ -303,15 +308,21 @@
                 "manu": "Produsen:",
                 "capac": "Volume:",
                 "partnum": "Nomor bagian:",
-                "modeln": "Model",
+                "modeln": "Model perangkat",
                 "allvram": "Total memori video",
                 "devicemanu": "Produsen perangkat",
-                "tooltip": "Tekan F5 atau Ctrl+S untuk menyimpan konten halaman sebagai file TXT."
+                "tooltip": "Tekan F5 atau Ctrl+S untuk menyimpan konten halaman sebagai file TXT.",
+                "allstorage": "Kapasitas semua penyimpanan",
+                "loading": "Mengambil informasi tentang spesifikasi PC… Ini tidak akan memakan waktu lebih dari satu menit.",
+                "freespace": "Kosong:",
+                "save": "Simpan laporan lengkap spesifikasi PC ke file TXT",
+                "save_done": "Laporan spesifikasi PC berhasil dibuat!",
+                "clipboard": "Salin laporan singkat spesifikasi PC ke clipboard\n\nFormat:\nProsesor (Core/Thread)\nRAM (Kapasitas dan tipe DDR)\nKartu grafis utama (Jumlah VRAM)\nModel perangkat / Motherboard"
             }
         },
         "pmgr": {
             "main": {
-                "label": "Manajemen proses",
+                "label": "Manajer Tugas",
                 "endprocess": "Akhiri proses",
                 "onlyfrozen": "Hanya yang macet",
                 "compact": "Tampilan ringkas",
@@ -319,8 +330,8 @@
                 "process": "Proses",
                 "memuse": "Penggunaan memori",
                 "location": "Lokasi file",
-                "excl": "Tambahkan ke pengecualian",
-                "exclinfo": "Masukkan nama proses dipisahkan dengan koma:",
+                "excl": "Sembunyikan dari daftar",
+                "exclinfo": "Masukkan nama proses yang ingin Anda sembunyikan, dipisahkan dengan koma.",
                 "excltitle": "Pengecualian proses",
                 "clear": "Bersihkan",
                 "save": "Simpan",
@@ -330,7 +341,25 @@
                 "from300mb": "dari 300 MB",
                 "from500mb": "dari 500 MB",
                 "from1000mb": "dari 1 GB",
-                "from2000mb": "dari 2 GB"
+                "from2000mb": "dari 2 GB",
+                "monitoring": "Pemantauan Sumber Daya",
+                "backtoprocess": "Manajemen Proses",
+                "updspeed": "Kecepatan pembaruan informasi:",
+                "showsysproc": "Tampilkan proses sistem dan yang tidak dapat dihentikan",
+                "milisec": "ms.",
+                "search": "Pencarian Proses",
+                "viewtype": "Gaya tampilan proses",
+                "friendly": "Ramah",
+                "systematic": "Sistematis",
+                "bothvar": "Kedua varian",
+                "onlymb": "Tampilkan penggunaan RAM hanya dalam megabyte",
+                "taskmgr": "Ganti Task Manager dengan halaman \"Manajemen Proses\"",
+                "getback": "Keluar dari mode eksklusif",
+                "getfullscr": "Mode eksklusif",
+                "modeset": "Jalankan program dalam mode eksklusif",
+                "topmost": "Selalu di atas",
+                "settings": "Pengaturan",
+                "pause": "Jeda pembaruan"
             }
         },
         "myan": {
@@ -341,7 +370,9 @@
                 "howitworks": "Bagaimana cara kerjanya?",
                 "banyandex": "Blokir Yandex",
                 "clear": "Bersihkan",
-                "makutnah": "Jangan blokir saya!"
+                "makutnah": "Jangan blokir saya!",
+                "siteban": "Dengan MakuTweaker, Anda dapat memblokir akses ke situs web tertentu dan seluruh domain menggunakan mekanisme hosts yang terintegrasi di Windows. Cantumkan satu per baris, dan program akan secara otomatis menerapkan pembatasan. Untuk membuka blokir situs web atau domain, hapus dari daftar dan simpan perubahan.",
+                "sitebandone": "Daftar situs web yang diblokir berhasil diperbarui."
             }
         },
         "ab": {
@@ -362,7 +393,11 @@
                 "cfg_error": "Terjadi kesalahan saat menyimpan file.",
                 "cfg_error1": "Terjadi kesalahan saat membaca file.",
                 "credL": "Versi:\nIde dan pengembangan:\nIkon program:\nTerima kasih khusus:",
-                "atop": "Situs web resmi"
+                "atop": "Situs web resmi",
+                "winr": "Tambahkan peluncuran program ke Win+R",
+                "winrinfo": "Anda dapat menjalankan MakuTweaker melalui jendela \"Run\" (Win+R)\ndengan memasukkan makut, maku, atau mt.\n\nAnda juga dapat menambahkan argumen untuk membuka halaman tertentu:\n/u - Windows Update\n/p - Performa\n/s - Pengatur waktu mati\n/mgr - Manajer Tugas\n/pc - Informasi PC\n/win - Informasi Windows\n\nSelain slash, Anda juga dapat menggunakan tanda minus atau tidak menambahkan simbol sama sekali.",
+                "disabletelemetry": "Nonaktifkan pengumpulan analitik",
+                "telemetryabt": "Agar program menjadi semaksimal mungkin berguna dan nyaman digunakan, MakuTweaker mengumpulkan sejumlah kecil data teknis: tab dan tweak yang paling sering Anda gunakan, serta hasil pengujian CPU Anda jika dijalankan di MakuTweaker Benchmark. Statistik ini membantu kami memahami fitur mana yang memerlukan peningkatan atau perbaikan dan fitur mana yang jarang digunakan.\n\nKami sangat menghargai privasi Anda. MakuTweaker tidak pernah mengumpulkan data pribadi Anda atau informasi apa pun yang tidak terkait dengan pengoperasian program. Kami hanya ingin lebih memahami kebutuhan pengguna kami agar dapat mengembangkan proyek ke arah yang tepat.\n\nJika Anda tidak ingin berbagi data, cukup centang kotaknya. Dalam hal ini, MakuTweaker akan berhenti mengumpulkan statistik dan tidak akan mengirimkan permintaan apa pun. Privasi penggunaan Anda tetap sepenuhnya berada di bawah kendali Anda."
             }
         },
         "tooltips": {
@@ -390,6 +425,85 @@
                 "MakuTweakerProcessMGR": "Tab \"Manajemen proses\" adalah alternatif terbaik untuk Task Manager Windows.\n\nPendekatan yang sangat ramah: proses sistem yang tidak dapat diakhiri disembunyikan. Hanya proses yang benar-benar dijalankan oleh pengguna yang ditampilkan.\n\nSemua proses secara otomatis diurutkan dari konsumsi terbesar ke terkecil. Anda juga dapat mengatur ambang batas konsumsi memori minimum untuk menampilkan proses - dari 50 megabyte hingga 2 gigabyte. Ini nyaman untuk memfilter daftar dan hanya menyisakan proses yang paling \"berat\" - misalnya, program pengeditan, mesin virtual, atau game.\n\nFitur utama manajemen proses di MakuTweaker - di bagian bawah ada kotak centang \"Tampilkan hanya proses yang macet\". Jika di Windows jendela ditandai sebagai macet dan memutih, Anda dapat mengaktifkan tampilan hanya jendela tersebut untuk menemukan proses yang macet dengan cepat dan mengakhirinya.\n\nSelain itu, dengan mengklik kanan pada proses, Anda dapat membuka menu konteks. Di dalamnya, tidak seperti Task Manager, Anda dapat langsung membuka \"Lokasi file\" proses. Dan saat menekan \"Akhiri proses\" - seluruh pohon proses langsung diakhiri.\n\nSistem penghitungan konsumsi RAM di MakuTweaker berbeda dari Task Manager - Di MakuTweaker nilainya lebih realistis.\nMasalahnya adalah program memperhitungkan sumber daya sistem yang digunakan, serta memori cadangan tambahan oleh aplikasi yang disembunyikan oleh Task Manager. Berkat ini, misalnya, Anda dapat mengetahui konsumsi aktual program pengeditan yang mencadangkan RAM untuk pratinjau video. Ini berlaku untuk program apa pun.",
                 "MakuTweakerProcessMGR1": "Klik tombol untuk memperluas jendela bantuan.",
                 "ttl": "Operator seluler di Rusia (misalnya - MTS, Beeline, MegaFon, Tele2, Yota) sering memblokir atau meminta biaya tambahan untuk tethering internet tanpa batas dari smartphone ke PC. Mereka melacak ini melalui parameter TTL, yang di Windows secara default adalah 128, dan di ponsel - 64.\nMemperbaiki TTL pada nilai 65 akan menyebabkan saat melewati ponsel, nilai akan berkurang 1, dan operator akan menerima paket \"smartphone\" standar dengan nilai 64. Mereka akan melihat bahwa jaringan dibagikan seolah-olah ke smartphone lain, bukan ke komputer, sehingga ini dapat menyelamatkan Anda dari permintaan tambahan untuk membayar tagihan.\n\nMakuTweaker sama sekali tidak menjamin bahwa ini akan berhasil.\nDi Rusia, parameter registri ini semakin populer.\nPengguna MakuTweaker dari Rusia meminta untuk menambahkannya."
+            }
+        },
+        "wininfo": {
+            "main": {
+                "label": "Informasi Windows",
+                "status_on": "Diaktifkan",
+                "status_off": "Dinonaktifkan",
+                "name": "Sistem Operasi",
+                "version": "Versi",
+                "edition": "Edisi",
+                "build": "Build",
+                "install_date": "Tanggal Instalasi",
+                "activation": "Status Aktivasi",
+                "locale_header": "Pengaturan Regional",
+                "isolation_header": "Virtualisasi dan Isolasi",
+                "protection_header": "Komponen Perlindungan",
+                "language": "Bahasa Sistem",
+                "region": "Wilayah",
+                "timezone": "Zona Waktu",
+                "activated": "Diaktifkan",
+                "not_activated": "Tidak Diaktifkan",
+                "unknown": "Tidak Diketahui",
+                "not_supported": "Tidak Didukung",
+                "present": "Tersedia",
+                "working": "Berfungsi",
+                "status_off_or_not_found": "Tidak Ditemukan / Dinonaktifkan",
+                "on_enforced": "Diaktifkan (Enforced)",
+                "on_audit": "Mode Audit (Audit)",
+                "on_not_working": "Diaktifkan (tetapi tidak berfungsi)",
+                "on_realtime": "Diaktifkan (Real-Time)",
+                "coreisol": "Isolasi Inti",
+                "uac": "Kontrol Akun Pengguna (UAC)",
+                "uac_off_no_prompt": "(Tanpa Elevasi) Dinonaktifkan",
+                "uac_medium": "Sedang (Level {0})"
+            }
+        },
+        "monitoring": {
+            "main": {
+                "CPU": "Prosesor",
+                "GPU": "Kartu Grafis",
+                "RAM": "RAM",
+                "Network": "Internet",
+                "Disk": "Disk",
+                "fetching": "Mendeteksi...",
+                "allnetwork": "Semua Adaptor Jaringan",
+                "alldrives": "Semua Drive",
+                "other": "Lainnya",
+                "unknown": "Tidak Diketahui",
+                "sdc": "Kartu SD",
+                "show": "Tampilkan",
+                "hide": "Sembunyikan",
+                "cpuusage": "Penggunaan CPU",
+                "cpufreq": "Frekuensi",
+                "proccount": "Proses",
+                "uptime": "Waktu Aktif",
+                "gpuusage": "Penggunaan GPU",
+                "gpumem": "Penggunaan Memori Video",
+                "gpucod": "Penggunaan Encoder",
+                "ram": "Penggunaan Memori",
+                "rampafi": "File Paging",
+                "netload": "Unduh",
+                "netusage": "Unggah",
+                "ipv4": "Alamat IPv4",
+                "ipad": "IP Eksternal",
+                "mac": "Alamat MAC",
+                "diskusage": "Aktivitas Disk",
+                "readspeed": "Kecepatan Baca",
+                "writespeed": "Kecepatan Tulis",
+                "capacity": "Kapasitas",
+                "freespace": "Ruang Tersedia",
+                "typedisk": "Jenis Disk",
+                "totalwrites": "Total Pembacaan",
+                "totalreads": "Total Penulisan",
+                "state": "Status",
+                "cpu_all": "Grafik Keseluruhan",
+                "cpu_cores": "Grafik Inti",
+                "cpu_threads": "Grafik Thread",
+                "temp": "Suhu",
+                "tdp": "Konsumsi Daya"
             }
         }
     }

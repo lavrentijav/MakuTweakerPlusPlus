@@ -14,7 +14,8 @@
                 "perf": "性能",
                 "per": "个性化",
                 "procmgr": "进程管理",
-                "pci": "电脑信息"
+                "pci": "电脑信息",
+                "wininfo": "Windows 信息"
             },
             "lowtabs": {
                 "rexp": "重启资源管理器",
@@ -198,7 +199,9 @@
                 "oldbootloader": "启用旧版系统引导加载程序",
                 "advancedboot": "每次启动时显示高级启动选项",
                 "swap": "禁用虚拟内存 (页面文件)",
-                "ttl": "启用网络共享限制绕过 (TTL 65)"
+                "ttl": "启用网络共享限制绕过 (TTL 65)",
+                "sitebantitle": "屏蔽特定网站和域名",
+                "sitebanopen": "打开"
             }
         },
         "sr": {
@@ -220,7 +223,9 @@
                 "smartscreen": "禁用 Smart Screen",
                 "chkdsk": "将 Chkdsk 超时时间设置为 1 分钟",
                 "reportbutton": "报告",
-                "telemetry": "禁用系统中的所有遥测和追踪"
+                "telemetry": "禁用系统中的所有遥测和追踪",
+                "pipcache": "清除 pip 缓存",
+                "status": "正在清除缓存... 这可能需要一些时间。"
             },
             "status": {
                 "uacwarn": "启用“禁用用户账户控制 (UAC)”选项后，Windows 11 的任务栏拖放功能将失效。MakuTweaker 与此问题无关。您确定要继续吗？"
@@ -303,15 +308,21 @@
                 "manu": "制造商:",
                 "capac": "容量:",
                 "partnum": "部件编号:",
-                "modeln": "型号",
+                "modeln": "设备型号",
                 "allvram": "总显存",
                 "devicemanu": "设备制造商",
-                "tooltip": "按下 F5 或 Ctrl+S 将页面内容保存为 TXT 文件。"
+                "tooltip": "按下 F5 或 Ctrl+S 将页面内容保存为 TXT 文件。",
+                "allstorage": "所有存储设备的容量",
+                "loading": "正在获取电脑规格信息… 这不会超过一分钟。",
+                "freespace": "可用空间：",
+                "save": "将完整的电脑规格报告保存为 TXT 文件",
+                "save_done": "电脑规格报告已成功创建！",
+                "clipboard": "将简短的电脑规格报告复制到剪贴板\n\n格式：\n处理器（核心/线程）\n内存（容量和 DDR 类型）\n主显卡（显存容量）\n设备型号 / 主板"
             }
         },
         "pmgr": {
             "main": {
-                "label": "进程管理",
+                "label": "任务管理器",
                 "endprocess": "结束进程",
                 "onlyfrozen": "仅显示卡死项",
                 "compact": "紧凑视图",
@@ -319,8 +330,8 @@
                 "process": "进程",
                 "memuse": "内存占用",
                 "location": "文件位置",
-                "excl": "添加到排除项",
-                "exclinfo": "输入用逗号分隔的进程名称：",
+                "excl": "从列表中隐藏",
+                "exclinfo": "请输入要隐藏的进程名称，并用逗号分隔。",
                 "excltitle": "进程排除",
                 "clear": "清除",
                 "save": "保存",
@@ -330,7 +341,25 @@
                 "from300mb": "300 MB 以上",
                 "from500mb": "500 MB 以上",
                 "from1000mb": "1 GB 以上",
-                "from2000mb": "2 GB 以上"
+                "from2000mb": "2 GB 以上",
+                "monitoring": "资源监控",
+                "backtoprocess": "进程管理",
+                "updspeed": "信息刷新速度：",
+                "showsysproc": "显示系统及无法终止的进程",
+                "milisec": "毫秒",
+                "search": "搜索进程",
+                "viewtype": "进程显示样式",
+                "friendly": "友好",
+                "systematic": "系统式",
+                "bothvar": "两种方式",
+                "onlymb": "仅以 MB 显示内存占用",
+                "taskmgr": "使用 \"进程管理\" 页面替换任务管理器",
+                "getback": "退出独占模式",
+                "getfullscr": "独占模式",
+                "modeset": "以独占模式启动程序",
+                "topmost": "置顶显示",
+                "settings": "设置",
+                "pause": "暂停更新"
             }
         },
         "myan": {
@@ -341,7 +370,9 @@
                 "howitworks": "这是如何工作的？",
                 "banyandex": "阻止 Yandex",
                 "clear": "清除",
-                "makutnah": "不要阻止我！"
+                "makutnah": "不要阻止我！",
+                "siteban": "通过 MakuTweaker，您可以使用 Windows 内置的 hosts 机制阻止访问特定网站和整个域名。请每行输入一个项目，程序将自动应用限制。若要解除对网站或域名的屏蔽，请将其从列表中删除并保存更改。",
+                "sitebandone": "已成功更新被屏蔽网站列表。"
             }
         },
         "ab": {
@@ -362,7 +393,11 @@
                 "cfg_error": "保存文件时发生错误。",
                 "cfg_error1": "读取文件时发生错误。",
                 "credL": "版本\n创意与开发:\n程序图标:\n特别感谢:",
-                "atop": "官方网站"
+                "atop": "官方网站",
+                "winr": "将程序启动添加到 Win+R",
+                "winrinfo": "您可以通过“运行”窗口 (Win+R)\n输入 makut、maku 或 mt 来启动 MakuTweaker。\n\n您还可以添加参数来打开特定页面：\n/u - Windows Update\n/p - 性能\n/s - 关机计时器\n/mgr - 任务管理器\n/pc - 电脑信息\n/win - Windows 信息\n\n除了斜杠之外，您也可以使用减号，或者完全不添加任何符号。",
+                "disabletelemetry": "禁用分析数据收集",
+                "telemetryabt": "为了让程序尽可能实用且易于使用，MakuTweaker 会收集少量技术数据：您最常使用的选项卡和优化项目，以及您在 MakuTweaker Benchmark 中运行处理器测试时的测试结果。这些统计信息有助于我们了解哪些功能需要改进或修复，以及哪些功能较少受到关注。\n\n我们非常重视您的隐私。MakuTweaker 绝不会收集您的个人数据或任何与程序运行无关的信息。我们只是希望更好地了解用户的需求，以便朝着正确的方向发展项目。\n\n如果您不想分享数据，只需勾选复选框即可。在这种情况下，MakuTweaker 将停止收集统计信息，并且不会发送任何请求。您的使用隐私始终完全由您自己掌控。"
             }
         },
         "tooltips": {
@@ -390,6 +425,85 @@
                 "MakuTweakerProcessMGR": "“进程管理”选项卡是 Windows 任务管理器的最佳替代品。\n\n设计非常友好：无法结束的系统进程被隐藏，仅显示用户启动的进程。\n\n所有进程按内存占用从高到低排序。您可以设置最小内存阈值（50 MB 到 2 GB），以便过滤掉轻量级进程，专注于剪辑软件、虚拟机或游戏等“重型”程序。\n\nMakuTweaker 进程管理的一大亮点是底部的“仅显示无响应进程”复选框。如果窗口变白且无响应，勾选此项即可快速找到并结束它。\n\n右键点击进程可打开上下文菜单，与任务管理器不同，您可以直接打开“文件位置”。点击“结束进程”将直接结束整个进程树。\n\nMakuTweaker 的内存统计比任务管理器更真实，因为它考虑了系统资源和应用程序预留的内存。这对于查看剪辑软件的实际内存占用非常有用。",
                 "MakuTweakerProcessMGR1": "点击按钮展开帮助窗口。",
                 "ttl": "俄罗斯移动运营商（如 MTS, Beeline, MegaFon, Tele2, Yota）经常限制或要求额外付费才能在电脑上共享手机流量。他们通过 TTL 参数进行追踪，Windows 默认为 128，手机为 64。\n将 TTL 固定为 65 后，经过手机时值会减 1，运营商会收到标准的“手机”包（值为 64），从而绕过限制。\nMakuTweaker 不保证此方法一定有效，但这在俄罗斯用户中很受欢迎。"
+            }
+        },
+        "wininfo": {
+            "main": {
+                "label": "Windows 信息",
+                "status_on": "已启用",
+                "status_off": "已禁用",
+                "name": "操作系统",
+                "version": "版本",
+                "edition": "版本",
+                "build": "内部版本",
+                "install_date": "安装日期",
+                "activation": "激活状态",
+                "locale_header": "区域设置",
+                "isolation_header": "虚拟化与隔离",
+                "protection_header": "保护组件",
+                "language": "系统语言",
+                "region": "区域",
+                "timezone": "时区",
+                "activated": "已激活",
+                "not_activated": "未激活",
+                "unknown": "未知",
+                "not_supported": "不受支持",
+                "present": "存在",
+                "working": "正在运行",
+                "status_off_or_not_found": "未找到 / 已禁用",
+                "on_enforced": "已启用 (Enforced)",
+                "on_audit": "评估模式 (Audit)",
+                "on_not_working": "已启用 (但未运行)",
+                "on_realtime": "已启用 (Real-Time)",
+                "coreisol": "核心隔离",
+                "uac": "用户账户控制 (UAC)",
+                "uac_off_no_prompt": "(无提升) 已禁用",
+                "uac_medium": "中等 (级别 {0})"
+            }
+        },
+        "monitoring": {
+            "main": {
+                "CPU": "处理器",
+                "GPU": "显卡",
+                "RAM": "内存",
+                "Network": "互联网",
+                "Disk": "磁盘",
+                "fetching": "检测中...",
+                "allnetwork": "所有网络适配器",
+                "alldrives": "所有驱动器",
+                "other": "其他",
+                "unknown": "未知",
+                "sdc": "SD 卡",
+                "show": "显示",
+                "hide": "隐藏",
+                "cpuusage": "处理器使用率",
+                "cpufreq": "频率",
+                "proccount": "进程",
+                "uptime": "运行时间",
+                "gpuusage": "GPU 使用率",
+                "gpumem": "显存使用量",
+                "gpucod": "编码器使用率",
+                "ram": "内存使用量",
+                "rampafi": "分页文件",
+                "netload": "下载",
+                "netusage": "上传",
+                "ipv4": "IPv4 地址",
+                "ipad": "外部 IP",
+                "mac": "MAC 地址",
+                "diskusage": "磁盘活动",
+                "readspeed": "读取速度",
+                "writespeed": "写入速度",
+                "capacity": "容量",
+                "freespace": "可用空间",
+                "typedisk": "磁盘类型",
+                "totalwrites": "总读取次数",
+                "totalreads": "总写入次数",
+                "state": "状态",
+                "cpu_all": "总体图表",
+                "cpu_cores": "核心图表",
+                "cpu_threads": "线程图表",
+                "temp": "温度",
+                "tdp": "功耗"
             }
         }
     }

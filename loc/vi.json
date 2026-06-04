@@ -14,7 +14,8 @@
                 "perf": "Hiệu suất",
                 "per": "Cá nhân hóa",
                 "procmgr": "Quản lý tiến trình",
-                "pci": "Thông tin PC"
+                "pci": "Thông tin PC",
+                "wininfo": "Thông tin Windows"
             },
             "lowtabs": {
                 "rexp": "Khởi động lại Explorer",
@@ -198,7 +199,9 @@
                 "oldbootloader": "Bật trình khởi động hệ thống cũ",
                 "advancedboot": "Tùy chọn nâng cao mỗi khi khởi động hệ thống",
                 "swap": "Tắt tệp hoán đổi (Swap file)",
-                "ttl": "Bật vượt giới hạn chia sẻ Internet (TTL 65)"
+                "ttl": "Bật vượt giới hạn chia sẻ Internet (TTL 65)",
+                "sitebantitle": "Chặn các trang web và tên miền cụ thể",
+                "sitebanopen": "Mở"
             }
         },
         "sr": {
@@ -220,7 +223,9 @@
                 "smartscreen": "Tắt Smart Screen",
                 "chkdsk": "Đặt thời gian chờ cho Chkdsk là 1 phút",
                 "reportbutton": "Báo cáo",
-                "telemetry": "Tắt toàn bộ telemetry và theo dõi trong hệ thống"
+                "telemetry": "Tắt toàn bộ telemetry và theo dõi trong hệ thống",
+                "pipcache": "Xóa bộ nhớ đệm pip",
+                "status": "Đang xóa bộ nhớ đệm... Việc này có thể mất một chút thời gian."
             },
             "status": {
                 "uacwarn": "Khi bật tùy chọn \"Tắt kiểm soát tài khoản người dùng (UAC)\", tính năng kéo thả (Drag-and-Drop) trên thanh tác vụ sẽ ngừng hoạt động trên Windows 11. MakuTweaker không liên quan đến vấn đề này. Bạn có thực sự muốn tiếp tục?"
@@ -303,15 +308,21 @@
                 "manu": "Nhà sản xuất:",
                 "capac": "Dung lượng:",
                 "partnum": "Số hiệu:",
-                "modeln": "Mẫu",
+                "modeln": "Mẫu thiết bị",
                 "allvram": "Tổng bộ nhớ video",
                 "devicemanu": "Nhà sản xuất thiết bị",
-                "tooltip": "Nhấn F5 hoặc Ctrl+S để lưu nội dung trang dưới dạng tệp TXT."
+                "tooltip": "Nhấn F5 hoặc Ctrl+S để lưu nội dung trang dưới dạng tệp TXT.",
+                "allstorage": "Dung lượng của tất cả thiết bị lưu trữ",
+                "loading": "Đang lấy thông tin về cấu hình PC… Quá trình này sẽ không mất quá một phút.",
+                "freespace": "Còn trống:",
+                "save": "Lưu báo cáo đầy đủ thông số PC vào tệp TXT",
+                "save_done": "Đã tạo báo cáo thông số PC thành công!",
+                "clipboard": "Sao chép báo cáo ngắn về thông số PC vào bộ nhớ tạm\n\nĐịnh dạng:\nBộ xử lý (Nhân/Luồng)\nRAM (Dung lượng và loại DDR)\nCard đồ họa chính (Dung lượng bộ nhớ video)\nMẫu thiết bị / Bo mạch chủ"
             }
         },
         "pmgr": {
             "main": {
-                "label": "Quản lý tiến trình",
+                "label": "Trình quản lý tác vụ",
                 "endprocess": "Kết thúc tiến trình",
                 "onlyfrozen": "Chỉ các mục bị treo",
                 "compact": "Chế độ xem thu gọn",
@@ -319,8 +330,8 @@
                 "process": "Quy trình",
                 "memuse": "Sử dụng bộ nhớ",
                 "location": "Vị trí tệp",
-                "excl": "Thêm vào ngoại lệ",
-                "exclinfo": "Nhập tên tiến trình, phân tách bằng dấu phẩy:",
+                "excl": "Ẩn khỏi danh sách",
+                "exclinfo": "Nhập tên các tiến trình bạn muốn ẩn, phân tách bằng dấu phẩy.",
                 "excltitle": "Ngoại lệ tiến trình",
                 "clear": "Xóa",
                 "save": "Lưu",
@@ -330,7 +341,25 @@
                 "from300mb": "từ 300 MB",
                 "from500mb": "từ 500 MB",
                 "from1000mb": "từ 1 GB",
-                "from2000mb": "từ 2 GB"
+                "from2000mb": "từ 2 GB",
+                "monitoring": "Giám sát tài nguyên",
+                "backtoprocess": "Quản lý tiến trình",
+                "updspeed": "Tốc độ cập nhật thông tin:",
+                "showsysproc": "Hiển thị các tiến trình hệ thống và không thể kết thúc",
+                "milisec": "ms.",
+                "search": "Tìm kiếm tiến trình",
+                "viewtype": "Kiểu hiển thị tiến trình",
+                "friendly": "Thân thiện",
+                "systematic": "Hệ thống",
+                "bothvar": "Cả hai kiểu",
+                "onlymb": "Chỉ hiển thị mức tiêu thụ RAM bằng megabyte",
+                "taskmgr": "Thay thế Trình quản lý tác vụ bằng trang \"Quản lý tiến trình\"",
+                "getback": "Thoát chế độ độc quyền",
+                "getfullscr": "Chế độ độc quyền",
+                "modeset": "Chạy chương trình ở chế độ độc quyền",
+                "topmost": "Luôn hiện trên cùng",
+                "settings": "Cài đặt",
+                "pause": "Tạm dừng cập nhật"
             }
         },
         "myan": {
@@ -341,7 +370,9 @@
                 "howitworks": "Nó hoạt động như thế nào?",
                 "banyandex": "Chặn Yandex",
                 "clear": "Xóa",
-                "makutnah": "Đừng chặn tôi!"
+                "makutnah": "Đừng chặn tôi!",
+                "siteban": "Với MakuTweaker, bạn có thể chặn quyền truy cập vào các trang web cụ thể và toàn bộ tên miền bằng cơ chế hosts được tích hợp sẵn trong Windows. Hãy liệt kê mỗi mục trên một dòng và chương trình sẽ tự động áp dụng các hạn chế. Để bỏ chặn một trang web hoặc tên miền, hãy xóa nó khỏi danh sách và lưu các thay đổi.",
+                "sitebandone": "Danh sách các trang web bị chặn đã được cập nhật thành công."
             }
         },
         "ab": {
@@ -362,7 +393,11 @@
                 "cfg_error": "Đã xảy ra lỗi khi lưu tệp.",
                 "cfg_error1": "Đã xảy ra lỗi khi đọc tệp.",
                 "credL": "Phiên bản:\nÝ tưởng và phát triển:\nBiểu tượng chương trình:\nĐặc biệt cảm ơn:",
-                "atop": "Trang web chính thức"
+                "atop": "Trang web chính thức",
+                "winr": "Thêm khởi chạy chương trình vào Win+R",
+                "winrinfo": "Bạn sẽ có thể khởi chạy MakuTweaker thông qua cửa sổ \"Run\" (Win+R)\nbằng cách nhập makut, maku hoặc mt.\n\nBạn cũng có thể thêm tham số để mở các trang cụ thể:\n/u - Windows Update\n/p - Hiệu suất\n/s - Hẹn giờ tắt máy\n/mgr - Trình quản lý tác vụ\n/pc - Thông tin PC\n/win - Thông tin Windows\n\nNgoài dấu gạch chéo, bạn cũng có thể dùng dấu gạch ngang hoặc không thêm ký hiệu nào.",
+                "disabletelemetry": "Tắt thu thập dữ liệu phân tích",
+                "telemetryabt": "Để chương trình trở nên hữu ích và thuận tiện nhất có thể, MakuTweaker thu thập một lượng nhỏ dữ liệu kỹ thuật: những tab và tinh chỉnh mà bạn sử dụng thường xuyên nhất, cũng như kết quả các bài kiểm tra CPU nếu bạn thực hiện chúng trong MakuTweaker Benchmark. Những số liệu thống kê này giúp chúng tôi hiểu được tính năng nào cần cải thiện hoặc sửa lỗi và tính năng nào ít được sử dụng.\n\nChúng tôi rất coi trọng quyền riêng tư của bạn. MakuTweaker không bao giờ thu thập dữ liệu cá nhân của bạn hoặc bất kỳ thông tin nào không liên quan đến hoạt động của chương trình. Chúng tôi chỉ muốn hiểu rõ hơn nhu cầu của người dùng để phát triển dự án theo đúng hướng.\n\nNếu bạn không muốn chia sẻ dữ liệu, chỉ cần đánh dấu vào ô lựa chọn. Trong trường hợp đó, MakuTweaker sẽ ngừng thu thập thống kê và sẽ không gửi bất kỳ yêu cầu nào. Quyền riêng tư của bạn vẫn hoàn toàn nằm trong tầm kiểm soát của bạn."
             }
         },
         "tooltips": {
@@ -390,6 +425,85 @@
                 "MakuTweakerProcessMGR": "Tab \"Quản lý tiến trình\" là giải pháp thay thế tốt nhất cho Task Manager.\n\nCách tiếp cận rất thân thiện: các tiến trình hệ thống không thể kết thúc đã được ẩn đi. Chỉ hiển thị các tiến trình do người dùng khởi chạy.\n\nCác tiến trình được sắp xếp tự động theo mức tiêu thụ tài nguyên. Bạn có thể đặt ngưỡng bộ nhớ tối thiểu để hiển thị - từ 50 MB đến 2 GB. Điều này giúp lọc danh sách để chỉ giữ lại các tiến trình \"nặng\" - ví dụ: phần mềm dựng phim, máy ảo hoặc trò chơi.\n\nTính năng chính của MakuTweaker là ô \"Chỉ hiển thị các tiến trình bị treo\". Nếu một cửa sổ bị treo và chuyển sang màu trắng, bạn có thể lọc để tìm và kết thúc nó nhanh chóng.\n\nNgoài ra, khi nhấn chuột phải vào tiến trình, bạn có thể mở \"Vị trí tệp\". Khi nhấn \"Kết thúc tiến trình\", toàn bộ cây tiến trình sẽ bị đóng.\n\nHệ thống tính toán RAM của MakuTweaker thực tế hơn Task Manager vì nó tính cả tài nguyên hệ thống và bộ nhớ dự trữ mà Task Manager thường ẩn đi.",
                 "MakuTweakerProcessMGR1": "Nhấn nút để mở cửa sổ trợ giúp.",
                 "ttl": "Các nhà mạng di động (như MTS, Beeline, MegaFon, Tele2, Yota) thường chặn hoặc thu phí chia sẻ Internet từ smartphone sang PC. Họ theo dõi qua tham số TTL (Windows mặc định là 128, điện thoại là 64).\nCố định TTL ở mức 65 sẽ khiến giá trị giảm còn 64 khi qua điện thoại, nhà mạng sẽ thấy như đang dùng trên smartphone thay vì PC.\n\nMakuTweaker không đảm bảo điều này sẽ hoạt động 100%.\nĐây là tham số registry phổ biến tại Nga và được người dùng yêu cầu thêm vào."
+            }
+        },
+        "wininfo": {
+            "main": {
+                "label": "Thông tin Windows",
+                "status_on": "Đã bật",
+                "status_off": "Đã tắt",
+                "name": "Hệ điều hành",
+                "version": "Phiên bản",
+                "edition": "Phiên bản hệ",
+                "build": "Bản dựng",
+                "install_date": "Ngày cài đặt",
+                "activation": "Trạng thái kích hoạt",
+                "locale_header": "Cài đặt khu vực",
+                "isolation_header": "Ảo hóa và cô lập",
+                "protection_header": "Thành phần bảo vệ",
+                "language": "Ngôn ngữ hệ thống",
+                "region": "Khu vực",
+                "timezone": "Múi giờ",
+                "activated": "Đã kích hoạt",
+                "not_activated": "Chưa kích hoạt",
+                "unknown": "Không xác định",
+                "not_supported": "Không được hỗ trợ",
+                "present": "Hiện diện",
+                "working": "Đang hoạt động",
+                "status_off_or_not_found": "Không tìm thấy / Đã tắt",
+                "on_enforced": "Đã bật (Enforced)",
+                "on_audit": "Chế độ đánh giá (Audit)",
+                "on_not_working": "Đã bật (nhưng không hoạt động)",
+                "on_realtime": "Đã bật (Real-Time)",
+                "coreisol": "Cô lập lõi",
+                "uac": "Kiểm soát tài khoản người dùng (UAC)",
+                "uac_off_no_prompt": "(Không nâng quyền) Đã tắt",
+                "uac_medium": "Trung bình (Mức {0})"
+            }
+        },
+        "monitoring": {
+            "main": {
+                "CPU": "Bộ xử lý",
+                "GPU": "Card đồ họa",
+                "RAM": "RAM",
+                "Network": "Internet",
+                "Disk": "Ổ đĩa",
+                "fetching": "Đang phát hiện...",
+                "allnetwork": "Tất cả bộ điều hợp mạng",
+                "alldrives": "Tất cả ổ đĩa",
+                "other": "Khác",
+                "unknown": "Không xác định",
+                "sdc": "Thẻ SD",
+                "show": "Hiển thị",
+                "hide": "Ẩn",
+                "cpuusage": "Mức sử dụng CPU",
+                "cpufreq": "Tần số",
+                "proccount": "Tiến trình",
+                "uptime": "Thời gian hoạt động",
+                "gpuusage": "Mức sử dụng GPU",
+                "gpumem": "Sử dụng bộ nhớ đồ họa",
+                "gpucod": "Mức sử dụng bộ mã hóa",
+                "ram": "Sử dụng bộ nhớ",
+                "rampafi": "Tệp hoán trang",
+                "netload": "Tải xuống",
+                "netusage": "Tải lên",
+                "ipv4": "Địa chỉ IPv4",
+                "ipad": "IP bên ngoài",
+                "mac": "Địa chỉ MAC",
+                "diskusage": "Hoạt động ổ đĩa",
+                "readspeed": "Tốc độ đọc",
+                "writespeed": "Tốc độ ghi",
+                "capacity": "Dung lượng",
+                "freespace": "Dung lượng trống",
+                "typedisk": "Loại ổ đĩa",
+                "totalwrites": "Tổng số lần đọc",
+                "totalreads": "Tổng số lần ghi",
+                "state": "Trạng thái",
+                "cpu_all": "Biểu đồ tổng thể",
+                "cpu_cores": "Biểu đồ lõi",
+                "cpu_threads": "Biểu đồ luồng",
+                "temp": "Nhiệt độ",
+                "tdp": "Mức tiêu thụ điện năng"
             }
         }
     }

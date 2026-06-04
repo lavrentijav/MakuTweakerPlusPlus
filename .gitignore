@@ -132,3 +132,14 @@ $RECYCLE.BIN/
 
 _NCrunch*
 
+# Legacy WPF (local reference only)
+legacy/
+
+# CMake / C++ build
+build/
+out/
+cmake-build-*/
+CMakeUserPresets.json
+.vs/
+compile_commands.json
+

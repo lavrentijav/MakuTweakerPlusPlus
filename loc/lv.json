@@ -14,7 +14,8 @@
                 "perf": "Veiktspēja",
                 "per": "Personalizēšana",
                 "procmgr": "Procesu pārvaldība",
-                "pci": "Datora informācija"
+                "pci": "Datora informācija",
+                "wininfo": "Windows informācija"
             },
             "lowtabs": {
                 "rexp": "Restartēt Explorer",
@@ -198,7 +199,9 @@
                 "oldbootloader": "Ieslēgt veco sistēmas ielādētāju",
                 "advancedboot": "Papildu parametri katrā sistēmas ielādē",
                 "swap": "Atspējot virtuālās atmiņas failu (swap)",
-                "ttl": "Ieslēgt interneta koplietošanas ierobežojumu apiešanu (TTL 65)"
+                "ttl": "Ieslēgt interneta koplietošanas ierobežojumu apiešanu (TTL 65)",
+                "sitebantitle": "Noteiktu vietņu un domēnu bloķēšana",
+                "sitebanopen": "Atvērt"
             }
         },
         "sr": {
@@ -220,7 +223,9 @@
                 "smartscreen": "Atspējot Smart Screen",
                 "chkdsk": "Iestatīt Chkdsk taimautu uz 1 minūti",
                 "reportbutton": "Atskaite",
-                "telemetry": "Atspējot visu telemetriju un izsekošanu sistēmā"
+                "telemetry": "Atspējot visu telemetriju un izsekošanu sistēmā",
+                "pipcache": "Notīrīt pip kešatmiņu",
+                "status": "Notiek kešatmiņas tīrīšana... Tas var aizņemt kādu laiku."
             },
             "status": {
                 "uacwarn": "Ieslēdzot opciju \"Atspējot lietotāja konta kontroli (UAC)\", Windows 11 pārstāj darboties vilkšana (Drag-and-Drop) uz uzdevumjoslas. MakuTweaker nav saistīts ar šo problēmu. Vai tiešām vēlaties turpināt?"
@@ -303,15 +308,21 @@
                 "manu": "Ražotājs:",
                 "capac": "Apjoms:",
                 "partnum": "Detaļas numurs:",
-                "modeln": "Modelis",
+                "modeln": "Ierīces modelis",
                 "allvram": "Kopējā video atmiņa",
                 "devicemanu": "Ierīces ražotājs",
-                "tooltip": "Nospiediet F5 vai Ctrl+S, lai saglabātu lapas saturu TXT failā."
+                "tooltip": "Nospiediet F5 vai Ctrl+S, lai saglabātu lapas saturu TXT failā.",
+                "allstorage": "Visu datu nesēju kopējais apjoms",
+                "loading": "Tiek iegūta informācija par datora specifikācijām… Tas neaizņems vairāk par minūti.",
+                "freespace": "Brīvs:",
+                "save": "Saglabāt pilnu datora specifikāciju pārskatu TXT failā",
+                "save_done": "Datora specifikāciju pārskats tika veiksmīgi izveidots!",
+                "clipboard": "Kopēt īsu datora specifikāciju pārskatu starpliktuvē\n\nFormāts:\nProcesors (Kodoli/Pavedieni)\nOperatīvā atmiņa (Apjoms un DDR tips)\nGalvenā videokarte (Videomiņas apjoms)\nIerīces modelis / Mātesplate"
             }
         },
         "pmgr": {
             "main": {
-                "label": "Procesu pārvaldība",
+                "label": "Uzdevumu pārvaldnieks",
                 "endprocess": "Beigt procesu",
                 "onlyfrozen": "Tikai sastingušie",
                 "compact": "Kompaktais skats",
@@ -319,8 +330,8 @@
                 "process": "Process",
                 "memuse": "Atmiņas lietojums",
                 "location": "Faila atrašanās vieta",
-                "excl": "Pievienot izņēmumiem",
-                "exclinfo": "Ievadiet procesu nosaukumus, atdalītus ar komatiem:",
+                "excl": "Paslēpt no saraksta",
+                "exclinfo": "Ievadiet procesu nosaukumus, kurus vēlaties paslēpt, atdalot tos ar komatiem.",
                 "excltitle": "Procesu izņēmumi",
                 "clear": "Notīrīt",
                 "save": "Saglabāt",
@@ -330,7 +341,25 @@
                 "from300mb": "no 300 MB",
                 "from500mb": "no 500 MB",
                 "from1000mb": "no 1 GB",
-                "from2000mb": "no 2 GB"
+                "from2000mb": "no 2 GB",
+                "monitoring": "Resursu uzraudzība",
+                "backtoprocess": "Procesu pārvaldība",
+                "updspeed": "Informācijas atjaunošanas ātrums:",
+                "showsysproc": "Rādīt sistēmas un neapturamās procesu vienības",
+                "milisec": "ms.",
+                "search": "Procesu meklēšana",
+                "viewtype": "Procesu attēlošanas stils",
+                "friendly": "Draudzīgs",
+                "systematic": "Sistēmisks",
+                "bothvar": "Abi varianti",
+                "onlymb": "Rādīt RAM patēriņu tikai megabaitos",
+                "taskmgr": "Aizstāt Uzdevumu pārvaldnieku ar lapu \"Procesu pārvaldība\"",
+                "getback": "Iziet no ekskluzīvā režīma",
+                "getfullscr": "Ekskluzīvais režīms",
+                "modeset": "Palaist programmu ekskluzīvajā režīmā",
+                "topmost": "Virs visiem logiem",
+                "settings": "Iestatījumi",
+                "pause": "Apturēt atjaunināšanu"
             }
         },
         "myan": {
@@ -341,7 +370,9 @@
                 "howitworks": "Kā tas darbojas?",
                 "banyandex": "Bloķēt Yandex",
                 "clear": "Notīrīt",
-                "makutnah": "Nebloķē mani!"
+                "makutnah": "Nebloķē mani!",
+                "siteban": "Izmantojot MakuTweaker, varat bloķēt piekļuvi atsevišķām vietnēm un veseliem domēniem, izmantojot Windows iebūvēto hosts mehānismu. Norādiet tos pa vienam katrā rindā, un programma automātiski piemēros ierobežojumus. Lai atbloķētu vietni vai domēnu, noņemiet to no saraksta un saglabājiet izmaiņas.",
+                "sitebandone": "Bloķēto vietņu saraksts ir veiksmīgi atjaunināts."
             }
         },
         "ab": {
@@ -362,7 +393,11 @@
                 "cfg_error": "Kļūda saglabājot failu.",
                 "cfg_error1": "Kļūda lasot failu.",
                 "credL": "Versija:\nIdeja un izstrāde:\nProgrammas ikona:\nĪpašs paldies:",
-                "atop": "Oficiālā vietne"
+                "atop": "Oficiālā vietne",
+                "winr": "Pievienot programmas palaišanu Win+R",
+                "winrinfo": "Jūs varēsiet palaist MakuTweaker caur \"Run\" logu (Win+R),\nievadot makut, maku vai mt.\n\nVarat arī pievienot argumentus noteiktu lapu palaišanai:\n/u - Windows Update\n/p - Veiktspēja\n/s - Izslēgšanas taimeris\n/mgr - Uzdevumu pārvaldnieks\n/pc - Datora informācija\n/win - Windows informācija\n\nPapildus slīpsvītrai varat izmantot domuzīmi vai vispār nepievienot nekādu simbolu.",
+                "disabletelemetry": "Atspējot analītikas datu vākšanu",
+                "telemetryabt": "Lai padarītu programmu pēc iespējas noderīgāku un ērtāku, MakuTweaker apkopo nelielu daudzumu tehnisko datu: kuras cilnes un iestatījumus jūs izmantojat visbiežāk, kā arī procesora testu rezultātus, ja tos veicat MakuTweaker Benchmark. Šī statistika palīdz mums saprast, kurām funkcijām nepieciešami uzlabojumi vai labojumi un kuras tiek izmantotas retāk.\n\nMēs augstu vērtējam jūsu privātumu. MakuTweaker nekad neapkopo jūsu personisko informāciju vai jebkādus datus, kas nav saistīti ar programmas darbību. Mēs vienkārši vēlamies labāk izprast savu lietotāju vajadzības, lai attīstītu projektu pareizajā virzienā.\n\nJa nevēlaties kopīgot datus, vienkārši atzīmējiet izvēles rūtiņu. Šādā gadījumā MakuTweaker pārtrauks vākt statistiku un nesūtīs nekādus pieprasījumus. Jūsu lietošanas privātums pilnībā paliek jūsu kontrolē."
             }
         },
         "tooltips": {
@@ -390,6 +425,85 @@
                 "MakuTweakerProcessMGR": "Cilne \"Procesu pārvaldība\" ir labākais Windows Uzdevumu pārvaldnieka analogs.\n\nPieeja ir maksimāli draudzīga: sistēmas procesi, kurus tik un tā nevar beigt, ir paslēpti. Tiek rādīti tikai tie procesi, kurus lietotājs patiešām palaidis pats.\n\nVisi procesi automātiski tiek kārtoti no lielākā patēriņa uz mazāko. Var arī uzstādīt minimālo atmiņas patēriņa slieksni procesu rādīšanai - no 50 megabaitiem līdz 2 gigabaitiem. Tas ir ērti, lai filtrētu sarakstu un atstātu tikai \"smagākos\" procesus - piemēram, montāžas programmas, virtuālās mašīnas vai spēles.\n\nGalvenā MakuTweaker procesu pārvaldības fīča - apakšā ir izvēles rūtiņa \"Rādīt tikai uzkārušos procesus\". Ja Windows logs ir atzīmēts kā uzkāries un kļuvis balts, var ieslēgt tikai šādu logu rādīšanu, lai ātri atrastu procesu, kas uzkāries, un to beigtu.\n\nTāpat, nospiežot ar peles labo pogu uz procesa, varēsiet atvērt konteksta izvēlni. Tajā, atšķirībā no uzdevumu pārvaldnieka, var uzreiz atvērt procesa \"Faila atrašanās vietu\". Bet, nospiežot \"Beigt procesu\" - uzreiz tiek beigts viss procesu koks.\n\nOperatīvās atmiņas patēriņa skaitīšanas sistēma MakuTweaker atšķiras no uzdevumu pārvaldnieka - MakuTweaker vērtības ir reālistiskākas.\nLieta tāda, ka programma ņem vērā izmantotos sistēmas resursus, kā arī lieko lietotņu rezervēto atmiņu, kuru uzdevumu pārvaldnieks slēpj. Pateicoties tam, piemēram, var uzzināt faktisko montāžas programmu patēriņu, kuras rezervē operatīvo atmiņu video priekšskatīšanai. Tas attiecas uz jebkurām programmām.",
                 "MakuTweakerProcessMGR1": "Nospiediet pogu, lai izvērstu palīdzības logu.",
                 "ttl": "Krievijas mobilo sakaru operatori (piemēram - MTS, Beeline, MegaFon, Tele2, Yota) bieži bloķē vai prasa papildu maksu par neierobežota interneta koplietošanu no viedtālruņa uz datoru. Viņi to izseko pēc TTL parametra, kas Windows pēc noklusējuma ir 128, bet tālruņiem - 64.\nTTL fiksēšana uz 65 novedīs pie tā, ka, izejot caur tālruni, vērtība samazināsies par 1, un operators saņems standarta \"viedtālruņa\" paketi ar vērtību 64. Viņš redzēs, ka tīkls tiek koplietots it kā uz citu viedtālruni, nevis datoru, tāpēc tas var pasargāt no liekas prasības apmaksāt rēķinu.\n\nMakuTweaker absolūti negarantē, ka tas nostrādās.\nKrievijā šis reģistra parametrs iegūst popularitāti.\nTo lūdza pievienot MakuTweaker lietotāji no Krievijas."
+            }
+        },
+        "wininfo": {
+            "main": {
+                "label": "Windows informācija",
+                "status_on": "Ieslēgts",
+                "status_off": "Izslēgts",
+                "name": "Operētājsistēma",
+                "version": "Versija",
+                "edition": "Izdevums",
+                "build": "Būvējums",
+                "install_date": "Instalēšanas datums",
+                "activation": "Aktivizācijas statuss",
+                "locale_header": "Reģionālie iestatījumi",
+                "isolation_header": "Virtualizācija un izolācija",
+                "protection_header": "Aizsardzības komponenti",
+                "language": "Sistēmas valoda",
+                "region": "Reģions",
+                "timezone": "Laika josla",
+                "activated": "Aktivizēts",
+                "not_activated": "Nav aktivizēts",
+                "unknown": "Nezināms",
+                "not_supported": "Netiek atbalstīts",
+                "present": "Pieejams",
+                "working": "Darbojas",
+                "status_off_or_not_found": "Nav atrasts / Izslēgts",
+                "on_enforced": "Ieslēgts (Enforced)",
+                "on_audit": "Novērtēšanas režīms (Audit)",
+                "on_not_working": "Ieslēgts (bet nedarbojas)",
+                "on_realtime": "Ieslēgts (Real-Time)",
+                "coreisol": "Kodola izolācija",
+                "uac": "Lietotāja konta kontrole (UAC)",
+                "uac_off_no_prompt": "(Bez paaugstināšanas) Izslēgts",
+                "uac_medium": "Vidējs (Līmenis {0})"
+            }
+        },
+        "monitoring": {
+            "main": {
+                "CPU": "Procesors",
+                "GPU": "Videokarte",
+                "RAM": "RAM",
+                "Network": "Internets",
+                "Disk": "Disks",
+                "fetching": "Nosaka...",
+                "allnetwork": "Visi tīkla adapteri",
+                "alldrives": "Visi diski",
+                "other": "Cits",
+                "unknown": "Nezināms",
+                "sdc": "SD karte",
+                "show": "Rādīt",
+                "hide": "Paslēpt",
+                "cpuusage": "Procesora noslodze",
+                "cpufreq": "Frekvence",
+                "proccount": "Procesi",
+                "uptime": "Darbības laiks",
+                "gpuusage": "GPU noslodze",
+                "gpumem": "Videomiņas izmantojums",
+                "gpucod": "Kodētāja noslodze",
+                "ram": "Atmiņas izmantojums",
+                "rampafi": "Lapošanas fails",
+                "netload": "Lejupielāde",
+                "netusage": "Augšupielāde",
+                "ipv4": "IPv4 adrese",
+                "ipad": "Ārējā IP",
+                "mac": "MAC adrese",
+                "diskusage": "Diska noslodze",
+                "readspeed": "Lasīšanas ātrums",
+                "writespeed": "Rakstīšanas ātrums",
+                "capacity": "Ietilpība",
+                "freespace": "Brīvs",
+                "typedisk": "Diska tips",
+                "totalwrites": "Kopā nolasījumu",
+                "totalreads": "Kopā ierakstu",
+                "state": "Stāvoklis",
+                "cpu_all": "Kopējais grafiks",
+                "cpu_cores": "Kodolu grafiks",
+                "cpu_threads": "Pavedienu grafiks",
+                "temp": "Temperatūra",
+                "tdp": "Enerģijas patēriņš"
             }
         }
     }
