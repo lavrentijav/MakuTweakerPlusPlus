@@ -41,7 +41,10 @@ void D3D11Context::BeginFrame(const float clear[4]) {
     context_->ClearRenderTargetView(rtv_.Get(), clear);
 }
 
-void D3D11Context::EndFrame() { swapChain_->Present(1, 0); }
+void D3D11Context::EndFrame() {
+    // Sync interval 0: do not block on vsync; keeps UI responsive when a frame is heavy.
+    swapChain_->Present(0, 0);
+}
 
 void D3D11Context::Shutdown() {
     rtv_.Reset();

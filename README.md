@@ -19,7 +19,18 @@ cmake -B build -G "Visual Studio 17 2022" -A x64
 cmake --build build --config Release
 ```
 
-Output: `build/Release/MakuTweaker.exe` with `loc/` and `assets/` copied beside the binary.
+Output: `build/Release/MakuTweaker.exe` with `loc/`, `assets/`, and `previewimg/` copied beside the binary.
+
+### Single-file build (embedded payload)
+
+`loc/`, `assets/`, and `previewimg/` are packed into the executable. On first run they are extracted to `%AppData%\MakuTweaker\runtime\` (cached by payload hash).
+
+```powershell
+cmake -B build-onefile -G "Visual Studio 17 2022" -A x64 -DMAKU_ONEFILE=ON
+cmake --build build-onefile --config Release
+```
+
+Artifact: `build-onefile/Release/MakuTweaker.exe` only (no sidecar folders required).
 
 ## Project layout
 
@@ -28,6 +39,7 @@ Output: `build/Release/MakuTweaker.exe` with `loc/` and `assets/` copied beside 
 ├── app.manifest
 ├── loc/              # JSON localization (26 languages)
 ├── assets/           # Icons and images
+├── previewimg/       # README / store screenshots per language
 ├── src/
 │   ├── main.cpp
 │   ├── app/          # Application shell

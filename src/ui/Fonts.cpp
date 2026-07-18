@@ -98,6 +98,7 @@ void InitFonts(HWND hwnd) {
         g_fontTitle = g_fontUi;
 
     io.FontDefault = g_fontUi;
+    io.FontGlobalScale = 1.f;
 }
 
 void ReloadFonts(HWND hwnd) {

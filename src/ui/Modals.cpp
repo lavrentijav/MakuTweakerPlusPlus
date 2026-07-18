@@ -1,5 +1,6 @@
 #include "ui/Modals.h"
 #include "app/Application.h"
+#include "app/Branding.h"
 #include "core/DisallowRun.h"
 #include "core/HostsBan.h"
 #include "core/StringUtil.h"
@@ -16,7 +17,7 @@ static bool g_makuYan{};
 static bool g_exclusion{};
 
 static void ShowError(const std::wstring& msg) {
-    MessageBoxW(maku::app::Application::Instance().Hwnd(), msg.c_str(), L"MakuTweaker",
+    MessageBoxW(maku::app::Application::Instance().Hwnd(), msg.c_str(), brand::kDisplayName,
                 MB_OK | MB_ICONERROR);
 }
 
@@ -73,7 +74,7 @@ void DrawAll() {
                     if (hosts::UpdateBlockedDomains(domains, &err)) {
                         MessageBoxW(app.Hwnd(),
                                     util::ToWide(l.Get("myan", "main", "sitebandone")).c_str(),
-                                    L"MakuTweaker", MB_OK | MB_ICONINFORMATION);
+                                    brand::kDisplayName, MB_OK | MB_ICONINFORMATION);
                         g_siteBan = false;
                         loaded = false;
                     } else {
@@ -143,6 +144,8 @@ void DrawAll() {
             ImGui::Combo(l.Get("pmgr", "main", "viewtype").c_str(), &s.processViewMode, modes, 3);
             ImGui::SliderInt(l.Get("pmgr", "main", "updspeed").c_str(), &s.monitoringRefreshMs, 250,
                              3000);
+            s.cpuAutoTopK = std::clamp(s.cpuAutoTopK, 3, 16);
+            ImGui::SliderInt(l.Get("pmgr", "main", "cpu_topk").c_str(), &s.cpuAutoTopK, 3, 16);
             if (ImGui::Button(l.Get("pmgr", "main", "save").c_str())) {
                 s.processExclusions = exclBuf;
                 s.Save();

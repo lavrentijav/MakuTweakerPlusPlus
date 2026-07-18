@@ -15,7 +15,8 @@
                 "per": "Personalization",
                 "procmgr": "Process Management",
                 "pci": "PC Information",
-                "wininfo": "Windows Information"
+                "wininfo": "Windows Information",
+                "mon": "Monitoring"
             },
             "lowtabs": {
                 "rexp": "Restart Explorer",
@@ -123,7 +124,15 @@
                 "suredialogT2": "using MakuTweaker.",
                 "suredialogT3": "You should be aware that this application can no longer be restored to the system,\nand work related to these components may not be correct.",
                 "suredialogT4": "To continue, type ILOVEMAKUTWEAKER in the textbox, and click OK.",
-                "suredialogNS": "Cancel"
+                "suredialogNS": "Cancel",
+                "allapps": "All installed UWP packages",
+                "searchpkg": "Search by name or package id...",
+                "refreshlist": "Refresh list",
+                "removeselected": "Remove selected",
+                "loadinglist": "Loading installed UWP packages...",
+                "emptylist": "No UWP packages found or the list failed to load.",
+                "noselected": "No packages selected.",
+                "selectone": "Select packages to remove (checkboxes in the list)."
             },
             "status": {
                 "noapps": "You have not selected any applications.",
@@ -145,7 +154,9 @@
                 "sixH": "6 Hours",
                 "info": "Enter The Number of Minutes\nAfter Which The System Will Shutdown.\nPress The \"Shutdown\" Button to Start The Timer You Set.",
                 "b1": "Start Shutdown Timer",
-                "b2": "Cancel Shutdown Timer"
+                "b2": "Cancel Shutdown Timer",
+                "countdown": "Until shutdown:",
+                "countdown_idle": "Shutdown timer is not running."
             }
         },
         "quick": {
@@ -271,6 +282,9 @@
         "pci": {
             "main": {
                 "label": "PC Information",
+                "ram_short": "RAM",
+                "save_tooltip": "Save report to TXT (F5)",
+                "copy_tooltip": "Copy short report",
                 "processorlabel": "CPU",
                 "processorname": "Processor Name:",
                 "processorcores": "Number of Cores and Threads:",
@@ -354,6 +368,7 @@
                 "monitoring": "Resource Monitoring",
                 "backtoprocess": "Process Management",
                 "updspeed": "Information refresh rate:",
+                "cpu_topk": "Top-K (auto mode):",
                 "showsysproc": "Show system and non-terminable processes",
                 "milisec": "ms.",
                 "search": "Process Search",
@@ -513,6 +528,67 @@
                 "cpu_threads": "Thread Graph",
                 "temp": "Temperature",
                 "tdp": "TDP"
+            }
+        },
+        "mon": {
+            "main": {
+                "label": "Monitoring",
+                "service_status": "Service",
+                "service_enable": "Collect metrics in background",
+                "service_enable_short": "Background",
+                "zoom_short": "Min",
+                "service_install": "Install service",
+                "service_start": "Start service",
+                "no_data": "No data yet — enable the metrics service or wait for samples",
+                "1h": "1 h",
+                "6h": "6 h",
+                "24h": "24 h",
+                "7d": "7 d",
+                "30d": "30 d",
+                "zoom": "Zoom (minutes)",
+                "service_install_ok": "Service installed",
+                "service_install_fail": "Could not install service (admin rights required)",
+                "gui_collect_hint": "GUI collects metrics while service is stopped"
+            },
+            "res": {
+                "cpu": "CPU",
+                "gpu": "GPU",
+                "ram": "RAM",
+                "net": "Network",
+                "disk": "Disk"
+            },
+            "graph": {
+                "time": "Time",
+                "pct": "Percent (%)",
+                "speed": "Speed"
+            },
+            "cpu": {
+                "auto": "Auto",
+                "threads": "Threads",
+                "cores": "Cores",
+                "numa": "NUMA",
+                "heatmap": "Heatmap",
+                "topn": "Top loaded",
+                "logical": "Logical",
+                "physical": "Physical",
+                "topn_count": "Top N",
+                "auto_active": "Active:",
+                "topk_auto": "Showing only the busiest series (Top-K).",
+                "many_warn": "Too many units — Top-K or heatmap is used",
+                "others": "Others (avg)",
+                "core_lbl": "Core #",
+                "thread_lbl": "Thread #",
+                "core_fmt": "Core",
+                "thread_fmt": "Thread"
+            },
+            "tray": {
+                "open": "Open MakuTweaker++",
+                "monitor": "Open Monitoring",
+                "start_service": "Start metrics service",
+                "stop_service": "Stop metrics service",
+                "not_installed": "Service not installed",
+                "open_data": "Open data folder",
+                "exit_tray": "Exit completely"
             }
         }
     }

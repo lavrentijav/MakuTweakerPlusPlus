@@ -12,10 +12,7 @@ struct Snapshot {
     double ramTotalMb = 0;
     double diskReadMbps = 0;
     double diskWriteMbps = 0;
-    double netDownMbps = 0;
-    double netUpMbps = 0;
     std::wstring gpuName;
-    double gpuUsagePercent = -1;
 };
 
 class PerformanceMonitor {
@@ -24,6 +21,7 @@ public:
 
     void Start();
     void Stop();
+    bool IsActive() const { return started_; }
     void Tick();
     Snapshot Get() const;
 
@@ -32,6 +30,7 @@ private:
     mutable std::mutex mutex_;
     Snapshot snap_{};
     void* query_{nullptr};
+    std::vector<void*> counters_;
     bool started_{false};
 };
 

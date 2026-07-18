@@ -22,8 +22,13 @@ struct SvcRow {
     bool critical = false;
 };
 
-void RefreshProcesses(std::vector<ProcRow>& out);
+/// @param detectFrozen if false, skips hung-window scan (much faster)
+void RefreshProcesses(std::vector<ProcRow>& out, bool detectFrozen = false);
 void RefreshServices(std::vector<SvcRow>& out);
+
+bool TerminateProcessByPid(DWORD pid);
+void TerminateProcessesByName(const std::wstring& exeName);
+bool OpenProcessLocation(const std::wstring& path);
 
 bool MatchesSearch(const std::wstring& haystack, const std::wstring& query);
 bool IsExcluded(const std::wstring& exeName, const std::string& exclusionsCsv);

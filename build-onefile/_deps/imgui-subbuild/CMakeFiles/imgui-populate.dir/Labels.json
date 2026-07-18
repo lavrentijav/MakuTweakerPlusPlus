@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/imgui-subbuild/CMakeFiles/imgui-populate"
+		},
+		{
+			"file" : "D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/imgui-subbuild/CMakeFiles/70876427a0b580876530e8c9fcfd33cd/imgui-populate.rule"
+		},
+		{
+			"file" : "D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/imgui-subbuild/CMakeFiles/53248ab3d61b13fb63a2327a610851fa/imgui-populate-complete.rule"
+		},
+		{
+			"file" : "D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/imgui-subbuild/CMakeFiles/f0a84a0a498cb2a09fc2319f81bd4ab0/imgui-populate-build.rule"
+		},
+		{
+			"file" : "D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/imgui-subbuild/CMakeFiles/f0a84a0a498cb2a09fc2319f81bd4ab0/imgui-populate-configure.rule"
+		},
+		{
+			"file" : "D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/imgui-subbuild/CMakeFiles/f0a84a0a498cb2a09fc2319f81bd4ab0/imgui-populate-download.rule"
+		},
+		{
+			"file" : "D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/imgui-subbuild/CMakeFiles/f0a84a0a498cb2a09fc2319f81bd4ab0/imgui-populate-install.rule"
+		},
+		{
+			"file" : "D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/imgui-subbuild/CMakeFiles/f0a84a0a498cb2a09fc2319f81bd4ab0/imgui-populate-mkdir.rule"
+		},
+		{
+			"file" : "D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/imgui-subbuild/CMakeFiles/f0a84a0a498cb2a09fc2319f81bd4ab0/imgui-populate-patch.rule"
+		},
+		{
+			"file" : "D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/imgui-subbuild/CMakeFiles/f0a84a0a498cb2a09fc2319f81bd4ab0/imgui-populate-test.rule"
+		},
+		{
+			"file" : "D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/imgui-subbuild/CMakeFiles/f0a84a0a498cb2a09fc2319f81bd4ab0/imgui-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"imgui-populate"
+		],
+		"name" : "imgui-populate"
+	}
+}

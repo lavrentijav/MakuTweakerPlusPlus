@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\Projects\cpp\MakuTweakerPlusPlus\build-onefile\_deps\json-subbuild\CMakeFiles\04b79aa2c854444eb95bf50069c2c94a\json-populate-mkdir.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\Projects\cpp\MakuTweakerPlusPlus\build-onefile\_deps\json-subbuild\CMakeFiles\04b79aa2c854444eb95bf50069c2c94a\json-populate-download.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\Projects\cpp\MakuTweakerPlusPlus\build-onefile\_deps\json-subbuild\CMakeFiles\04b79aa2c854444eb95bf50069c2c94a\json-populate-update.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\Projects\cpp\MakuTweakerPlusPlus\build-onefile\_deps\json-subbuild\CMakeFiles\04b79aa2c854444eb95bf50069c2c94a\json-populate-patch.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\Projects\cpp\MakuTweakerPlusPlus\build-onefile\_deps\json-subbuild\CMakeFiles\04b79aa2c854444eb95bf50069c2c94a\json-populate-configure.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\Projects\cpp\MakuTweakerPlusPlus\build-onefile\_deps\json-subbuild\CMakeFiles\04b79aa2c854444eb95bf50069c2c94a\json-populate-build.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\Projects\cpp\MakuTweakerPlusPlus\build-onefile\_deps\json-subbuild\CMakeFiles\04b79aa2c854444eb95bf50069c2c94a\json-populate-install.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\Projects\cpp\MakuTweakerPlusPlus\build-onefile\_deps\json-subbuild\CMakeFiles\04b79aa2c854444eb95bf50069c2c94a\json-populate-test.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\Projects\cpp\MakuTweakerPlusPlus\build-onefile\_deps\json-subbuild\CMakeFiles\55c9515be93d0ce2400aedc85dc4fa0b\json-populate-complete.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\Projects\cpp\MakuTweakerPlusPlus\build-onefile\_deps\json-subbuild\CMakeFiles\6e4a144bc17c59fa0ef597995f977829\json-populate.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\Projects\cpp\MakuTweakerPlusPlus\build-onefile\_deps\json-subbuild\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="D:\Projects\cpp\MakuTweakerPlusPlus\build-onefile\_deps\json-subbuild\CMakeFiles\json-populate" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{A861F2AF-499E-34D4-92D5-E8F5F3656B96}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

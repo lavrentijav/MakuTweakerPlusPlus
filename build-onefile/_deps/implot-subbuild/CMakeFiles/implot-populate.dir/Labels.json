@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/implot-subbuild/CMakeFiles/implot-populate"
+		},
+		{
+			"file" : "D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/implot-subbuild/CMakeFiles/db47983fb1265daf8e311e31522769dd/implot-populate.rule"
+		},
+		{
+			"file" : "D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/implot-subbuild/CMakeFiles/32e98be2e42d3844cd6982aaf20ab42e/implot-populate-complete.rule"
+		},
+		{
+			"file" : "D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/implot-subbuild/CMakeFiles/f29cf51b6ca42eea7a97f94aa9cd1b21/implot-populate-build.rule"
+		},
+		{
+			"file" : "D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/implot-subbuild/CMakeFiles/f29cf51b6ca42eea7a97f94aa9cd1b21/implot-populate-configure.rule"
+		},
+		{
+			"file" : "D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/implot-subbuild/CMakeFiles/f29cf51b6ca42eea7a97f94aa9cd1b21/implot-populate-download.rule"
+		},
+		{
+			"file" : "D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/implot-subbuild/CMakeFiles/f29cf51b6ca42eea7a97f94aa9cd1b21/implot-populate-install.rule"
+		},
+		{
+			"file" : "D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/implot-subbuild/CMakeFiles/f29cf51b6ca42eea7a97f94aa9cd1b21/implot-populate-mkdir.rule"
+		},
+		{
+			"file" : "D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/implot-subbuild/CMakeFiles/f29cf51b6ca42eea7a97f94aa9cd1b21/implot-populate-patch.rule"
+		},
+		{
+			"file" : "D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/implot-subbuild/CMakeFiles/f29cf51b6ca42eea7a97f94aa9cd1b21/implot-populate-test.rule"
+		},
+		{
+			"file" : "D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/implot-subbuild/CMakeFiles/f29cf51b6ca42eea7a97f94aa9cd1b21/implot-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"implot-populate"
+		],
+		"name" : "implot-populate"
+	}
+}

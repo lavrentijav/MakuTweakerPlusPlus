@@ -1,0 +1,8 @@
+{
+	"InstallScripts" : 
+	[
+		"D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/cmake_install.cmake",
+		"D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/json-build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

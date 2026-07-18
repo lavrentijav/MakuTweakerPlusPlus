@@ -1,4 +1,5 @@
 #pragma once
+#include "app/Branding.h"
 #include <shlobj.h>
 #include <string>
 #include <vector>
@@ -43,7 +44,20 @@ inline std::wstring GetAppDataPath() {
         return L"";
     std::wstring result = path;
     CoTaskMemFree(path);
-    result += L"\\MakuTweaker";
+    result += L"\\";
+    result += brand::kAppDataFolder;
+    CreateDirectoryW(result.c_str(), nullptr);
+    return result;
+}
+
+inline std::wstring GetSharedDataPath() {
+    wchar_t* path = nullptr;
+    if (FAILED(SHGetKnownFolderPath(FOLDERID_ProgramData, 0, nullptr, &path)))
+        return L"";
+    std::wstring result = path;
+    CoTaskMemFree(path);
+    result += L"\\";
+    result += brand::kAppDataFolder;
     CreateDirectoryW(result.c_str(), nullptr);
     return result;
 }

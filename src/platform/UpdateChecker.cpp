@@ -1,5 +1,9 @@
 #include "platform/UpdateChecker.h"
+#include "app/Branding.h"
+#include "app/Version.h"
+#include "core/StringUtil.h"
 #include <windows.h>
+#include <string>
 #include <winhttp.h>
 #include <nlohmann/json.hpp>
 #include <thread>
@@ -10,8 +14,10 @@ namespace maku::platform {
 void CheckForUpdateAsync(int currentBuild, std::function<void(UpdateInfo)> onDone) {
     std::thread([currentBuild, onDone = std::move(onDone)] {
         UpdateInfo info;
+        const std::wstring userAgent =
+            util::ToWide(std::string(brand::kDisplayNameUtf8) + "/" + maku::version::kText);
         HINTERNET session =
-            WinHttpOpen(L"MakuTweaker/5.6", WINHTTP_ACCESS_TYPE_DEFAULT_PROXY, nullptr, nullptr, 0);
+            WinHttpOpen(userAgent.c_str(), WINHTTP_ACCESS_TYPE_DEFAULT_PROXY, nullptr, nullptr, 0);
         if (!session) {
             onDone(info);
             return;

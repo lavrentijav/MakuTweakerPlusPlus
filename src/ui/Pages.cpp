@@ -3,8 +3,10 @@
 #include "ui/Theme.h"
 #include "ui/Modals.h"
 #include "app/Application.h"
+#include "app/Branding.h"
+#include "app/Version.h"
 #include "core/AppPaths.h"
-#include "core/PerformanceMonitor.h"
+#include "ui/MonitorPage.h"
 #include "core/PresetIO.h"
 #include "core/Benchmark.h"
 #include "core/JobQueue.h"
@@ -13,8 +15,14 @@
 #include "core/ProcessRunner.h"
 #include "core/Registry.h"
 #include "core/StringUtil.h"
+#include "core/Analytics.h"
+#include "core/SysInfoFormat.h"
+#include "core/UwpUtil.h"
+#include "core/TweakProbe.h"
 #include "core/Wmi.h"
 #include <imgui.h>
+#include <algorithm>
+#include <cfloat>
 #include <tlhelp32.h>
 #include <psapi.h>
 #include <atomic>
@@ -51,15 +59,6 @@ static bool KeyMissing(HKEY root, const wchar_t* sub) {
     return !reg::KeyExists(root, sub);
 }
 
-static bool AnyNamespaceMissing() {
-    const wchar_t* keys[] = {
-        L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{A0953C92-50DC-43bf-BE83-3742FED03C9C}",
-        L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{f86fa3ab-70d2-4fc7-9c99-fcbf05467f3a}"};
-    for (auto k : keys)
-        if (KeyMissing(HKEY_LOCAL_MACHINE, k)) return true;
-    return false;
-}
-
 static void DeleteNamespaceKeys(bool on) {
     const wchar_t* keys[] = {
         L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{A0953C92-50DC-43bf-BE83-3742FED03C9C}",
@@ -79,23 +78,17 @@ static void DrawExplorer() {
     auto& l = Application::Instance().L10n();
     PageTitle(l.Get("expl", "main", "label"));
     static bool nonrem, hidden, ext, pchome, gallery, showpc, shortcut;
-    static bool init{};
-    if (!init) {
-        nonrem = AnyNamespaceMissing();
-        DWORD v{};
-        if (reg::GetDword(HKEY_CURRENT_USER,
-                          L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", L"Hidden",
-                          v))
-            hidden = v == 1;
-        if (reg::GetDword(HKEY_CURRENT_USER,
-                          L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
-                          L"HideFileExt", v))
-            ext = v == 0;
-        if (reg::GetDword(HKEY_CURRENT_USER,
-                          L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", L"LaunchTo",
-                          v))
-            pchome = v == 1;
-        init = true;
+    static float lastProbe = -1000.f;
+    if (ImGui::GetTime() - lastProbe > 2.f) {
+        const auto t = tweak::ProbeExplorer();
+        nonrem = t.nonremovable;
+        hidden = t.hidden;
+        ext = t.extensions;
+        pchome = t.pcHome;
+        gallery = t.gallery;
+        showpc = t.showPc;
+        shortcut = t.shortcut;
+        lastProbe = ImGui::GetTime();
     }
     if (os::GetWindowsBuild() < 22621)
         ToggleRow("nonrem", l.Get("expl", "main", "nonremovable"), &nonrem,
@@ -182,6 +175,15 @@ static void DrawWindowsUpdate() {
     auto& l = Application::Instance().L10n();
     PageTitle(l.Get("wu", "main", "label"));
     static bool wu1, wu2, wu3, wu5, wu6;
+    static float lastProbe = -1000.f;
+    if (ImGui::GetTime() - lastProbe > 2.f) {
+        const auto t = tweak::ProbeWindowsUpdate();
+        wu1 = t.blockInternet;
+        wu3 = t.excludeDrivers;
+        wu5 = t.serviceStopped;
+        wu6 = t.disableReserves;
+        lastProbe = ImGui::GetTime();
+    }
     ToggleRow("wu1", l.Get("wu", "main", "wu1"), &wu1, [](bool on) {
         if (on) {
             reg::SetDword(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate",
@@ -223,6 +225,16 @@ static void DrawSysAndRec() {
     auto& l = Application::Instance().L10n();
     PageTitle(l.Get("sr", "main", "label"));
     static bool telemetry, uac, hybern, smartscreen, bing, sticky, bitlocker, coreisol, chkdsk;
+    static float lastProbe = -1000.f;
+    if (ImGui::GetTime() - lastProbe > 2.f) {
+        const auto t = tweak::ProbeSysRec();
+        telemetry = t.telemetryOff;
+        uac = t.uacOff;
+        hybern = t.hibernateOff;
+        smartscreen = t.smartScreenOff;
+        bing = t.bingOff;
+        lastProbe = ImGui::GetTime();
+    }
     ToggleRow("telemetry", l.Get("sr", "main", "telemetry"), &telemetry, [](bool on) {
         reg::SetDword(HKEY_LOCAL_MACHINE,
                       L"SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection", L"AllowTelemetry",
@@ -272,6 +284,16 @@ static void DrawPersonalization() {
     auto& l = Application::Instance().L10n();
     PageTitle(l.Get("per", "main", "label"));
     static bool dark, transparency, verbose, oldcont, endtask;
+    static float lastProbe = -1000.f;
+    if (ImGui::GetTime() - lastProbe > 2.f) {
+        const auto t = tweak::ProbePersonalization();
+        dark = t.darkTheme;
+        transparency = t.transparencyOff;
+        verbose = t.verboseBoot;
+        endtask = t.endTask;
+        oldcont = t.oldContextMenu;
+        lastProbe = ImGui::GetTime();
+    }
     ToggleRow("dark", l.Get("per", "main", "darktheme"), &dark, [](bool on) {
         reg::SetDword(HKEY_CURRENT_USER,
                       L"Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
@@ -311,6 +333,14 @@ static void DrawAdvanced() {
     auto& l = Application::Instance().L10n();
     PageTitle(l.CatName("adv"));
     static bool vbs, ttl, disindex, swap;
+    static float lastProbe = -1000.f;
+    if (ImGui::GetTime() - lastProbe > 2.f) {
+        const auto t = tweak::ProbeAdvanced();
+        vbs = t.vbsOff;
+        ttl = t.ttlReduced;
+        disindex = t.indexingOff;
+        lastProbe = ImGui::GetTime();
+    }
     ToggleRow("vbs", l.Get("adv", "main", "vbs"), &vbs, [](bool on) {
         reg::SetDword(HKEY_LOCAL_MACHINE, L"SYSTEM\\CurrentControlSet\\Control\\DeviceGuard",
                       L"EnableVirtualizationBasedSecurity", on ? 0u : 1u);
@@ -383,25 +413,53 @@ static void DrawQuickSet() {
 static void DrawSat() {
     auto& l = Application::Instance().L10n();
     PageTitle(l.Get("sat", "main", "label"));
-    int mins = 30;
-    ImGui::SliderInt("mins", &mins, 1, 600);
-    if (ButtonRow("10m", l.Get("sat", "main", "tenM"),
-                  [] { proc::Run(L"C:\\Windows\\System32\\shutdown.exe", L"-s -t 600"); }))
-    {
+    ImGui::TextWrapped("%s", l.Get("sat", "main", "info").c_str());
+
+    static int mins = 30;
+    static std::chrono::steady_clock::time_point shutdownEnds{};
+    static bool shutdownActive = false;
+
+    const auto now = std::chrono::steady_clock::now();
+    if (shutdownActive && now >= shutdownEnds) shutdownActive = false;
+
+    ImGui::SliderInt(l.Get("sat", "main", "minho").c_str(), &mins, 1, 600);
+
+    if (shutdownActive) {
+        const auto left = std::chrono::duration_cast<std::chrono::seconds>(shutdownEnds - now);
+        const long long sec = std::max(0LL, left.count());
+        const long long h = sec / 3600;
+        const long long m = (sec % 3600) / 60;
+        const long long s = sec % 60;
+        char buf[64]{};
+        snprintf(buf, sizeof(buf), "%02lld:%02lld:%02lld",
+                 static_cast<long long>(h), static_cast<long long>(m), static_cast<long long>(s));
+        std::string countdownLabel = l.Get("sat", "main", "countdown");
+        if (countdownLabel == "countdown") countdownLabel = "Until shutdown:";
+        ImGui::TextColored(ImVec4(0.45f, 0.88f, 0.55f, 1.f), "%s %s", countdownLabel.c_str(), buf);
+    } else {
+        std::string idle = l.Get("sat", "main", "countdown_idle");
+        if (idle == "countdown_idle") idle = "Shutdown timer is not running.";
+        ImGui::TextDisabled("%s", idle.c_str());
     }
-    if (ButtonRow("1h", l.Get("sat", "main", "oneH"),
-                  [] { proc::Run(L"C:\\Windows\\System32\\shutdown.exe", L"-s -t 3600"); }))
-    {
+
+    auto startShutdown = [&](int seconds) {
+        wchar_t args[64];
+        swprintf_s(args, L"-s -t %d", seconds);
+        proc::Run(L"C:\\Windows\\System32\\shutdown.exe", args);
+        shutdownEnds = std::chrono::steady_clock::now() + std::chrono::seconds(seconds);
+        shutdownActive = true;
+    };
+
+    if (ButtonRow("10m", l.Get("sat", "main", "tenM"), [&] { startShutdown(600); })) {
     }
-    if (ButtonRow("custom", l.Get("sat", "main", "b1"), [mins] {
-            wchar_t args[64];
-            swprintf_s(args, L"-s -t %d", mins * 60);
-            proc::Run(L"C:\\Windows\\System32\\shutdown.exe", args);
+    if (ButtonRow("1h", l.Get("sat", "main", "oneH"), [&] { startShutdown(3600); })) {
+    }
+    if (ButtonRow("custom", l.Get("sat", "main", "b1"), [&] { startShutdown(mins * 60); })) {
+    }
+    if (ButtonRow("cancel", l.Get("sat", "main", "b2"), [&] {
+            proc::Run(L"C:\\Windows\\System32\\shutdown.exe", L"-a");
+            shutdownActive = false;
         })) {
-    }
-    if (ButtonRow("cancel", l.Get("sat", "main", "b2"),
-                  [] { proc::Run(L"C:\\Windows\\System32\\shutdown.exe", L"-a"); }))
-    {
     }
 }
 
@@ -409,9 +467,10 @@ static void DrawPerf() {
     auto& l = Application::Instance().L10n();
     PageTitle(l.Get("perfor", "main", "label"));
     ImGui::TextWrapped("%s", l.Get("perfor", "main", "info").c_str());
-    int pct = 50;
+    static int pct = 50;
     ImGui::SliderInt("pct", &pct, 1, 100);
-    if (ButtonRow("apply", l.Get("perfor", "main", "applyb"), [pct] {
+    if (ButtonRow("apply", l.Get("perfor", "main", "applyb"), [&] {
+            const int throttle = pct;
             auto r = proc::Run(L"powercfg", L"/getactivescheme");
             std::wstring scheme = util::ToWide(r.output);
             auto p = scheme.find(L": ");
@@ -422,7 +481,7 @@ static void DrawPerf() {
             }
             wchar_t buf[256];
             swprintf_s(buf, L"/setacvalueindex %s SUB_PROCESSOR PROCTHROTTLEMAX %d", scheme.c_str(),
-                       pct);
+                       throttle);
             proc::Run(L"powercfg", buf);
             proc::Run(L"powercfg", L"/setactive " + scheme);
         })) {
@@ -437,20 +496,157 @@ static void DrawAct() {
 }
 
 // --- UWP ---
+static std::string UwpStr(const l10n::Localization& l, const char* key, const char* enFallback) {
+    const std::string v = l.Get("uwp", "main", key);
+    return v == key ? enFallback : v;
+}
+
+static std::vector<uwp::PackageInfo> g_uwpPackages;
+static std::vector<char> g_uwpSelected;
+static std::mutex g_uwpMutex;
+static std::atomic<bool> g_uwpListReady{false};
+static std::atomic<bool> g_uwpListLoading{false};
+static std::string g_uwpLastError;
+
+static void RequestUwpPackageReload() {
+    bool expected = false;
+    if (!g_uwpListLoading.compare_exchange_strong(expected, true)) return;
+    g_uwpListReady = false;
+    jobs::JobQueue::Instance().Enqueue([]() {
+        auto loaded = uwp::ListInstalledPackages();
+        std::lock_guard lock(g_uwpMutex);
+        g_uwpPackages = std::move(loaded.packages);
+        g_uwpLastError = loaded.error;
+        g_uwpSelected.assign(g_uwpPackages.size(), 0);
+        g_uwpListReady = true;
+        g_uwpListLoading = false;
+    });
+}
+
 static void DrawUwp() {
     auto& l = Application::Instance().L10n();
     PageTitle(l.Get("uwp", "main", "label"));
     ImGui::TextWrapped("%s", l.Get("uwp", "main", "info1").c_str());
-    static bool u3, u5, u9, u10, u13, u15;
-    ToggleRow("u3", l.Get("uwp", "main", "u3"), &u3, nullptr);
-    ToggleRow("u5", l.Get("uwp", "main", "u5"), &u5, nullptr);
-    ToggleRow("u9", l.Get("uwp", "main", "u9"), &u9, nullptr);
-    if (ButtonRow("remove", l.Get("uwp", "main", "b"), [] {
-            jobs::JobQueue::Instance().Enqueue([] {
-                proc::RunPowerShell(
-                    L"Get-AppxPackage *zune* | Remove-AppxPackage; Get-AppxPackage *skypeapp* | Remove-AppxPackage");
-            });
-        })) {
+    ImGui::TextWrapped("%s", l.Get("uwp", "main", "info2").c_str());
+    ImGui::Separator();
+
+    static char searchBuf[256]{};
+    static bool showConfirm{};
+    static char confirmBuf[64]{};
+    static std::vector<std::wstring> pendingRemove;
+
+    if (!g_uwpListReady && !g_uwpListLoading) RequestUwpPackageReload();
+
+    ImGui::TextUnformatted(UwpStr(l, "allapps", "All installed UWP packages").c_str());
+    if (ImGui::Button(UwpStr(l, "refreshlist", "Refresh list").c_str())) RequestUwpPackageReload();
+
+    if (g_uwpListLoading.load()) {
+        ImGui::TextWrapped("%s", UwpStr(l, "loadinglist", "Loading installed UWP packages...").c_str());
+        return;
+    }
+
+    std::lock_guard uwpLock(g_uwpMutex);
+
+    if (g_uwpPackages.empty() && !g_uwpLastError.empty())
+        ImGui::TextColored(ImVec4(1.f, 0.45f, 0.35f, 1.f), "%s", g_uwpLastError.c_str());
+    else if (g_uwpPackages.empty())
+        ImGui::TextDisabled("%s",
+                            UwpStr(l, "emptylist", "No UWP packages found or list failed to load.")
+                                .c_str());
+
+    ImGui::SetNextItemWidth(-1);
+    ImGui::InputTextWithHint("##uwp_search",
+                             UwpStr(l, "searchpkg", "Search by name or package id...").c_str(),
+                             searchBuf, sizeof(searchBuf));
+    const std::wstring searchW = util::ToWide(searchBuf);
+    const std::wstring searchLower = [&] {
+        std::wstring s = searchW;
+        for (auto& c : s) c = towlower(c);
+        return s;
+    }();
+
+    if (ImGui::BeginChild("uwp_list", ImVec2(0, -ImGui::GetFrameHeightWithSpacing() * 2.5f), true)) {
+        if (ImGui::BeginTable("uwp_tbl", 2,
+                              ImGuiTableFlags_RowBg | ImGuiTableFlags_ScrollY |
+                                  ImGuiTableFlags_SizingStretchProp)) {
+            ImGui::TableSetupColumn("pkg", ImGuiTableColumnFlags_WidthStretch);
+            ImGui::TableSetupColumn("sel", ImGuiTableColumnFlags_WidthFixed, 36.0f);
+            for (size_t i = 0; i < g_uwpPackages.size(); ++i) {
+                const auto& pkg = g_uwpPackages[i];
+                std::wstring hay = pkg.name + L" " + pkg.packageFullName;
+                for (auto& c : hay) c = towlower(c);
+                if (!searchLower.empty() && hay.find(searchLower) == std::wstring::npos) continue;
+
+                ImGui::TableNextRow();
+                ImGui::TableNextColumn();
+                ImGui::PushID(static_cast<int>(i));
+                if (i >= g_uwpSelected.size()) g_uwpSelected.resize(g_uwpPackages.size(), 0);
+                bool checked = g_uwpSelected[i] != 0;
+                const std::string label = util::ToUtf8(pkg.name);
+                ImGui::TextUnformatted(label.c_str());
+                ImGui::TextDisabled("%s", util::ToUtf8(pkg.packageFullName).c_str());
+                ImGui::TableNextColumn();
+                if (ImGui::Checkbox("##sel", &checked)) g_uwpSelected[i] = checked ? 1 : 0;
+                ImGui::PopID();
+            }
+            ImGui::EndTable();
+        }
+    }
+    ImGui::EndChild();
+
+    size_t selectedCount = 0;
+    for (size_t i = 0; i < g_uwpPackages.size() && i < g_uwpSelected.size(); ++i)
+        if (g_uwpSelected[i] != 0) ++selectedCount;
+
+    if (selectedCount == 0)
+        ImGui::TextDisabled("%s", UwpStr(l, "selectone", "Select packages to remove.").c_str());
+    else
+        ImGui::Text("%zu selected", selectedCount);
+
+    if (ImGui::Button(UwpStr(l, "removeselected", "Remove selected").c_str(),
+                      ImVec2(-1, 0)) &&
+        selectedCount > 0) {
+        pendingRemove.clear();
+        for (size_t i = 0; i < g_uwpPackages.size() && i < g_uwpSelected.size(); ++i) {
+            if (g_uwpSelected[i] != 0) pendingRemove.push_back(g_uwpPackages[i].packageFullName);
+        }
+        showConfirm = true;
+    }
+
+    if (showConfirm) ImGui::OpenPopup("UwpConfirm");
+    if (ImGui::BeginPopupModal("UwpConfirm", &showConfirm, ImGuiWindowFlags_AlwaysAutoResize)) {
+        ImGui::TextWrapped("%s", l.Get("uwp", "main", "suredialogT1").c_str());
+        ImGui::Text("%zu %s", pendingRemove.size(), l.Get("uwp", "main", "suredialogT2").c_str());
+        ImGui::TextWrapped("%s", l.Get("uwp", "main", "suredialogT3").c_str());
+        ImGui::TextWrapped("%s", l.Get("uwp", "main", "suredialogT4").c_str());
+        ImGui::InputText("##uwp_confirm", confirmBuf, sizeof(confirmBuf));
+        if (ImGui::Button(l.Def("on").c_str())) {
+            if (strcmp(confirmBuf, "ILOVEMAKUTWEAKER") == 0 && !pendingRemove.empty()) {
+                const auto toRemove = pendingRemove;
+                g_uwpListLoading = true;
+                g_uwpListReady = false;
+                jobs::JobQueue::Instance().Enqueue([toRemove]() {
+                    uwp::RemovePackages(toRemove);
+                    auto loaded = uwp::ListInstalledPackages();
+                    std::lock_guard lock(g_uwpMutex);
+                    g_uwpPackages = std::move(loaded.packages);
+                    g_uwpLastError = loaded.error;
+                    g_uwpSelected.assign(g_uwpPackages.size(), 0);
+                    g_uwpListReady = true;
+                    g_uwpListLoading = false;
+                });
+                confirmBuf[0] = 0;
+                showConfirm = false;
+                pendingRemove.clear();
+            }
+        }
+        ImGui::SameLine();
+        if (ImGui::Button(l.Def("off").c_str())) {
+            confirmBuf[0] = 0;
+            showConfirm = false;
+            pendingRemove.clear();
+        }
+        ImGui::EndPopup();
     }
 }
 
@@ -474,52 +670,11 @@ static bool IsSystemProcess(const pmgr::ProcRow& p) {
     return lower.find(L"\\windows\\") != std::wstring::npos;
 }
 
-static void DrawMonitoringPanel() {
-    auto& l = Application::Instance().L10n();
-    const auto snap = perfmon::PerformanceMonitor::Instance().Get();
-    ImGui::Text("%s: %.1f%%", l.Get("monitoring", "main", "cpuusage").c_str(), snap.cpuPercent);
-    ImGui::Text("%s: %.0f / %.0f MB", l.Get("monitoring", "main", "ram").c_str(), snap.ramUsedMb,
-                snap.ramTotalMb);
-    ImGui::Text("%s: %.2f MB/s", l.Get("monitoring", "main", "readspeed").c_str(),
-                snap.diskReadMbps);
-    ImGui::Text("%s: %.2f MB/s", l.Get("monitoring", "main", "writespeed").c_str(),
-                snap.diskWriteMbps);
-    if (!snap.gpuName.empty()) {
-        ImGui::Text("GPU: ");
-        ImGui::SameLine();
-        TextWide(snap.gpuName);
-    }
-    static float hist[120]{};
-    static int histIdx{};
-    hist[histIdx++ % 120] = static_cast<float>(snap.cpuPercent);
-    ImGui::PlotLines("CPU", hist, 120, histIdx, nullptr, 0.f, 100.f, ImVec2(-1, 80));
-}
-
 static void DrawProcessMgr() {
     auto& app = Application::Instance();
     auto& l = app.L10n();
     auto& settings = app.GetSettings();
-    PageTitle(l.CatName("procmgr"));
-
-    if (ImGui::Button(l.Get("pmgr", "main", "monitoring").c_str()))
-        settings.pmgrShowMonitoring = !settings.pmgrShowMonitoring;
-    ImGui::SameLine();
-    if (ImGui::Button(l.Get("pmgr", "main", "settings").c_str())) modals::OpenExclusionSettings();
-    ImGui::SameLine();
-    if (ImGui::Button("MakuYan")) modals::OpenMakuYan();
-    if (!app.ExclusiveLayout() &&
-        ImGui::Button(l.Get("pmgr", "main", "getfullscr").c_str())) {
-        settings.exclusiveMode = true;
-        settings.Save();
-    }
-
-    if (settings.pmgrShowMonitoring) {
-        DrawMonitoringPanel();
-        if (ImGui::Button(l.Get("pmgr", "main", "backtoprocess").c_str()))
-            settings.pmgrShowMonitoring = false;
-        settings.Save();
-        return;
-    }
+    PageTitleCompact(l.CatName("procmgr"));
 
     static int tab = 0;
     static std::vector<pmgr::ProcRow> procs;
@@ -529,6 +684,8 @@ static void DrawProcessMgr() {
     static std::wstring selectedSvc;
     static bool needRefresh = true;
     static int lastTab = -1;
+    static DWORD lastAutoRefreshTick = 0;
+    constexpr DWORD kAutoRefreshMs = 4000;
 
     const std::wstring searchW = util::ToWide(searchBuf);
     if (tab != lastTab) {
@@ -536,56 +693,112 @@ static void DrawProcessMgr() {
         lastTab = tab;
     }
 
-    if (ImGui::BeginTabBar("pmgr_tabs")) {
-        if (ImGui::BeginTabItem(PmgrStr(l, "tabproc", "Processes").c_str())) {
-            tab = 0;
-            ImGui::EndTabItem();
+    const bool dark = IsDarkTheme(settings.theme);
+    PushCardSurface(dark);
+    PushCompactToolbarStyle();
+
+    if (ImGui::BeginTable("pmgr_toolbar", 2,
+                          ImGuiTableFlags_SizingStretchSame | ImGuiTableFlags_NoPadInnerX)) {
+        ImGui::TableSetupColumn("main", ImGuiTableColumnFlags_WidthStretch, 1.f);
+        ImGui::TableSetupColumn("acts", ImGuiTableColumnFlags_WidthFixed, 280.f * UiScale());
+        ImGui::TableNextRow();
+
+        ImGui::TableSetColumnIndex(0);
+        if (ImGui::BeginTabBar("pmgr_tabs", ImGuiTabBarFlags_FittingPolicyScroll)) {
+            if (ImGui::BeginTabItem(PmgrStr(l, "tabproc", "Processes").c_str())) {
+                tab = 0;
+                ImGui::EndTabItem();
+            }
+            if (ImGui::BeginTabItem(PmgrStr(l, "tabsvc", "Services").c_str())) {
+                tab = 1;
+                ImGui::EndTabItem();
+            }
+            ImGui::EndTabBar();
         }
-        if (ImGui::BeginTabItem(PmgrStr(l, "tabsvc", "Services").c_str())) {
-            tab = 1;
-            ImGui::EndTabItem();
+
+        ImGui::TableSetColumnIndex(1);
+        if (ImGui::Button(l.CatName("mon").c_str())) app.SetPage(app::PageId::Monitor);
+        ImGui::SameLine(0.f, 4.f);
+        if (ImGui::Button(l.Get("pmgr", "main", "settings").c_str()))
+            modals::OpenExclusionSettings();
+        ImGui::SameLine(0.f, 4.f);
+        if (ImGui::Button("MakuYan")) modals::OpenMakuYan();
+        if (!app.ExclusiveLayout()) {
+            ImGui::SameLine(0.f, 4.f);
+            if (ImGui::Button(l.Get("pmgr", "main", "getfullscr").c_str())) {
+                settings.exclusiveMode = true;
+                settings.Save();
+            }
         }
-        ImGui::EndTabBar();
+
+        ImGui::TableNextRow();
+        ImGui::TableSetColumnIndex(0);
+        ImGui::SetNextItemWidth(-1.f);
+        ImGui::InputTextWithHint("##pmgr_search",
+                                 PmgrStr(l, "filtersearch", "Search by name or PID...").c_str(),
+                                 searchBuf, sizeof(searchBuf));
+        ImGui::TableSetColumnIndex(1);
+        if (ImGui::Button(l.Get("pmgr", "main", "showall").c_str())) needRefresh = true;
+        if (tab == 0) {
+            ImGui::SameLine(0.f, 4.f);
+            if (ImGui::Button(l.Get("pmgr", "main", "endprocess").c_str()) && selectedPid != 0) {
+                HANDLE h = OpenProcess(PROCESS_TERMINATE, FALSE, selectedPid);
+                if (h) {
+                    TerminateProcess(h, 0);
+                    CloseHandle(h);
+                    selectedPid = 0;
+                    needRefresh = true;
+                }
+            }
+        }
+
+        if (tab == 0) {
+            ImGui::TableNextRow();
+            ImGui::TableSetColumnIndex(0);
+            bool groupChanged = false;
+            if (ImGui::Checkbox(PmgrStr(l, "group", "Group processes").c_str(), &settings.group))
+                groupChanged = true;
+            ImGui::SameLine(0.f, 10.f);
+            if (ImGui::Checkbox(l.Get("pmgr", "main", "onlyfrozen").c_str(), &settings.onlyFrozen))
+                groupChanged = true;
+            ImGui::SameLine(0.f, 10.f);
+            if (ImGui::Checkbox(l.Get("pmgr", "main", "compact").c_str(), &settings.compact))
+                groupChanged = true;
+
+            const char* memFilters[] = {
+                l.Get("pmgr", "main", "showall").c_str(),
+                l.Get("pmgr", "main", "from50mb").c_str(),
+                l.Get("pmgr", "main", "from100mb").c_str(),
+                l.Get("pmgr", "main", "from300mb").c_str(),
+                l.Get("pmgr", "main", "from500mb").c_str(),
+                l.Get("pmgr", "main", "from1000mb").c_str(),
+                l.Get("pmgr", "main", "from2000mb").c_str(),
+            };
+            ImGui::TableSetColumnIndex(1);
+            ImGui::SetNextItemWidth(-1.f);
+            if (ImGui::Combo("##memfilter", &settings.lastProcessFilterIndex, memFilters,
+                             static_cast<int>(std::size(memFilters))))
+                groupChanged = true;
+            if (groupChanged) settings.Save();
+        }
+
+        ImGui::EndTable();
     }
 
-    ImGui::SetNextItemWidth(-1);
-    ImGui::InputTextWithHint("##pmgr_search",
-                             PmgrStr(l, "filtersearch", "Search by name or PID...").c_str(),
-                             searchBuf, sizeof(searchBuf));
+    PopCompactToolbarStyle();
+    PopCardSurface();
+    ImGui::Dummy(ImVec2(0.f, 4.f * UiScale()));
 
-    if (ImGui::Button(l.Get("pmgr", "main", "showall").c_str())) needRefresh = true;
-
-    bool groupChanged = false;
-    if (ImGui::Checkbox(PmgrStr(l, "group", "Group processes").c_str(), &settings.group))
-        groupChanged = true;
-    ImGui::SameLine();
-    if (ImGui::Checkbox(l.Get("pmgr", "main", "onlyfrozen").c_str(), &settings.onlyFrozen))
-        groupChanged = true;
-    ImGui::SameLine();
-    if (ImGui::Checkbox(l.Get("pmgr", "main", "compact").c_str(), &settings.compact))
-        groupChanged = true;
-
-    const char* memFilters[] = {
-        l.Get("pmgr", "main", "showall").c_str(),
-        l.Get("pmgr", "main", "from50mb").c_str(),
-        l.Get("pmgr", "main", "from100mb").c_str(),
-        l.Get("pmgr", "main", "from300mb").c_str(),
-        l.Get("pmgr", "main", "from500mb").c_str(),
-        l.Get("pmgr", "main", "from1000mb").c_str(),
-        l.Get("pmgr", "main", "from2000mb").c_str(),
-    };
-    ImGui::SetNextItemWidth(180);
-    if (ImGui::Combo("##memfilter", &settings.lastProcessFilterIndex, memFilters,
-                     static_cast<int>(std::size(memFilters))))
-        groupChanged = true;
-
-    if (groupChanged) settings.Save();
-
-    if (needRefresh || (tab == 0 && procs.empty()) || (tab == 1 && services.empty())) {
+    const bool listEmpty = (tab == 0 && procs.empty()) || (tab == 1 && services.empty());
+    const DWORD nowTick = GetTickCount();
+    const bool autoDue =
+        lastAutoRefreshTick == 0 || (nowTick - lastAutoRefreshTick) >= kAutoRefreshMs;
+    if (needRefresh || listEmpty || autoDue) {
         if (tab == 0)
-            pmgr::RefreshProcesses(procs);
+            pmgr::RefreshProcesses(procs, settings.onlyFrozen);
         else
             pmgr::RefreshServices(services);
+        if (!needRefresh) lastAutoRefreshTick = nowTick;
         needRefresh = false;
     }
 
@@ -594,17 +807,6 @@ static void DrawProcessMgr() {
     const SIZE_T memMin = PmgrMemThresholdMb(settings.lastProcessFilterIndex);
 
     if (tab == 0) {
-        ImGui::SameLine();
-        if (ImGui::Button(l.Get("pmgr", "main", "endprocess").c_str()) && selectedPid != 0) {
-            HANDLE h = OpenProcess(PROCESS_TERMINATE, FALSE, selectedPid);
-            if (h) {
-                TerminateProcess(h, 0);
-                CloseHandle(h);
-                selectedPid = 0;
-                needRefresh = true;
-            }
-        }
-
         struct FilteredProc {
             size_t index;
         };
@@ -629,6 +831,9 @@ static void DrawProcessMgr() {
         const int colCount = settings.compact ? 4 : 5;
         const float tableH = ImGui::GetContentRegionAvail().y - 4.0f;
 
+        SIZE_T maxMem = 1;
+        for (const auto& fp : visible) maxMem = std::max(maxMem, procs[fp.index].mem);
+
         auto drawProcRow = [&](const pmgr::ProcRow& p) {
             ImGui::TableNextRow();
             ImGui::PushID(static_cast<int>(p.pid));
@@ -638,13 +843,41 @@ static void DrawProcessMgr() {
             if (ImGui::Selectable(rowLabel.c_str(), selected,
                                   ImGuiSelectableFlags_SpanAllColumns | ImGuiSelectableFlags_AllowOverlap))
                 selectedPid = p.pid;
+            if (ImGui::BeginPopupContextItem()) {
+                if (ImGui::MenuItem(l.Get("pmgr", "main", "endprocess").c_str())) {
+                    pmgr::TerminateProcessesByName(p.name);
+                    needRefresh = true;
+                }
+                if (ImGui::MenuItem(l.Get("pmgr", "main", "location").c_str())) {
+                    if (!p.path.empty()) pmgr::OpenProcessLocation(p.path);
+                }
+                if (ImGui::MenuItem(l.Get("pmgr", "main", "excl").c_str())) {
+                    const std::string exe = util::ToUtf8(p.name);
+                    auto& excl = settings.processExclusions;
+                    if (excl.find(exe) == std::string::npos) {
+                        if (!excl.empty()) excl += ",";
+                        excl += exe;
+                        settings.Save();
+                    }
+                }
+                ImGui::EndPopup();
+            }
             ImGui::TableNextColumn();
             ImGui::Text("%lu", p.pid);
             ImGui::TableNextColumn();
-            if (settings.ramMbOnly)
-                ImGui::Text("%.0f MB", p.mem / (1024.0 * 1024.0));
-            else
-                ImGui::Text("%.1f MB", p.mem / (1024.0 * 1024.0));
+            {
+                const float frac =
+                    std::clamp(static_cast<float>(p.mem) / static_cast<float>(maxMem), 0.f, 1.f);
+                const ImVec4 accent = AccentColor();
+                ImGui::PushStyleColor(ImGuiCol_PlotHistogram, accent);
+                ImGui::PushStyleColor(ImGuiCol_PlotHistogramHovered, AccentLightColor());
+                ImGui::ProgressBar(frac, ImVec2(-FLT_MIN, 10.f * UiScale()), "");
+                ImGui::PopStyleColor(2);
+                if (settings.ramMbOnly)
+                    ImGui::Text("%.0f MB", p.mem / (1024.0 * 1024.0));
+                else
+                    ImGui::Text("%.1f MB", p.mem / (1024.0 * 1024.0));
+            }
             ImGui::TableNextColumn();
             ImGui::TextUnformatted(p.critical ? yesLbl.c_str() : noLbl.c_str());
             if (!settings.compact) {
@@ -782,120 +1015,6 @@ static void DrawProcessMgr() {
     }
 }
 
-// --- PCI ---
-static void DrawPci() {
-    auto& l = Application::Instance().L10n();
-    PageTitle(l.Get("pci", "main", "label"));
-    static bool loadingShown{};
-    if (!loadingShown) {
-        ImGui::TextWrapped("%s", l.Get("pci", "main", "loading").c_str());
-        loadingShown = true;
-    }
-    std::wstring cpu = wmi::QueryScalar(L"SELECT Name FROM Win32_Processor", L"Name");
-    std::wstring ram = wmi::QueryScalar(L"SELECT TotalPhysicalMemory FROM Win32_ComputerSystem",
-                                        L"TotalPhysicalMemory");
-
-    ImGui::TextUnformatted(l.Get("pci", "main", "processorname").c_str());
-    ImGui::SameLine();
-    TextWide(cpu);
-    if (!ram.empty()) {
-        try {
-            const unsigned long long bytes = std::stoull(ram);
-            ImGui::Text("%s %.2f GB", l.Get("pci", "main", "ramtotal").c_str(),
-                        bytes / (1024.0 * 1024.0 * 1024.0));
-        } catch (...) {
-        }
-    }
-    auto gpus = wmi::QueryList(L"SELECT Name FROM Win32_VideoController", L"Name");
-    for (auto& g : gpus) {
-        ImGui::Bullet();
-        ImGui::SameLine();
-        TextWide(g);
-    }
-
-    ImGui::Separator();
-    ImGui::TextUnformatted(l.Get("pci", "main", "benchtitle").c_str());
-
-    static std::atomic<bool> benchRunning{false};
-    static std::string benchResult;
-    static std::mutex benchMutex;
-    if (benchResult.empty()) benchResult = l.Get("pci", "main", "benchtip");
-
-    auto startBench = [&](bool multi) {
-        if (benchRunning.exchange(true)) return;
-
-        const std::string running =
-            multi ? l.Get("pci", "main", "running_multicore") : l.Get("pci", "main", "running");
-        const std::string done =
-            multi ? l.Get("pci", "main", "test1multi") : l.Get("pci", "main", "test1");
-        const std::string scoreLbl = l.Get("pci", "main", "test2");
-        const std::string opsLbl = l.Get("pci", "main", "test3");
-
-        {
-            std::lock_guard lock(benchMutex);
-            benchResult = running;
-        }
-
-        jobs::JobQueue::Instance().Enqueue([multi, done, scoreLbl, opsLbl]() {
-            try {
-                const auto r = bench::Run(multi);
-                const std::string line =
-                    done + " " + scoreLbl + " " + FormatScore(r.score) + " " + opsLbl;
-                std::lock_guard lock(benchMutex);
-                benchResult = line;
-            } catch (...) {
-                std::lock_guard lock(benchMutex);
-                benchResult = done + " (error)";
-            }
-            benchRunning = false;
-        });
-    };
-
-    const bool busy = benchRunning.load();
-    if (busy) ImGui::BeginDisabled();
-    if (ImGui::Button(l.Get("pci", "main", "benchbutton").c_str())) startBench(false);
-    ImGui::SameLine();
-    if (ImGui::Button(l.Get("pci", "main", "benchbutton2").c_str())) startBench(true);
-    ImGui::SameLine();
-    if (ImGui::Button(l.Get("pci", "main", "lookresulbutton").c_str()))
-        proc::OpenUrl(L"https://adderly.top/makubench");
-    if (busy) ImGui::EndDisabled();
-
-    {
-        std::lock_guard lock(benchMutex);
-        ImGui::TextWrapped("%s", benchResult.c_str());
-    }
-
-    auto saveReport = [&]() {
-        std::wstring path = util::GetExeDirectory() + L"\\pci_export.txt";
-        std::wofstream out(path);
-        out << L"CPU: " << cpu << L"\nRAM: " << ram << L"\n";
-        for (auto& g : gpus) out << L"GPU: " << g << L"\n";
-        MessageBoxW(Application::Instance().Hwnd(),
-                    util::ToWide(l.Get("pci", "main", "save_done")).c_str(), L"MakuTweaker",
-                    MB_OK);
-    };
-    if (ImGui::Button(l.Get("pci", "main", "save").c_str())) saveReport();
-    ImGui::SameLine();
-    if (ImGui::Button(l.Get("pci", "main", "clipboard").c_str())) {
-        std::wstring clip = L"CPU: " + cpu + L"\nRAM: " + ram;
-        if (OpenClipboard(nullptr)) {
-            EmptyClipboard();
-            const size_t bytes = (clip.size() + 1) * sizeof(wchar_t);
-            HGLOBAL mem = GlobalAlloc(GMEM_MOVEABLE, bytes);
-            if (mem) {
-                memcpy(GlobalLock(mem), clip.c_str(), bytes);
-                GlobalUnlock(mem);
-                SetClipboardData(CF_UNICODETEXT, mem);
-            }
-            CloseClipboard();
-        }
-    }
-    if (ImGui::IsKeyPressed(ImGuiKey_F5) ||
-        (ImGui::GetIO().KeyCtrl && ImGui::IsKeyPressed(ImGuiKey_S)))
-        saveReport();
-}
-
 static void DrawSettings() {
     auto& app = Application::Instance();
     auto& l = app.L10n();
@@ -928,19 +1047,19 @@ static void DrawSettings() {
         themeDark = false;
         s.theme = "Light";
         s.Save();
-        ui::ApplyTheme(s.theme);
-        ui::SyncDwmDark(app.Hwnd(), false);
+        ui::ApplyTheme(s.theme, app.Hwnd());
+        ui::SyncDwmTheme(app.Hwnd(), s.theme, false);
     }
     ImGui::SameLine();
     if (ImGui::RadioButton(l.Get("ab", "main", "d").c_str(), themeDark)) {
         themeDark = true;
         s.theme = "Dark";
         s.Save();
-        ui::ApplyTheme(s.theme);
-        ui::SyncDwmDark(app.Hwnd(), true);
+        ui::ApplyTheme(s.theme, app.Hwnd());
+        ui::SyncDwmTheme(app.Hwnd(), s.theme, false);
     }
     ImGui::Separator();
-    ImGui::Text("MakuTweaker 5.8 (C++/ImGui)");
+    ImGui::Text("%s %s (C++/ImGui)", brand::kDisplayNameUtf8, maku::version::kText);
     ImGui::Text("Mark Adderly");
     if (ImGui::Button("GitHub"))
         proc::OpenUrl(L"https://github.com/MarkAdderly/MakuTweaker");
@@ -952,6 +1071,9 @@ static void DrawSettings() {
 
     if (ImGui::Checkbox(l.Get("ab", "main", "disabletelemetry").c_str(), &s.disableTelemetry))
         s.Save();
+    if (ImGui::CollapsingHeader("Telemetry info")) {
+        ImGui::TextWrapped("%s", l.Get("ab", "main", "telemetryabt").c_str());
+    }
 
     ImGui::Checkbox(l.Get("pmgr", "main", "modeset").c_str(), &s.autoStartExclusive);
 
@@ -962,9 +1084,9 @@ static void DrawSettings() {
         std::wstring err;
         if (preset::ExportSettings(path, &err))
             MessageBoxW(app.Hwnd(), util::ToWide(l.Get("ab", "main", "cfg_svsuccess")).c_str(),
-                        L"MakuTweaker", MB_OK);
+                        brand::kDisplayName, MB_OK);
         else
-            MessageBoxW(app.Hwnd(), err.c_str(), L"MakuTweaker", MB_OK | MB_ICONERROR);
+            MessageBoxW(app.Hwnd(), err.c_str(), brand::kDisplayName, MB_OK | MB_ICONERROR);
     }
     ImGui::SameLine();
     if (ImGui::Button(l.Get("ab", "main", "cfg_import").c_str())) {
@@ -972,9 +1094,9 @@ static void DrawSettings() {
         std::wstring err;
         if (preset::ImportSettings(path, &err))
             MessageBoxW(app.Hwnd(), util::ToWide(l.Get("ab", "main", "cfg_ldsuccess")).c_str(),
-                        L"MakuTweaker", MB_OK);
+                        brand::kDisplayName, MB_OK);
         else
-            MessageBoxW(app.Hwnd(), err.c_str(), L"MakuTweaker", MB_OK | MB_ICONERROR);
+            MessageBoxW(app.Hwnd(), err.c_str(), brand::kDisplayName, MB_OK | MB_ICONERROR);
     }
 
     if (ImGui::Button("MakuYan")) modals::OpenMakuYan();
@@ -1003,6 +1125,7 @@ void Draw(app::PageId page) {
     case app::PageId::ProcessMgr: DrawProcessMgr(); break;
     case app::PageId::Pci: DrawPci(); break;
     case app::PageId::WinInfo: DrawWinInfo(); break;
+    case app::PageId::Monitor: DrawMonitor(); break;
     case app::PageId::Settings: DrawSettings(); break;
     default: break;
     }

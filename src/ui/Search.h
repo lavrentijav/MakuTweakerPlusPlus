@@ -3,6 +3,6 @@
 
 namespace maku::ui {
 
-void DrawSearchBar();
+void DrawSearchBar(bool compact = false);
 
 } // namespace maku::ui

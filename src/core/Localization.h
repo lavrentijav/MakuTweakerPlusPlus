@@ -25,14 +25,17 @@ public:
         std::string categoryKey;
         std::string internalCategoryTag;
     };
-    std::vector<TweakSuggestion> GetAllTweaksForSearch() const;
+    const std::vector<TweakSuggestion>& GetAllTweaksForSearch() const;
+    void RebuildSearchIndex();
 
     static std::wstring LocPath(const std::string& lang);
 
 private:
     std::string lang_;
     nlohmann::json root_;
+    std::vector<TweakSuggestion> searchIndex_;
     void LoadFile(const std::string& lang);
+    void BuildSearchIndex();
 };
 
 } // namespace maku::l10n

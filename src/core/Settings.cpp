@@ -43,8 +43,13 @@ void Settings::Load() {
         if (j.contains("processViewMode")) processViewMode = j["processViewMode"].get<int>();
         if (j.contains("monitoringRefreshMs"))
             monitoringRefreshMs = j["monitoringRefreshMs"].get<int>();
+        if (j.contains("cpuAutoTopK")) cpuAutoTopK = j["cpuAutoTopK"].get<int>();
         if (j.contains("pmgrShowMonitoring"))
             pmgrShowMonitoring = j["pmgrShowMonitoring"].get<bool>();
+        if (j.contains("metricsServiceEnabled"))
+            metricsServiceEnabled = j["metricsServiceEnabled"].get<bool>();
+        if (j.contains("metricsIntervalSec"))
+            metricsIntervalSec = j["metricsIntervalSec"].get<int>();
     } catch (...) {
     }
 }
@@ -73,7 +78,10 @@ void Settings::Save() const {
     j["ramMbOnly"] = ramMbOnly;
     j["processViewMode"] = processViewMode;
     j["monitoringRefreshMs"] = monitoringRefreshMs;
+    j["cpuAutoTopK"] = cpuAutoTopK;
     j["pmgrShowMonitoring"] = pmgrShowMonitoring;
+    j["metricsServiceEnabled"] = metricsServiceEnabled;
+    j["metricsIntervalSec"] = metricsIntervalSec;
     std::ofstream f(Path());
     if (f) f << j.dump(2);
 }

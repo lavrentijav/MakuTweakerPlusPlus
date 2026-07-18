@@ -18,6 +18,7 @@ public:
 
     ID3D11Device* Device() const { return device_.Get(); }
     ID3D11DeviceContext* Context() const { return context_.Get(); }
+    bool UsesAlphaSwapChain() const { return false; }
 
 private:
     Microsoft::WRL::ComPtr<ID3D11Device> device_;

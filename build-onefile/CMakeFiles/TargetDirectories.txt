@@ -1,0 +1,4 @@
+D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/CMakeFiles/MakuTweaker.dir
+D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/CMakeFiles/ALL_BUILD.dir
+D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/CMakeFiles/ZERO_CHECK.dir
+D:/Projects/cpp/MakuTweakerPlusPlus/build-onefile/_deps/json-build/CMakeFiles/ALL_BUILD.dir

@@ -1,4 +1,5 @@
 #include "core/Localization.h"
+#include "core/EmbeddedStore.h"
 #include "core/StringUtil.h"
 #include <fstream>
 #include <set>
@@ -20,7 +21,7 @@ std::string GetString(const nlohmann::json& j, const std::string& fallback = {})
 } // namespace
 
 std::wstring Localization::LocPath(const std::string& lang) {
-    return util::GetExeDirectory() + L"\\loc\\" + util::ToWide(lang) + L".json";
+    return embed::DataRoot() + L"\\loc\\" + util::ToWide(lang) + L".json";
 }
 
 void Localization::LoadFile(const std::string& lang) {
@@ -36,9 +37,89 @@ void Localization::LoadFile(const std::string& lang) {
     }
     f >> root_;
     lang_ = lang;
+    BuildSearchIndex();
 }
 
-Localization::Localization(const std::string& lang) : lang_(lang) { LoadFile(lang); }
+Localization::Localization(const std::string& lang) : lang_(lang) {
+    LoadFile(lang);
+    BuildSearchIndex();
+}
+
+void Localization::RebuildSearchIndex() { BuildSearchIndex(); }
+
+void Localization::BuildSearchIndex() {
+    std::vector<TweakSuggestion> tweaks;
+    static const std::set<std::string> ignored = {
+        "label", "choose", "showall", "info1", "info2", "info3", "chk", "comp", "b",
+        "mode1", "mode2", "mode3", "tpmy", "tpmn", "tooltip", "test1multi",
+        "running_multicore", "running", "test1", "test2", "test3", "benchtip",
+        "info", "flyout", "reportbutton", "b2", "b4", "deledge_done", "deledge_error",
+        "deledge_tooltip", "deledge_sure", "deledge_before", "deledge_btn",
+        "makuos_tooltip", "infodone", "title", "title2", "os", "oned", "tenM",
+        "thirtyM", "oneH", "twoH", "fourH", "sixH", "suredialogT1", "suredialogT2",
+        "suredialogT3", "suredialogT4", "suredialogNS", "isnt", "is", "wu5b", "wu6b",
+        "install", "reset", "enable", "e8b"};
+    static const std::set<std::string> skipCats = {
+        "base", "pmgr", "perfor", "settings", "ab", "quick"};
+
+    const nlohmann::json* categories = TryGet(root_, "categories");
+    if (!categories || !categories->is_object()) {
+        searchIndex_.clear();
+        searchIndex_.shrink_to_fit();
+        return;
+    }
+
+    const nlohmann::json* base = TryGet(*categories, "base");
+    const nlohmann::json* catNames = base ? TryGet(*base, "catname") : nullptr;
+
+    for (auto& category : categories->items()) {
+        if (skipCats.count(category.key())) continue;
+        if (!category.value().is_object()) continue;
+        const nlohmann::json* main = TryGet(category.value(), "main");
+        if (!main || !main->contains("label")) continue;
+
+        std::string tag = category.key();
+        std::string displayCat = tag;
+        if (catNames) {
+            const nlohmann::json* name = TryGet(*catNames, tag.c_str());
+            if (name) displayCat = GetString(*name, tag);
+        }
+
+        for (auto& tweak : main->items()) {
+            std::string tkey = tweak.key();
+            if (ignored.count(tkey)) continue;
+            if (tkey.rfind("tooltip", 0) == 0 || tkey.rfind("desc", 0) == 0 ||
+                tkey.rfind("status", 0) == 0 || tkey.rfind("info", 0) == 0 ||
+                tkey.rfind("tip", 0) == 0 || tkey.rfind("note", 0) == 0 ||
+                tkey.rfind("warn", 0) == 0 || tkey.rfind("msg", 0) == 0)
+                continue;
+            if (!tweak.value().is_string()) continue;
+            std::string val = tweak.value().get<std::string>();
+            if (val.size() > 90) continue;
+            tweaks.push_back({tkey, val, displayCat, tag});
+        }
+    }
+
+    const nlohmann::json* myan = TryGet(*categories, "myan");
+    const nlohmann::json* myanMain = myan ? TryGet(*myan, "main") : nullptr;
+    const nlohmann::json* exclTitle =
+        myanMain ? TryGet(*myanMain, "excltitle") : nullptr;
+    if (exclTitle) {
+        std::string pmgrLabel = "ProcessMGR";
+        const nlohmann::json* pmgr = TryGet(*categories, "pmgr");
+        const nlohmann::json* pmgrMain = pmgr ? TryGet(*pmgr, "main") : nullptr;
+        const nlohmann::json* pmgrLbl = pmgrMain ? TryGet(*pmgrMain, "label") : nullptr;
+        if (pmgrLbl) pmgrLabel = GetString(*pmgrLbl, pmgrLabel);
+        tweaks.push_back({"makuyan_appblock", GetString(*exclTitle, "MakuYan"), pmgrLabel,
+                          "makuyan_window"});
+    }
+
+    searchIndex_ = std::move(tweaks);
+}
+
+const std::vector<Localization::TweakSuggestion>& Localization::GetAllTweaksForSearch() const {
+    return searchIndex_;
+}
 
 StringMap Localization::LoadCategory(const std::string& category) const {
     StringMap result;
@@ -83,56 +164,5 @@ std::string Localization::CatName(const std::string& internalTag) const {
 }
 
 std::string Localization::Def(const std::string& key) const { return Get("base", "def", key); }
-
-std::vector<Localization::TweakSuggestion> Localization::GetAllTweaksForSearch() const {
-    std::vector<TweakSuggestion> tweaks;
-    static const std::set<std::string> ignored = {
-        "label", "choose", "showall", "info1", "info2", "info3", "chk", "comp", "b",
-        "mode1", "mode2", "mode3", "tpmy", "tpmn", "tooltip", "test1multi",
-        "running_multicore", "running", "test1", "test2", "test3", "benchtip",
-        "info", "flyout", "reportbutton", "b2", "b4", "deledge_done", "deledge_error",
-        "deledge_tooltip", "deledge_sure", "deledge_before", "deledge_btn",
-        "makuos_tooltip", "infodone", "title", "title2", "os", "oned", "tenM",
-        "thirtyM", "oneH", "twoH", "fourH", "sixH", "suredialogT1", "suredialogT2",
-        "suredialogT3", "suredialogT4", "suredialogNS", "isnt", "is", "wu5b", "wu6b",
-        "install", "reset", "enable", "e8b"};
-    static const std::set<std::string> skipCats = {
-        "base", "pmgr", "perfor", "settings", "ab", "quick"};
-
-    const nlohmann::json* categories = TryGet(root_, "categories");
-    if (!categories || !categories->is_object()) return tweaks;
-
-    const nlohmann::json* base = TryGet(*categories, "base");
-    const nlohmann::json* catNames = base ? TryGet(*base, "catname") : nullptr;
-
-    for (auto& category : categories->items()) {
-        if (skipCats.count(category.key())) continue;
-        if (!category.value().is_object()) continue;
-        const nlohmann::json* main = TryGet(category.value(), "main");
-        if (!main || !main->contains("label")) continue;
-
-        std::string tag = category.key();
-        std::string displayCat = tag;
-        if (catNames) {
-            const nlohmann::json* name = TryGet(*catNames, tag.c_str());
-            if (name) displayCat = GetString(*name, tag);
-        }
-
-        for (auto& tweak : main->items()) {
-            std::string tkey = tweak.key();
-            if (ignored.count(tkey)) continue;
-            if (tkey.rfind("tooltip", 0) == 0 || tkey.rfind("desc", 0) == 0 ||
-                tkey.rfind("status", 0) == 0 || tkey.rfind("info", 0) == 0 ||
-                tkey.rfind("tip", 0) == 0 || tkey.rfind("note", 0) == 0 ||
-                tkey.rfind("warn", 0) == 0 || tkey.rfind("msg", 0) == 0)
-                continue;
-            if (!tweak.value().is_string()) continue;
-            std::string val = tweak.value().get<std::string>();
-            if (val.size() > 90) continue;
-            tweaks.push_back({tkey, val, displayCat, tag});
-        }
-    }
-    return tweaks;
-}
 
 } // namespace maku::l10n

@@ -8,5 +8,6 @@ namespace maku::ui::pages {
 
 void Draw(maku::app::PageId page);
 void DrawWinInfo();
+void DrawPci();
 
 } // namespace maku::ui::pages

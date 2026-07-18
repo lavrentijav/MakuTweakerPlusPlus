@@ -28,7 +28,10 @@ struct Settings {
     bool ramMbOnly = false;
     int processViewMode = 0;
     int monitoringRefreshMs = 1000;
+    int cpuAutoTopK = 8;
     bool pmgrShowMonitoring = false;
+    bool metricsServiceEnabled = false;
+    int metricsIntervalSec = 5;
 
     void Load();
     void Save() const;

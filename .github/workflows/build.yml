@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: windows-latest
@@ -18,7 +21,8 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Update build number
+      - name: Bump compilation counter
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         shell: pwsh
         run: ./scripts/UpdateBuildNumber.ps1
 
@@ -28,14 +32,42 @@ jobs:
       - name: Build Release
         run: cmake --build build --config Release
 
+      - name: Configure onefile
+        run: cmake -B build-onefile -G "Visual Studio 17 2022" -A x64 -DMAKU_ONEFILE=ON
+
+      - name: Build onefile Release
+        run: cmake --build build-onefile --config Release
+
+      - name: Commit build number to git
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        shell: pwsh
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add BuildNumber.txt
+          $n = (Get-Content BuildNumber.txt -Raw).Trim()
+          git diff --staged --quiet
+          if ($LASTEXITCODE -ne 0) {
+            git commit -m "chore: build $n [skip ci]"
+            git push
+          }
+
       - name: Copy output for artifact
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force -Path build_output | Out-Null
           Copy-Item -Recurse build/Release/* build_output/
+          New-Item -ItemType Directory -Force -Path build_output_onefile | Out-Null
+          Copy-Item build-onefile/Release/MakuTweaker++.exe build_output_onefile/
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: MakuTweaker-Release
           path: build_output/
+
+      - name: Upload onefile artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MakuTweaker-OneFile
+          path: build_output_onefile/MakuTweaker++.exe

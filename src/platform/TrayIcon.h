@@ -11,6 +11,7 @@ public:
     void Destroy();
     void ShowBalloon(const std::wstring& title, const std::wstring& message);
     bool HandleMessage(UINT msg, WPARAM wp, LPARAM lp);
+    static bool ProcessCallback(HWND hwnd, WPARAM wp, LPARAM lp);
 
 private:
     HWND hwnd_{};

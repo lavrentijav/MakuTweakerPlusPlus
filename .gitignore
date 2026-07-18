@@ -56,6 +56,9 @@ ipch/
 *.psess
 *.vsp
 *.vspx
+# WPR traces (regenerate: scripts/Profile-MakuTweaker.ps1 as Admin)
+profiles/*.etl
+!profiles/.gitkeep
 
 # Guidance Automation Toolkit
 *.gpState
@@ -143,3 +146,29 @@ CMakeUserPresets.json
 .vs/
 compile_commands.json
 
+
+# --- secrets & local-only (auto-added) ---
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.session
+*.session-journal
+*credentials*.json
+*credentials*.txt
+id_rsa
+id_ed25519
+*.db
+.idea/
+.vscode/
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+*.log
+node_modules/
+
+build/ build-onefile/ out/ profiles/ *.etl .vs/

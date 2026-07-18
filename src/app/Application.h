@@ -26,13 +26,15 @@ enum class PageId {
     ProcessMgr,
     Pci,
     WinInfo,
+    Monitor,
     Settings,
     Count
 };
 
 inline const char* PageTag(PageId id) {
     static const char* tags[] = {"exp",  "wu",   "sys",  "per",  "uwp", "quick", "adv",
-                                 "compon", "act", "perf", "sat",  "pmgr", "pci", "wininfo"};
+                                 "compon", "act", "perf", "sat",  "pmgr", "pci", "wininfo",
+                                 "mon"};
     if (id == PageId::Settings) return "settings";
     if (static_cast<int>(id) < 0 || static_cast<int>(id) >= static_cast<int>(PageId::Settings))
         return "exp";
@@ -46,6 +48,7 @@ inline PageId PageFromTag(const std::string& tag) {
     if (tag == "procmgr" || tag == "mgr") return PageId::ProcessMgr;
     if (tag == "wininfo" || tag == "win") return PageId::WinInfo;
     if (tag == "pci" || tag == "pc") return PageId::Pci;
+    if (tag == "mon") return PageId::Monitor;
     if (tag == "wu" || tag == "u") return PageId::WindowsUpdate;
     if (tag == "perf" || tag == "p") return PageId::Performance;
     if (tag == "sat" || tag == "s") return PageId::ShutdownTimer;
@@ -74,6 +77,10 @@ public:
     PageId CurrentPage() const { return currentPage_; }
     bool ExclusiveLayout() const { return settings_.exclusiveMode; }
 
+    bool TryHideToMetricsTray();
+    void RequestQuit();
+    void AdoptMetricsServiceTrayMode();
+
     HWND Hwnd() const { return hwnd_; }
     bool ShowUpdateDialog() const { return showUpdateDialog_; }
     void SetShowUpdateDialog(bool v) { showUpdateDialog_ = v; }
@@ -90,8 +97,6 @@ private:
     std::unique_ptr<l10n::Localization> l10n_;
     platform::TrayIcon tray_;
     PageId currentPage_{PageId::Explorer};
-    bool explorerRestartPending_{false};
-    DWORD explorerRestartAt_{0};
     bool showUpdateDialog_{false};
     platform::UpdateInfo pendingUpdate_{};
     DWORD lastPerfTick_{0};

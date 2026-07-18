@@ -11,9 +11,11 @@ struct RunResult {
 };
 
 RunResult Run(const std::wstring& file, const std::wstring& args, bool shell = false);
+RunResult RunElevated(const std::wstring& file, const std::wstring& args);
 RunResult RunHidden(const std::string& commandLine);
 RunResult RunPowerShell(const std::wstring& script);
 void OpenUrl(const std::wstring& url);
+bool LaunchDetached(const std::wstring& file, const std::wstring& args = L"");
 void RestartExplorer();
 void KillExplorer();
 

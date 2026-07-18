@@ -1,9 +1,11 @@
 #include "core/ProcessMgrUtil.h"
 #include "core/StringUtil.h"
+#include <shellapi.h>
 #include <psapi.h>
 #include <tlhelp32.h>
 #include <algorithm>
 #include <cwctype>
+#include <unordered_set>
 
 namespace maku::pmgr {
 namespace {
@@ -30,26 +32,23 @@ std::wstring QueryProcessImagePath(HANDLE h) {
     return {};
 }
 
-bool IsProcessFrozen(DWORD pid) {
+std::unordered_set<DWORD> CollectFrozenProcessIds() {
     struct Ctx {
-        DWORD pid;
-        HWND hwnd = nullptr;
-    } ctx{pid};
-
+        std::unordered_set<DWORD>* out;
+    };
+    std::unordered_set<DWORD> frozen;
+    Ctx ctx{&frozen};
     EnumWindows(
         [](HWND hwnd, LPARAM lp) -> BOOL {
+            if (!IsWindowVisible(hwnd)) return TRUE;
             auto* c = reinterpret_cast<Ctx*>(lp);
-            DWORD wpid = 0;
-            GetWindowThreadProcessId(hwnd, &wpid);
-            if (wpid == c->pid && IsWindowVisible(hwnd)) {
-                c->hwnd = hwnd;
-                return FALSE;
-            }
+            DWORD pid = 0;
+            GetWindowThreadProcessId(hwnd, &pid);
+            if (pid && IsHungAppWindow(hwnd)) c->out->insert(pid);
             return TRUE;
         },
         reinterpret_cast<LPARAM>(&ctx));
-
-    return ctx.hwnd && IsHungAppWindow(ctx.hwnd);
+    return frozen;
 }
 
 std::wstring ToLower(std::wstring s) {
@@ -91,29 +90,33 @@ bool IsExcluded(const std::wstring& exeName, const std::string& exclusionsCsv) {
     return false;
 }
 
-void RefreshProcesses(std::vector<ProcRow>& out) {
+void RefreshProcesses(std::vector<ProcRow>& out, const bool detectFrozen) {
     out.clear();
+    const std::unordered_set<DWORD> frozenIds =
+        detectFrozen ? CollectFrozenProcessIds() : std::unordered_set<DWORD>{};
+
     HANDLE snap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
     if (snap == INVALID_HANDLE_VALUE) return;
 
+    out.reserve(256);
     PROCESSENTRY32W pe{sizeof(pe)};
     if (Process32FirstW(snap, &pe)) {
         do {
             ProcRow row;
             row.pid = pe.th32ProcessID;
             row.name = pe.szExeFile;
+            row.frozen = detectFrozen && frozenIds.count(pe.th32ProcessID) != 0;
 
-            DWORD access = PROCESS_QUERY_LIMITED_INFORMATION | PROCESS_VM_READ;
-            HANDLE h = OpenProcess(access, FALSE, pe.th32ProcessID);
-            if (h) {
-                PROCESS_MEMORY_COUNTERS pmc{};
-                if (GetProcessMemoryInfo(h, &pmc, sizeof(pmc)))
-                    row.mem = pmc.WorkingSetSize;
-                row.path = QueryProcessImagePath(h);
-                row.critical = QueryProcessCritical(h);
-                CloseHandle(h);
+            if (pe.th32ProcessID >= 100) {
+                const DWORD access = PROCESS_QUERY_LIMITED_INFORMATION | PROCESS_VM_READ;
+                if (HANDLE h = OpenProcess(access, FALSE, pe.th32ProcessID)) {
+                    PROCESS_MEMORY_COUNTERS pmc{};
+                    if (GetProcessMemoryInfo(h, &pmc, sizeof(pmc)))
+                        row.mem = pmc.WorkingSetSize;
+                    row.critical = QueryProcessCritical(h);
+                    CloseHandle(h);
+                }
             }
-            row.frozen = IsProcessFrozen(pe.th32ProcessID);
             out.push_back(std::move(row));
         } while (Process32NextW(snap, &pe));
     }
@@ -121,6 +124,47 @@ void RefreshProcesses(std::vector<ProcRow>& out) {
 
     std::sort(out.begin(), out.end(),
               [](const ProcRow& a, const ProcRow& b) { return a.mem > b.mem; });
+
+    constexpr size_t kPathEnrichMax = 150;
+    const size_t limit = std::min(out.size(), kPathEnrichMax);
+    for (size_t i = 0; i < limit; ++i) {
+        if (out[i].pid < 100 || !out[i].path.empty()) continue;
+        const DWORD access = PROCESS_QUERY_LIMITED_INFORMATION;
+        if (HANDLE h = OpenProcess(access, FALSE, out[i].pid)) {
+            out[i].path = QueryProcessImagePath(h);
+            CloseHandle(h);
+        }
+    }
+}
+
+bool TerminateProcessByPid(const DWORD pid) {
+    if (!pid) return false;
+    HANDLE h = OpenProcess(PROCESS_TERMINATE, FALSE, pid);
+    if (!h) return false;
+    const BOOL ok = TerminateProcess(h, 0);
+    CloseHandle(h);
+    return ok != FALSE;
+}
+
+void TerminateProcessesByName(const std::wstring& exeName) {
+    if (exeName.empty()) return;
+    HANDLE snap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    if (snap == INVALID_HANDLE_VALUE) return;
+    PROCESSENTRY32W pe{sizeof(pe)};
+    if (Process32FirstW(snap, &pe)) {
+        do {
+            if (_wcsicmp(pe.szExeFile, exeName.c_str()) == 0)
+                TerminateProcessByPid(pe.th32ProcessID);
+        } while (Process32NextW(snap, &pe));
+    }
+    CloseHandle(snap);
+}
+
+bool OpenProcessLocation(const std::wstring& path) {
+    if (path.empty()) return false;
+    const std::wstring arg = L"/select,\"" + path + L"\"";
+    return reinterpret_cast<INT_PTR>(ShellExecuteW(nullptr, L"open", L"explorer.exe", arg.c_str(),
+                                                   nullptr, SW_SHOWNORMAL)) > 32;
 }
 
 void RefreshServices(std::vector<SvcRow>& out) {
