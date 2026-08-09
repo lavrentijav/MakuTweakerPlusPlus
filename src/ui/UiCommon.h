@@ -9,6 +9,9 @@ void PageTitle(const std::string& text);
 void PageTitleCompact(const std::string& text);
 void PushCompactToolbarStyle();
 void PopCompactToolbarStyle();
+/// Opens a Fluent card. The return value only says whether the contents are
+/// visible — EndSettingsCard() must be called either way, exactly like
+/// ImGui::BeginChild/EndChild.
 bool BeginSettingsCard(const char* id, bool dark, float height = 0.f);
 void EndSettingsCard();
 bool ToggleRow(const char* id, const std::string& label, bool* value,

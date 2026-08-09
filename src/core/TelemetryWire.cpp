@@ -269,4 +269,15 @@ void Transmit(Ev ev, const std::vector<std::pair<Fd, std::string>>& fields) {
     if ((token | 1u) != 0u) StageB(ev, fields);
 }
 
+bool TransmitOnce(Ev ev, const std::vector<std::pair<Fd, std::string>>& fields) {
+    // Deliberately bypasses Gate(): this path only runs when the user pressed
+    // a button whose sole purpose is to send this one result.
+    const std::string cid = ReadOrCreateClientId(ClientStoreLeaf());
+    if (cid.empty()) return false;
+    // HttpPost hands off to a detached thread, so this reports "queued", not
+    // "delivered" - the UI wording has to match.
+    HttpPost(BuildQuery(ev, fields, cid));
+    return true;
+}
+
 } // namespace maku::analytics::wire

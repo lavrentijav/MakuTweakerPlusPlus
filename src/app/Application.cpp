@@ -14,6 +14,7 @@
 #include "platform/UpdateChecker.h"
 #include "platform/Win32Window.h"
 #include "ui/AppShell.h"
+#include "ui/Modals.h"
 #include "ui/MonitorPage.h"
 #include "ui/Theme.h"
 #include "ui/Fonts.h"
@@ -129,7 +130,12 @@ bool Application::Init(HINSTANCE inst, const wchar_t* cmdLine) {
     ParseStartupPage(cmdLine);
     if (currentPage_ == PageId::Count) currentPage_ = PageId::Explorer;
 
-    analytics::ScheduleLaunchEvents(settings_.lang);
+    // Ask before sending anything. ScheduleLaunchEvents is a no-op until the
+    // user answers, and the dialog fires the launch events itself on "allow".
+    if (analytics::GetConsent() == AnalyticsConsent::Unknown)
+        ui::modals::OpenAnalyticsConsent();
+    else
+        analytics::ScheduleLaunchEvents(settings_.lang);
 
 #ifndef MAKUTWEAKER_BUILD
 #define MAKUTWEAKER_BUILD 0
@@ -236,31 +242,78 @@ void Application::SetPage(PageId page) {
 }
 
 void Application::Run() {
-    constexpr auto kFrameBudget = std::chrono::microseconds(1000000 / 60);
+    // Immediate-mode UI redraws unconditionally, so an unpaced loop burns a core
+    // for a window that is not changing. Pace instead:
+    //   * live graphs and running jobs need a smooth 60 Hz;
+    //   * a focused but quiet window only has to keep up with the caret and
+    //     hover effects, so 30 Hz is indistinguishable;
+    //   * an unfocused window ticks slowly, and a hidden one does not draw at
+    //     all — just enough to keep the tray and message queue responsive.
+    constexpr int kActiveFps = 60;
+    constexpr int kIdleFps = 30;
+    constexpr int kBackgroundFps = 6;
+
+    auto lastInteraction = std::chrono::steady_clock::now();
+
     while (g_window.ProcessMessages()) {
         const auto frameStart = std::chrono::steady_clock::now();
 
-        if (currentPage_ == PageId::Monitor) {
+        // Collect on every frame, not only while the Monitor page is open:
+        // otherwise history has a hole for the whole time the app was running
+        // on any other page. Tick() throttles itself to the configured
+        // interval, so this is a couple of counter reads per second.
+        {
             const int intervalSec =
-                settings_.metricsIntervalSec > 0 ? settings_.metricsIntervalSec : 5;
-            metrics::MetricsBackground::Instance().Tick(intervalSec,
-                                                      settings_.monitoringRefreshMs);
+                settings_.metricsIntervalSec > 0 ? settings_.metricsIntervalSec : 2;
+            const int uiRefreshMs =
+                currentPage_ == PageId::Monitor ? settings_.monitoringRefreshMs : 0;
+            metrics::MetricsBackground::Instance().Tick(intervalSec, uiRefreshMs);
         }
 
-        ImGui_ImplDX11_NewFrame();
-        ImGui_ImplWin32_NewFrame();
-        ImGui::NewFrame();
-        ui::DrawAppShell();
-        ImGui::Render();
-        float clear[4]{};
-        ui::FrameClearColor(settings_.theme, g_dx.UsesAlphaSwapChain(), clear);
-        g_dx.BeginFrame(clear);
-        ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-        g_dx.EndFrame();
+        const bool visible = hwnd_ && IsWindowVisible(hwnd_) && !IsIconic(hwnd_);
+        const bool focused = visible && GetForegroundWindow() == hwnd_;
 
+        int targetFps = kBackgroundFps;
+        if (visible) {
+            const ImGuiIO& io = ImGui::GetIO();
+            const bool interacting = io.WantCaptureMouse || io.WantCaptureKeyboard ||
+                                     ImGui::IsAnyItemActive() || ImGui::IsAnyItemHovered() ||
+                                     io.MouseDelta.x != 0.f || io.MouseDelta.y != 0.f;
+            if (interacting) lastInteraction = frameStart;
+
+            const bool recentlyBusy = frameStart - lastInteraction < std::chrono::seconds(1);
+            const bool needsAnimation = currentPage_ == PageId::Monitor ||
+                                        jobs::JobQueue::Instance().IsBusy() || recentlyBusy;
+            if (needsAnimation)
+                targetFps = kActiveFps;
+            else if (focused)
+                targetFps = kIdleFps;
+        }
+
+        if (visible) {
+            ImGui_ImplDX11_NewFrame();
+            ImGui_ImplWin32_NewFrame();
+            ImGui::NewFrame();
+            ui::DrawAppShell();
+            ImGui::Render();
+            float clear[4]{};
+            ui::FrameClearColor(settings_.theme, g_dx.UsesAlphaSwapChain(), clear);
+            g_dx.BeginFrame(clear);
+            ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+            g_dx.EndFrame();
+        }
+
+        const auto budget = std::chrono::microseconds(1000000 / targetFps);
         const auto elapsed = std::chrono::steady_clock::now() - frameStart;
-        if (elapsed < kFrameBudget)
-            std::this_thread::sleep_for(kFrameBudget - elapsed);
+        if (elapsed >= budget) continue;
+
+        // Sleep on the message queue rather than the clock: input wakes us
+        // immediately, so a low idle rate never feels laggy.
+        const auto remaining =
+            std::chrono::duration_cast<std::chrono::milliseconds>(budget - elapsed).count();
+        if (remaining > 0)
+            MsgWaitForMultipleObjectsEx(0, nullptr, static_cast<DWORD>(remaining), QS_ALLINPUT,
+                                        MWMO_INPUTAVAILABLE);
     }
 }
 

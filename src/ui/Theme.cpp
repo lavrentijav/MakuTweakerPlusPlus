@@ -34,6 +34,7 @@ namespace {
 
 constexpr ImVec4 kFallbackAccent(0.86f, 0.72f, 0.28f, 1.00f);
 
+static bool g_darkTheme = true;
 static ImVec4 g_accent = kFallbackAccent;
 static ImVec4 g_accentLight = kFallbackAccent;
 
@@ -97,165 +98,165 @@ static void ReloadSystemAccent() {
     g_accentLight = LightenAccent(g_accent, 0.34f);
 }
 
+/// WinUI 3 / Fluent neutral palette, the same one ModernWPF and MicaWPF paint
+/// the original with. Values are the documented theme resources flattened
+/// against the window background so we never need real translucency: a solid
+/// fill is one draw call, an acrylic blur is a render target plus a shader.
+struct Palette {
+    ImVec4 windowBg;      ///< SolidBackgroundFillColorBase
+    ImVec4 paneBg;        ///< SolidBackgroundFillColorSecondary (nav pane)
+    ImVec4 cardBg;        ///< CardBackgroundFillColorDefault
+    ImVec4 control;       ///< ControlFillColorDefault
+    ImVec4 controlHover;  ///< ControlFillColorSecondary
+    ImVec4 controlActive; ///< ControlFillColorTertiary
+    ImVec4 stroke;        ///< ControlStrokeColorDefault
+    ImVec4 text;          ///< TextFillColorPrimary
+    ImVec4 textSecondary; ///< TextFillColorSecondary
+    ImVec4 textDisabled;  ///< TextFillColorDisabled
+    ImVec4 subtle;        ///< SubtleFillColorSecondary (hovered list rows)
+};
+
+constexpr ImVec4 Rgb(int r, int g, int b, float a = 1.f) {
+    return ImVec4(r / 255.f, g / 255.f, b / 255.f, a);
+}
+
+Palette ThemePalette(const bool dark) {
+    if (dark) {
+        return Palette{
+            /*windowBg*/ Rgb(0x20, 0x20, 0x20),
+            /*paneBg*/ Rgb(0x1C, 0x1C, 0x1C),
+            /*cardBg*/ Rgb(0x2B, 0x2B, 0x2B),
+            /*control*/ Rgb(0x2D, 0x2D, 0x2D),
+            /*controlHover*/ Rgb(0x32, 0x32, 0x32),
+            /*controlActive*/ Rgb(0x27, 0x27, 0x27),
+            /*stroke*/ ImVec4(1.f, 1.f, 1.f, 0.093f),
+            /*text*/ Rgb(0xFF, 0xFF, 0xFF),
+            /*textSecondary*/ ImVec4(1.f, 1.f, 1.f, 0.786f),
+            /*textDisabled*/ ImVec4(1.f, 1.f, 1.f, 0.364f),
+            /*subtle*/ ImVec4(1.f, 1.f, 1.f, 0.061f),
+        };
+    }
+    return Palette{
+        /*windowBg*/ Rgb(0xF3, 0xF3, 0xF3),
+        /*paneBg*/ Rgb(0xEE, 0xEE, 0xEE),
+        /*cardBg*/ Rgb(0xFB, 0xFB, 0xFB),
+        /*control*/ Rgb(0xFF, 0xFF, 0xFF),
+        /*controlHover*/ Rgb(0xF9, 0xF9, 0xF9),
+        /*controlActive*/ Rgb(0xF5, 0xF5, 0xF5),
+        /*stroke*/ ImVec4(0.f, 0.f, 0.f, 0.0578f),
+        /*text*/ ImVec4(0.f, 0.f, 0.f, 0.8956f),
+        /*textSecondary*/ ImVec4(0.f, 0.f, 0.f, 0.6063f),
+        /*textDisabled*/ ImVec4(0.f, 0.f, 0.f, 0.3628f),
+        /*subtle*/ ImVec4(0.f, 0.f, 0.f, 0.0373f),
+    };
+}
+
+static Palette g_palette = ThemePalette(true);
+
 void ApplyModernFluentStyle(bool dark) {
     ImGuiStyle& s = ImGui::GetStyle();
     ImVec4* c = s.Colors;
 
+    g_palette = ThemePalette(dark);
+    const Palette& p = g_palette;
+
     const ImVec4 accent = g_accent;
     const ImVec4 accentLight = g_accentLight;
+    // Fluent tints the accent toward the text color so it stays readable on
+    // whichever background it lands on.
+    const ImVec4 accentOnSurface = dark ? accentLight : accent;
 
     s.AntiAliasedLines = true;
     s.AntiAliasedLinesUseTex = false;
     s.AntiAliasedFill = true;
 
-    const float tileR = 22.f;
-    s.WindowRounding = tileR;
-    s.ChildRounding = tileR;
-    s.PopupRounding = 20.f;
-    s.FrameRounding = 18.f;
-    s.TabRounding = 16.f;
-    s.GrabRounding = 12.f;
-    s.ScrollbarRounding = 12.f;
-    s.ScrollbarSize = 10.f;
+    // Fluent corner radii: 4 for controls, 8 for cards, flyouts and the window.
+    s.WindowRounding = 8.f;
+    s.ChildRounding = 8.f;
+    s.PopupRounding = 8.f;
+    s.FrameRounding = 4.f;
+    s.TabRounding = 6.f;
+    s.GrabRounding = 4.f;
+    s.ScrollbarRounding = 4.f;
+    s.ScrollbarSize = 12.f;
+    s.GrabMinSize = 12.f;
 
-    s.FramePadding = ImVec2(16.f, 11.f);
-    s.ItemSpacing = ImVec2(12.f, 10.f);
-    s.ItemInnerSpacing = ImVec2(10.f, 7.f);
-    s.WindowPadding = ImVec2(20.f, 18.f);
-    s.CellPadding = ImVec2(12.f, 8.f);
+    // Metrics taken from the WinUI control sizes the WPF build uses: 32px tall
+    // buttons, 8px gutters, 12px content padding.
+    s.FramePadding = ImVec2(11.f, 6.f);
+    s.ItemSpacing = ImVec2(8.f, 6.f);
+    s.ItemInnerSpacing = ImVec2(8.f, 4.f);
+    s.WindowPadding = ImVec2(16.f, 14.f);
+    s.CellPadding = ImVec2(10.f, 6.f);
     s.WindowMenuButtonPosition = ImGuiDir_None;
 
     s.WindowBorderSize = 0.f;
-    s.ChildBorderSize = 0.f;
-    s.FrameBorderSize = 0.f;
-    s.PopupBorderSize = 0.f;
+    s.ChildBorderSize = 1.f;
+    s.FrameBorderSize = 1.f;
+    s.PopupBorderSize = 1.f;
     s.TabBorderSize = 0.f;
 
-    if (dark) {
-        const ImVec4 winBg(0.08f, 0.06f, 0.05f, 1.f);
-        const ImVec4 childBg(0.11f, 0.09f, 0.08f, 1.f);
-        const ImVec4 popupBg(0.13f, 0.11f, 0.09f, 0.98f);
-        const ImVec4 frame(0.18f, 0.15f, 0.13f, 1.f);
-        const ImVec4 frameHover(0.24f, 0.20f, 0.17f, 1.f);
-        const ImVec4 frameActive(0.30f, 0.25f, 0.20f, 1.f);
+    c[ImGuiCol_WindowBg] = p.windowBg;
+    c[ImGuiCol_ChildBg] = ImVec4(0.f, 0.f, 0.f, 0.f);
+    c[ImGuiCol_PopupBg] = p.cardBg;
+    c[ImGuiCol_Border] = p.stroke;
+    c[ImGuiCol_BorderShadow] = ImVec4(0.f, 0.f, 0.f, 0.f);
 
-        c[ImGuiCol_WindowBg] = winBg;
-        c[ImGuiCol_ChildBg] = childBg;
-        c[ImGuiCol_PopupBg] = popupBg;
-        c[ImGuiCol_Border] = ImVec4(1.f, 1.f, 1.f, 0.08f);
-        c[ImGuiCol_BorderShadow] = ImVec4(0.f, 0.f, 0.f, 0.f);
+    c[ImGuiCol_Text] = p.text;
+    c[ImGuiCol_TextDisabled] = p.textDisabled;
 
-        c[ImGuiCol_Text] = ImVec4(0.98f, 0.98f, 0.99f, 0.92f);
-        c[ImGuiCol_TextDisabled] = ImVec4(0.98f, 0.98f, 0.99f, 0.42f);
+    c[ImGuiCol_FrameBg] = p.control;
+    c[ImGuiCol_FrameBgHovered] = p.controlHover;
+    c[ImGuiCol_FrameBgActive] = p.controlActive;
+    c[ImGuiCol_Button] = p.control;
+    c[ImGuiCol_ButtonHovered] = p.controlHover;
+    c[ImGuiCol_ButtonActive] = p.controlActive;
 
-        c[ImGuiCol_FrameBg] = frame;
-        c[ImGuiCol_FrameBgHovered] = frameHover;
-        c[ImGuiCol_FrameBgActive] = frameActive;
-        c[ImGuiCol_Button] = frame;
-        c[ImGuiCol_ButtonHovered] = frameHover;
-        c[ImGuiCol_ButtonActive] = frameActive;
+    c[ImGuiCol_Header] = p.subtle;
+    c[ImGuiCol_HeaderHovered] = p.subtle;
+    c[ImGuiCol_HeaderActive] = p.controlActive;
 
-        c[ImGuiCol_Header] = ImVec4(accent.x, accent.y, accent.z, 0.22f);
-        c[ImGuiCol_HeaderHovered] = ImVec4(accent.x, accent.y, accent.z, 0.32f);
-        c[ImGuiCol_HeaderActive] = ImVec4(accent.x, accent.y, accent.z, 0.42f);
+    c[ImGuiCol_CheckMark] = dark ? ImVec4(0.f, 0.f, 0.f, 1.f) : ImVec4(1.f, 1.f, 1.f, 1.f);
+    c[ImGuiCol_SliderGrab] = accentOnSurface;
+    c[ImGuiCol_SliderGrabActive] = accentOnSurface;
+    c[ImGuiCol_TextSelectedBg] = ImVec4(accent.x, accent.y, accent.z, 0.35f);
 
-        c[ImGuiCol_CheckMark] = accentLight;
-        c[ImGuiCol_SliderGrab] = accent;
-        c[ImGuiCol_SliderGrabActive] = accentLight;
-        c[ImGuiCol_TextSelectedBg] = ImVec4(accent.x, accent.y, accent.z, 0.35f);
+    c[ImGuiCol_Tab] = ImVec4(0.f, 0.f, 0.f, 0.f);
+    c[ImGuiCol_TabHovered] = p.subtle;
+    c[ImGuiCol_TabActive] = p.cardBg;
+    c[ImGuiCol_TabUnfocused] = ImVec4(0.f, 0.f, 0.f, 0.f);
+    c[ImGuiCol_TabUnfocusedActive] = p.control;
 
-        c[ImGuiCol_Tab] = ImVec4(0.10f, 0.08f, 0.07f, 1.f);
-        c[ImGuiCol_TabHovered] = ImVec4(accent.x, accent.y, accent.z, 0.40f);
-        c[ImGuiCol_TabActive] = accent;
-        c[ImGuiCol_TabUnfocused] = ImVec4(0.08f, 0.06f, 0.05f, 1.f);
-        c[ImGuiCol_TabUnfocusedActive] = ImVec4(accent.x, accent.y, accent.z, 0.32f);
+    c[ImGuiCol_Separator] = p.stroke;
+    c[ImGuiCol_SeparatorHovered] = p.stroke;
+    c[ImGuiCol_SeparatorActive] = accentOnSurface;
 
-        c[ImGuiCol_Separator] = ImVec4(0.40f, 0.35f, 0.30f, 0.45f);
-        c[ImGuiCol_SeparatorHovered] = ImVec4(accent.x, accent.y, accent.z, 0.55f);
-        c[ImGuiCol_SeparatorActive] = accent;
+    c[ImGuiCol_ScrollbarBg] = ImVec4(0.f, 0.f, 0.f, 0.f);
+    c[ImGuiCol_ScrollbarGrab] = dark ? ImVec4(1.f, 1.f, 1.f, 0.33f) : ImVec4(0.f, 0.f, 0.f, 0.33f);
+    c[ImGuiCol_ScrollbarGrabHovered] =
+        dark ? ImVec4(1.f, 1.f, 1.f, 0.45f) : ImVec4(0.f, 0.f, 0.f, 0.45f);
+    c[ImGuiCol_ScrollbarGrabActive] =
+        dark ? ImVec4(1.f, 1.f, 1.f, 0.55f) : ImVec4(0.f, 0.f, 0.f, 0.55f);
 
-        c[ImGuiCol_ScrollbarBg] = ImVec4(0.f, 0.f, 0.f, 0.f);
-        c[ImGuiCol_ScrollbarGrab] = ImVec4(0.55f, 0.55f, 0.60f, 0.45f);
-        c[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.65f, 0.65f, 0.70f, 0.55f);
-        c[ImGuiCol_ScrollbarGrabActive] = ImVec4(0.75f, 0.75f, 0.80f, 0.65f);
+    c[ImGuiCol_TitleBg] = ImVec4(0.f, 0.f, 0.f, 0.f);
+    c[ImGuiCol_TitleBgActive] = ImVec4(0.f, 0.f, 0.f, 0.f);
+    c[ImGuiCol_TitleBgCollapsed] = ImVec4(0.f, 0.f, 0.f, 0.f);
 
-        c[ImGuiCol_TitleBg] = ImVec4(0.f, 0.f, 0.f, 0.f);
-        c[ImGuiCol_TitleBgActive] = ImVec4(0.f, 0.f, 0.f, 0.f);
-        c[ImGuiCol_TitleBgCollapsed] = ImVec4(0.f, 0.f, 0.f, 0.f);
+    c[ImGuiCol_TableHeaderBg] = p.paneBg;
+    c[ImGuiCol_TableBorderStrong] = p.stroke;
+    c[ImGuiCol_TableBorderLight] = p.stroke;
+    c[ImGuiCol_TableRowBg] = ImVec4(0.f, 0.f, 0.f, 0.f);
+    c[ImGuiCol_TableRowBgAlt] = p.subtle;
 
-        c[ImGuiCol_TableHeaderBg] = ImVec4(0.16f, 0.16f, 0.19f, 1.f);
-        c[ImGuiCol_TableBorderStrong] = ImVec4(0.38f, 0.38f, 0.43f, 0.55f);
-        c[ImGuiCol_TableBorderLight] = ImVec4(0.30f, 0.30f, 0.34f, 0.40f);
-        c[ImGuiCol_TableRowBg] = ImVec4(0.f, 0.f, 0.f, 0.f);
-        c[ImGuiCol_TableRowBgAlt] = ImVec4(0.12f, 0.12f, 0.14f, 0.55f);
+    c[ImGuiCol_NavHighlight] = accentOnSurface;
+    c[ImGuiCol_ResizeGrip] = ImVec4(0.f, 0.f, 0.f, 0.f);
+    c[ImGuiCol_ResizeGripHovered] = p.subtle;
+    c[ImGuiCol_ResizeGripActive] = accentOnSurface;
 
-        c[ImGuiCol_NavHighlight] = accentLight;
-        c[ImGuiCol_ResizeGrip] = ImVec4(0.50f, 0.50f, 0.55f, 0.20f);
-        c[ImGuiCol_ResizeGripHovered] = ImVec4(accent.x, accent.y, accent.z, 0.45f);
-        c[ImGuiCol_ResizeGripActive] = accent;
-    } else {
-        const ImVec4 winBg(0.97f, 0.97f, 0.98f, 1.f);
-        const ImVec4 childBg(0.99f, 0.99f, 1.00f, 1.f);
-        const ImVec4 popupBg(0.99f, 0.99f, 1.00f, 0.98f);
-        const ImVec4 frame(0.93f, 0.93f, 0.95f, 1.f);
-        const ImVec4 frameHover(0.88f, 0.88f, 0.91f, 1.f);
-        const ImVec4 frameActive(0.82f, 0.82f, 0.86f, 1.f);
-
-        c[ImGuiCol_WindowBg] = winBg;
-        c[ImGuiCol_ChildBg] = childBg;
-        c[ImGuiCol_PopupBg] = popupBg;
-        c[ImGuiCol_Border] = ImVec4(0.72f, 0.72f, 0.76f, 0.55f);
-        c[ImGuiCol_BorderShadow] = ImVec4(0.f, 0.f, 0.f, 0.f);
-
-        c[ImGuiCol_Text] = ImVec4(0.08f, 0.08f, 0.10f, 0.95f);
-        c[ImGuiCol_TextDisabled] = ImVec4(0.08f, 0.08f, 0.10f, 0.45f);
-
-        c[ImGuiCol_FrameBg] = frame;
-        c[ImGuiCol_FrameBgHovered] = frameHover;
-        c[ImGuiCol_FrameBgActive] = frameActive;
-        c[ImGuiCol_Button] = frame;
-        c[ImGuiCol_ButtonHovered] = frameHover;
-        c[ImGuiCol_ButtonActive] = frameActive;
-
-        c[ImGuiCol_Header] = ImVec4(accent.x, accent.y, accent.z, 0.18f);
-        c[ImGuiCol_HeaderHovered] = ImVec4(accent.x, accent.y, accent.z, 0.28f);
-        c[ImGuiCol_HeaderActive] = ImVec4(accent.x, accent.y, accent.z, 0.38f);
-
-        c[ImGuiCol_CheckMark] = accent;
-        c[ImGuiCol_SliderGrab] = accent;
-        c[ImGuiCol_SliderGrabActive] = accentLight;
-        c[ImGuiCol_TextSelectedBg] = ImVec4(accent.x, accent.y, accent.z, 0.22f);
-
-        c[ImGuiCol_Tab] = ImVec4(0.94f, 0.94f, 0.96f, 1.f);
-        c[ImGuiCol_TabHovered] = ImVec4(accent.x, accent.y, accent.z, 0.22f);
-        c[ImGuiCol_TabActive] = accent;
-        c[ImGuiCol_TabUnfocused] = ImVec4(0.96f, 0.96f, 0.98f, 1.f);
-        c[ImGuiCol_TabUnfocusedActive] = ImVec4(accent.x, accent.y, accent.z, 0.20f);
-
-        c[ImGuiCol_Separator] = ImVec4(0.68f, 0.68f, 0.72f, 0.55f);
-        c[ImGuiCol_SeparatorHovered] = ImVec4(accent.x, accent.y, accent.z, 0.45f);
-        c[ImGuiCol_SeparatorActive] = accent;
-
-        c[ImGuiCol_ScrollbarBg] = ImVec4(0.f, 0.f, 0.f, 0.f);
-        c[ImGuiCol_ScrollbarGrab] = ImVec4(0.55f, 0.55f, 0.60f, 0.35f);
-        c[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.45f, 0.45f, 0.50f, 0.50f);
-        c[ImGuiCol_ScrollbarGrabActive] = ImVec4(0.35f, 0.35f, 0.40f, 0.60f);
-
-        c[ImGuiCol_TitleBg] = ImVec4(0.f, 0.f, 0.f, 0.f);
-        c[ImGuiCol_TitleBgActive] = ImVec4(0.f, 0.f, 0.f, 0.f);
-        c[ImGuiCol_TitleBgCollapsed] = ImVec4(0.f, 0.f, 0.f, 0.f);
-
-        c[ImGuiCol_TableHeaderBg] = ImVec4(0.94f, 0.94f, 0.96f, 1.f);
-        c[ImGuiCol_TableBorderStrong] = ImVec4(0.72f, 0.72f, 0.76f, 0.65f);
-        c[ImGuiCol_TableBorderLight] = ImVec4(0.80f, 0.80f, 0.84f, 0.45f);
-        c[ImGuiCol_TableRowBg] = ImVec4(0.f, 0.f, 0.f, 0.f);
-        c[ImGuiCol_TableRowBgAlt] = ImVec4(0.95f, 0.95f, 0.97f, 0.65f);
-
-        c[ImGuiCol_NavHighlight] = accent;
-        c[ImGuiCol_ResizeGrip] = ImVec4(0.55f, 0.55f, 0.60f, 0.18f);
-        c[ImGuiCol_ResizeGripHovered] = ImVec4(accent.x, accent.y, accent.z, 0.35f);
-        c[ImGuiCol_ResizeGripActive] = accent;
-    }
+    c[ImGuiCol_PlotLines] = accentOnSurface;
+    c[ImGuiCol_PlotLinesHovered] = accentOnSurface;
+    c[ImGuiCol_PlotHistogram] = accentOnSurface;
+    c[ImGuiCol_PlotHistogramHovered] = accentLight;
 }
 
 } // namespace
@@ -272,7 +273,12 @@ ImVec4 AccentColor() { return g_accent; }
 
 ImVec4 AccentLightColor() { return g_accentLight; }
 
-ImVec4 AccentTextColor() { return g_accentLight; }
+ImVec4 AccentTextColor() {
+    // Fluent uses AccentTextFillColorPrimary: the light-2 tint on dark
+    // backgrounds, the base accent on light ones. Using the light tint on a
+    // white page washes headings out to near-invisible.
+    return g_darkTheme ? g_accentLight : g_accent;
+}
 
 ImU32 AccentSparklineU32() {
     const ImVec4 a = AccentLightColor();
@@ -288,48 +294,46 @@ ImU32 AccentBarU32() {
 
 static void ApplyImPlotColors(bool dark) {
     ImPlotStyle& ps = ImPlot::GetStyle();
-    const ImVec4 accent = AccentColor();
-    const ImVec4 grid = dark ? ImVec4(0.35f, 0.30f, 0.26f, 0.35f) : ImVec4(0.55f, 0.50f, 0.45f, 0.40f);
-    const ImVec4 axis = dark ? ImVec4(0.75f, 0.72f, 0.68f, 0.85f) : ImVec4(0.25f, 0.22f, 0.18f, 0.90f);
-    ps.Colors[ImPlotCol_PlotBg] = dark ? ImVec4(0.10f, 0.08f, 0.07f, 1.f) : ImVec4(0.98f, 0.97f, 0.95f, 1.f);
-    ps.Colors[ImPlotCol_FrameBg] = CardSurfaceColor(dark);
-    ps.Colors[ImPlotCol_PlotBorder] = ImVec4(1.f, 1.f, 1.f, dark ? 0.06f : 0.08f);
-    ps.Colors[ImPlotCol_LegendBg] = ImVec4(0.f, 0.f, 0.f, dark ? 0.45f : 0.12f);
-    ps.Colors[ImPlotCol_LegendBorder] = ImVec4(accent.x, accent.y, accent.z, 0.55f);
-    ps.Colors[ImPlotCol_LegendText] = axis;
-    ps.Colors[ImPlotCol_TitleText] = axis;
-    ps.Colors[ImPlotCol_InlayText] = axis;
-    ps.Colors[ImPlotCol_AxisText] = axis;
-    ps.Colors[ImPlotCol_AxisGrid] = grid;
-    ps.Colors[ImPlotCol_AxisTick] = grid;
+    const Palette p = ThemePalette(dark);
+    const ImVec4 accent = dark ? g_accentLight : g_accent;
+
+    ps.Colors[ImPlotCol_PlotBg] = p.cardBg;
+    ps.Colors[ImPlotCol_FrameBg] = ImVec4(0.f, 0.f, 0.f, 0.f);
+    ps.Colors[ImPlotCol_PlotBorder] = p.stroke;
+    ps.Colors[ImPlotCol_LegendBg] = p.cardBg;
+    ps.Colors[ImPlotCol_LegendBorder] = p.stroke;
+    ps.Colors[ImPlotCol_LegendText] = p.textSecondary;
+    ps.Colors[ImPlotCol_TitleText] = p.text;
+    ps.Colors[ImPlotCol_InlayText] = p.textSecondary;
+    ps.Colors[ImPlotCol_AxisText] = p.textSecondary;
+    ps.Colors[ImPlotCol_AxisGrid] = p.stroke;
+    ps.Colors[ImPlotCol_AxisTick] = p.stroke;
     ps.Colors[ImPlotCol_Line] = accent;
-    ps.Colors[ImPlotCol_Fill] = ImVec4(accent.x, accent.y, accent.z, 0.25f);
+    ps.Colors[ImPlotCol_Fill] = ImVec4(accent.x, accent.y, accent.z, 0.22f);
     ps.Colors[ImPlotCol_MarkerOutline] = accent;
-    ps.Colors[ImPlotCol_MarkerFill] = AccentLightColor();
+    ps.Colors[ImPlotCol_MarkerFill] = accent;
     ps.Colors[ImPlotCol_ErrorBar] = ImVec4(0.85f, 0.35f, 0.30f, 1.f);
-    ps.Colors[ImPlotCol_Crosshairs] = ImVec4(accent.x, accent.y, accent.z, 0.65f);
-    ps.Colors[ImPlotCol_Selection] = ImVec4(accent.x, accent.y, accent.z, 0.35f);
+    ps.Colors[ImPlotCol_Crosshairs] = p.textSecondary;
+    ps.Colors[ImPlotCol_Selection] = ImVec4(accent.x, accent.y, accent.z, 0.30f);
 }
 
-ImVec4 NavPaneColor(bool dark) {
-    return dark ? ImVec4(0.06f, 0.05f, 0.04f, 1.f) : ImVec4(0.93f, 0.91f, 0.88f, 1.f);
-}
+ImVec4 NavPaneColor(bool dark) { return ThemePalette(dark).paneBg; }
 
-ImVec4 ContentPaneColor(bool dark) {
-    return dark ? ImVec4(0.09f, 0.07f, 0.06f, 1.f) : ImVec4(0.98f, 0.97f, 0.95f, 1.f);
-}
+ImVec4 ContentPaneColor(bool dark) { return ThemePalette(dark).windowBg; }
 
-ImVec4 CardSurfaceColor(bool dark) {
-    return dark ? ImVec4(0.14f, 0.11f, 0.09f, 1.f) : ImVec4(0.96f, 0.94f, 0.91f, 1.f);
-}
+ImVec4 CardSurfaceColor(bool dark) { return ThemePalette(dark).cardBg; }
 
-ImVec4 CardGlassColor(const bool dark) {
-    return dark ? ImVec4(0.20f, 0.16f, 0.12f, 0.78f) : ImVec4(0.97f, 0.95f, 0.91f, 0.88f);
-}
+ImVec4 CardGlassColor(const bool dark) { return ThemePalette(dark).cardBg; }
 
-ImVec4 CardBorderColor(const bool dark) {
-    return dark ? ImVec4(1.f, 1.f, 1.f, 0.10f) : ImVec4(0.f, 0.f, 0.f, 0.08f);
-}
+ImVec4 CardBorderColor(const bool dark) { return ThemePalette(dark).stroke; }
+
+ImVec4 TextPrimaryColor(const bool dark) { return ThemePalette(dark).text; }
+
+ImVec4 TextSecondaryColor(const bool dark) { return ThemePalette(dark).textSecondary; }
+
+ImVec4 ControlFillColor(const bool dark) { return ThemePalette(dark).control; }
+
+ImVec4 SubtleFillColor(const bool dark) { return ThemePalette(dark).subtle; }
 
 ImU32 CardBorderU32(const bool dark) {
     return ImGui::ColorConvertFloat4ToU32(CardBorderColor(dark));
@@ -337,8 +341,10 @@ ImU32 CardBorderU32(const bool dark) {
 
 void DrawCardBorder(ImDrawList* dl, const ImVec2 min, const ImVec2 max, const bool dark,
                     const float rounding, const bool accentHighlight) {
-    if (!accentHighlight) return;
-    dl->AddRect(min, max, AccentBarU32(), rounding, 0, 1.2f * g_uiScale);
+    // Fluent surfaces always carry a hairline stroke; the accent variant is
+    // only for the focused/selected card.
+    const ImU32 color = accentHighlight ? AccentBarU32() : CardBorderU32(dark);
+    dl->AddRect(min, max, color, rounding, 0, 1.f * g_uiScale);
 }
 
 const char* DwmGlassModeName() { return g_dwmGlassMode; }
@@ -347,6 +353,7 @@ void ApplyTheme(const std::string& theme, HWND hwnd) {
     ReloadSystemAccent();
     const std::string t = NormalizeTheme(theme);
     const bool dark = t == "Dark";
+    g_darkTheme = dark;
     ImGui::StyleColorsDark();
     if (!dark) ImGui::StyleColorsLight();
     ApplyModernFluentStyle(dark);
@@ -373,16 +380,16 @@ float NavItemHeight() { return 40.f * g_uiScale; }
 
 float ContentGap() { return 16.f * g_uiScale; }
 
-float TileRounding() { return 22.f * g_uiScale; }
+float TileRounding() { return 4.f * g_uiScale; }
 
-float CardRounding() { return 22.f * g_uiScale; }
+float CardRounding() { return 8.f * g_uiScale; }
 
 void PushCardSurface(const bool dark) {
     ImGui::PushStyleColor(ImGuiCol_ChildBg, CardSurfaceColor(dark));
     ImGui::PushStyleColor(ImGuiCol_Border, CardBorderColor(dark));
     ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, CardRounding());
-    ImGui::PushStyleVar(ImGuiStyleVar_ChildBorderSize, 0.f);
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(16.f * g_uiScale, 14.f * g_uiScale));
+    ImGui::PushStyleVar(ImGuiStyleVar_ChildBorderSize, 1.f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(14.f * g_uiScale, 12.f * g_uiScale));
 }
 
 void PopCardSurface() {
@@ -432,18 +439,11 @@ void SyncDwmTheme(HWND hwnd, const std::string& theme, bool /*perPixelAlphaSwapC
 }
 
 void FrameClearColor(const std::string& theme, bool /*alphaSwapChain*/, float rgba[4]) {
-    const bool dark = IsDarkTheme(theme);
-    if (dark) {
-        rgba[0] = 0.08f;
-        rgba[1] = 0.06f;
-        rgba[2] = 0.05f;
-        rgba[3] = 1.f;
-    } else {
-        rgba[0] = 0.97f;
-        rgba[1] = 0.97f;
-        rgba[2] = 0.98f;
-        rgba[3] = 1.f;
-    }
+    const ImVec4 bg = ThemePalette(IsDarkTheme(theme)).windowBg;
+    rgba[0] = bg.x;
+    rgba[1] = bg.y;
+    rgba[2] = bg.z;
+    rgba[3] = 1.f;
 }
 
 } // namespace maku::ui

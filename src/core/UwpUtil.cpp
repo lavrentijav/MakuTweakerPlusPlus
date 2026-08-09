@@ -84,4 +84,66 @@ bool RemovePackages(const std::vector<std::wstring>& packageFullNames) {
     return r.exitCode == 0;
 }
 
+const std::vector<std::wstring>& CuratedRemovablePackages() {
+    // Mirrors the checkbox list on the original's "Remove UWP apps" page.
+    // Deliberately includes things some people keep (Calculator, Notepad,
+    // Store): the original presents them as options, not as a default.
+    static const std::vector<std::wstring> packages = {
+        L"Clipchamp.Clipchamp",
+        L"Microsoft.3DBuilder",
+        L"Microsoft.549981C3F5F10", // Cortana
+        L"Microsoft.BingNews",
+        L"Microsoft.BingWeather",
+        L"Microsoft.Copilot",
+        L"Microsoft.GamingApp",
+        L"Microsoft.GetHelp",
+        L"Microsoft.Getstarted",
+        L"Microsoft.Messaging",
+        L"Microsoft.Microsoft3DViewer",
+        L"Microsoft.MicrosoftOfficeHub",
+        L"Microsoft.MicrosoftSolitaireCollection",
+        L"Microsoft.MicrosoftStickyNotes",
+        L"Microsoft.MixedReality.Portal",
+        L"Microsoft.MSPaint",
+        L"Microsoft.Office.OneNote",
+        L"Microsoft.OutlookForWindows",
+        L"Microsoft.Paint",
+        L"Microsoft.People",
+        L"Microsoft.PowerAutomateDesktop",
+        L"Microsoft.SkypeApp",
+        L"Microsoft.Todos",
+        L"Microsoft.Windows.DevHome",
+        L"Microsoft.WindowsAlarms",
+        L"Microsoft.WindowsCalculator",
+        L"Microsoft.WindowsCamera",
+        L"Microsoft.WindowsFeedbackHub",
+        L"Microsoft.WindowsMaps",
+        L"Microsoft.WindowsNotepad",
+        L"Microsoft.WindowsSoundRecorder",
+        L"Microsoft.WindowsStore",
+        L"Microsoft.Xbox.TCUI",
+        L"Microsoft.XboxApp",
+        L"Microsoft.XboxSpeechToTextOverlay",
+        L"Microsoft.YourPhone",
+        L"Microsoft.ZuneMusic",
+        L"Microsoft.ZuneVideo",
+        L"MicrosoftCorporationII.QuickAssist",
+        L"microsoft.windowscommunicationsapps",
+    };
+    return packages;
+}
+
+bool IsCuratedRemovable(const std::wstring& packageFullName) {
+    // A full name is "Family_Version_Arch__PublisherId", so match on the
+    // segment before the first underscore rather than a substring — otherwise
+    // "Microsoft.Paint" would also match "Microsoft.Paint3D".
+    const size_t underscore = packageFullName.find(L'_');
+    const std::wstring family =
+        underscore == std::wstring::npos ? packageFullName : packageFullName.substr(0, underscore);
+
+    for (const auto& candidate : CuratedRemovablePackages())
+        if (_wcsicmp(family.c_str(), candidate.c_str()) == 0) return true;
+    return false;
+}
+
 } // namespace maku::uwp

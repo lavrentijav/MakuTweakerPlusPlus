@@ -2,6 +2,8 @@
 #include <imgui.h>
 #include <implot.h>
 #include <algorithm>
+#include <cmath>
+#include <iterator>
 
 namespace maku::ui {
 
@@ -96,6 +98,72 @@ void DownsampleAverage(const std::vector<double>& xs, const std::vector<double>&
         outX.push_back(sumX / count);
         outY.push_back(sumY / count);
     }
+}
+
+double NiceBucketSeconds(const double spanSeconds, const int targetPoints) {
+    if (spanSeconds <= 0.0 || targetPoints <= 1) return 0.0;
+
+    // Intervals a person would name out loud, from one second to one day.
+    static const double kSteps[] = {1,    2,    5,    10,   15,   30,    60,   120,
+                                    300,  600,  900,  1800, 3600, 7200,  10800, 21600,
+                                    43200, 86400};
+    const double ideal = spanSeconds / static_cast<double>(targetPoints);
+    for (const double step : kSteps)
+        if (step >= ideal) return step;
+    return kSteps[std::size(kSteps) - 1];
+}
+
+void DownsampleTimeBuckets(const std::vector<double>& xs, const std::vector<double>& ys,
+                           std::vector<double>& outX, std::vector<double>& outY,
+                           const double bucketSeconds) {
+    outX.clear();
+    outY.clear();
+    const size_t n = xs.size();
+    if (n == 0 || n != ys.size()) return;
+    if (bucketSeconds <= 0.0) {
+        outX = xs;
+        outY = ys;
+        return;
+    }
+
+    outX.reserve(n);
+    outY.reserve(n);
+
+    // Buckets are aligned to absolute time, not to the first sample, so the
+    // points do not shift sideways as new data arrives.
+    double bucketStart = std::floor(xs[0] / bucketSeconds) * bucketSeconds;
+    double sumX = 0.0;
+    double sumY = 0.0;
+    size_t count = 0;
+
+    const auto flush = [&] {
+        if (count == 0) return;
+        outX.push_back(sumX / static_cast<double>(count));
+        outY.push_back(sumY / static_cast<double>(count));
+        sumX = 0.0;
+        sumY = 0.0;
+        count = 0;
+    };
+
+    for (size_t i = 0; i < n; ++i) {
+        if (xs[i] >= bucketStart + bucketSeconds) {
+            flush();
+            bucketStart = std::floor(xs[i] / bucketSeconds) * bucketSeconds;
+        }
+        sumX += xs[i];
+        sumY += ys[i];
+        ++count;
+    }
+    flush();
+}
+
+std::string FormatBucketWidth(const double bucketSeconds) {
+    if (bucketSeconds < 1.0) return {};
+    const long long s = static_cast<long long>(bucketSeconds + 0.5);
+    if (s < 60) return std::to_string(s) + " s";
+    if (s < 3600) return std::to_string(s / 60) + " min";
+    if (s < 86400) return std::to_string(s / 3600) + " h";
+    return std::to_string(s / 86400) + " d";
 }
 
 } // namespace maku::ui

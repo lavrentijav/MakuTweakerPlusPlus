@@ -29,6 +29,18 @@ void Settings::Load() {
         if (j.contains("disableUpdateNotify"))
             disableUpdateNotify = j["disableUpdateNotify"].get<bool>();
         if (j.contains("disableTelemetry")) disableTelemetry = j["disableTelemetry"].get<bool>();
+        if (j.contains("analyticsConsent")) analyticsConsent = j["analyticsConsent"].get<int>();
+        if (j.contains("tabVisits") && j["tabVisits"].is_object()) {
+            for (auto it = j["tabVisits"].begin(); it != j["tabVisits"].end(); ++it)
+                if (it->is_number_integer()) tabVisits[it.key()] = it->get<int>();
+        }
+        // Settings written before the consent prompt existed only carry
+        // disableTelemetry. Treat an explicit `false` there as prior consent so
+        // upgrading users are not re-prompted; anything else asks again.
+        if (!j.contains("analyticsConsent") && j.contains("disableTelemetry"))
+            analyticsConsent = static_cast<int>(disableTelemetry ? AnalyticsConsent::Declined
+                                                                : AnalyticsConsent::Granted);
+        disableTelemetry = analyticsConsent != static_cast<int>(AnalyticsConsent::Granted);
         if (j.contains("lastProcessFilterIndex"))
             lastProcessFilterIndex = j["lastProcessFilterIndex"].get<int>();
         if (j.contains("group")) group = j["group"].get<bool>();
@@ -66,7 +78,10 @@ void Settings::Save() const {
     j["lastPageTag"] = lastPageTag;
     j["updIgnoredCount"] = updIgnoredCount;
     j["disableUpdateNotify"] = disableUpdateNotify;
-    j["disableTelemetry"] = disableTelemetry;
+    // Derived, never authored by hand: consent is the source of truth.
+    j["disableTelemetry"] = analyticsConsent != static_cast<int>(AnalyticsConsent::Granted);
+    j["analyticsConsent"] = analyticsConsent;
+    j["tabVisits"] = tabVisits;
     j["lastProcessFilterIndex"] = lastProcessFilterIndex;
     j["group"] = group;
     j["compact"] = compact;

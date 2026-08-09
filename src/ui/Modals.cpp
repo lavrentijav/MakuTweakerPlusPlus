@@ -1,10 +1,13 @@
 #include "ui/Modals.h"
 #include "app/Application.h"
 #include "app/Branding.h"
+#include "core/Analytics.h"
 #include "core/DisallowRun.h"
 #include "core/HostsBan.h"
 #include "core/StringUtil.h"
 #include "core/TaskMgrReplace.h"
+#include "ui/Fonts.h"
+#include "ui/Theme.h"
 #include <imgui.h>
 #include <algorithm>
 #include <cstring>
@@ -15,6 +18,7 @@ namespace {
 static bool g_siteBan{};
 static bool g_makuYan{};
 static bool g_exclusion{};
+static bool g_consent{};
 
 static void ShowError(const std::wstring& msg) {
     MessageBoxW(maku::app::Application::Instance().Hwnd(), msg.c_str(), brand::kDisplayName,
@@ -26,11 +30,60 @@ static void ShowError(const std::wstring& msg) {
 void OpenSiteBan() { g_siteBan = true; }
 void OpenMakuYan() { g_makuYan = true; }
 void OpenExclusionSettings() { g_exclusion = true; }
+void OpenAnalyticsConsent() { g_consent = true; }
 
 void DrawAll() {
     auto& app = maku::app::Application::Instance();
     auto& l = app.L10n();
     auto& s = app.GetSettings();
+
+    if (g_consent) {
+        ImGui::OpenPopup("AnalyticsConsent");
+        // No close button and no click-outside dismissal: leaving the question
+        // unanswered would mean guessing, and the safe guess (off) should be an
+        // explicit choice rather than an accident.
+        ImGui::SetNextWindowSize(ImVec2(520.f * UiScale(), 0.f), ImGuiCond_Appearing);
+        const ImVec2 viewport = ImGui::GetIO().DisplaySize;
+        ImGui::SetNextWindowPos(ImVec2(viewport.x * 0.5f, viewport.y * 0.5f), ImGuiCond_Appearing,
+                                ImVec2(0.5f, 0.5f));
+        if (ImGui::BeginPopupModal("AnalyticsConsent", nullptr,
+                                   ImGuiWindowFlags_AlwaysAutoResize |
+                                       ImGuiWindowFlags_NoSavedSettings |
+                                       ImGuiWindowFlags_NoTitleBar)) {
+            ImGui::PushFont(FontTitle());
+            ImGui::TextUnformatted(l.Get("ab", "consent", "title").c_str());
+            ImGui::PopFont();
+            ImGui::Spacing();
+            ImGui::TextWrapped("%s", l.Get("ab", "consent", "body").c_str());
+            ImGui::Spacing();
+            ImGui::BulletText("%s", l.Get("ab", "consent", "item_cpu").c_str());
+            ImGui::BulletText("%s", l.Get("ab", "consent", "item_tabs").c_str());
+            ImGui::Spacing();
+            ImGui::TextWrapped("%s", l.Get("ab", "consent", "note").c_str());
+            ImGui::Spacing();
+            ImGui::Separator();
+            ImGui::Spacing();
+
+            const float buttonW = (ImGui::GetContentRegionAvail().x - ImGui::GetStyle().ItemSpacing.x) * 0.5f;
+            if (ImGui::Button(l.Get("ab", "consent", "allow").c_str(), ImVec2(buttonW, 0.f))) {
+                analytics::SetConsent(AnalyticsConsent::Granted);
+                s.analyticsConsent = static_cast<int>(AnalyticsConsent::Granted);
+                s.disableTelemetry = false;
+                analytics::ScheduleLaunchEvents(s.lang);
+                g_consent = false;
+                ImGui::CloseCurrentPopup();
+            }
+            ImGui::SameLine();
+            if (ImGui::Button(l.Get("ab", "consent", "decline").c_str(), ImVec2(buttonW, 0.f))) {
+                analytics::SetConsent(AnalyticsConsent::Declined);
+                s.analyticsConsent = static_cast<int>(AnalyticsConsent::Declined);
+                s.disableTelemetry = true;
+                g_consent = false;
+                ImGui::CloseCurrentPopup();
+            }
+            ImGui::EndPopup();
+        }
+    }
 
     if (g_siteBan) {
         ImGui::OpenPopup("SiteBan");

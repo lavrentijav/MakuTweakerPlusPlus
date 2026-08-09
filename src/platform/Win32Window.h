@@ -6,8 +6,10 @@ namespace maku::platform {
 
 class Win32Window {
 public:
-    static constexpr int kWidth = 1062;
-    static constexpr int kHeight = 675;
+    // Wider than the WPF original's 1062: the Fluent rows carry a 40px switch
+    // and a larger font, and at the old width long labels ran under the edge.
+    static constexpr int kWidth = 1240;
+    static constexpr int kHeight = 760;
 
     bool Create(HINSTANCE inst, const wchar_t* title);
     HWND Hwnd() const { return hwnd_; }

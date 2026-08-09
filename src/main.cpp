@@ -1,5 +1,6 @@
 #include "app/Application.h"
 #include "app/Branding.h"
+#include "cli/Cli.h"
 #include "core/OsUtil.h"
 #include "ui/Dpi.h"
 #include "platform/MetricsService.h"
@@ -35,6 +36,13 @@ int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE, PWSTR cmdLine, int) {
     if (HasArg(argc, argv, L"--uninstall-metrics-service")) {
         LocalFree(argv);
         return maku::metrics_svc::Uninstall() ? 0 : 1;
+    }
+
+    // Anything that is not a legacy GUI switch runs headless.
+    if (maku::cli::WantsCli(argc, argv)) {
+        const int code = maku::cli::Run(argc, argv);
+        LocalFree(argv);
+        return code;
     }
     LocalFree(argv);
 

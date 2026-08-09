@@ -10,9 +10,13 @@
 #define MAKUTWEAKER_BUILD 0
 #endif
 
+#define MAKU_WIDEN2(x) L##x
+#define MAKU_WIDEN(x) MAKU_WIDEN2(x)
+
 namespace maku::version {
 
 inline constexpr const char* kText = MAKU_APP_VERSION;
+inline constexpr const wchar_t* kTextW = MAKU_WIDEN(MAKU_APP_VERSION);
 inline constexpr int kBuild = MAKUTWEAKER_BUILD;
 
 } // namespace maku::version

@@ -50,34 +50,115 @@ void PushCompactToolbarStyle() {
 
 void PopCompactToolbarStyle() { ImGui::PopStyleVar(3); }
 
+namespace {
+
+/// WinUI ToggleSwitch: a 40x20 pill with a 12px knob that slides across and
+/// flips to the accent color when on. Drawn by hand because ImGui has no
+/// equivalent widget and a Checkbox reads as a different control entirely.
+///
+/// The animation is a plain lerp driven by ImGui's delta time — no easing
+/// curves, no per-frame allocations, and it settles so the idle frame loop can
+/// go back to sleep.
+void DrawToggleSwitch(ImDrawList* dl, ImVec2 center, bool on, bool hovered, bool dark,
+                      float& animation) {
+    const float scale = UiScale();
+    const float trackW = 40.f * scale;
+    const float trackH = 20.f * scale;
+    const float radius = trackH * 0.5f;
+
+    const float target = on ? 1.f : 0.f;
+    const float step = ImGui::GetIO().DeltaTime * 8.f;
+    animation += std::clamp(target - animation, -step, step);
+    if (std::abs(target - animation) < 0.01f) animation = target;
+
+    const ImVec2 p0(center.x - trackW * 0.5f, center.y - trackH * 0.5f);
+    const ImVec2 p1(p0.x + trackW, p0.y + trackH);
+
+    const ImVec4 accent = AccentColor();
+    const ImVec4 offFill = dark ? ImVec4(1.f, 1.f, 1.f, 0.06f) : ImVec4(0.f, 0.f, 0.f, 0.02f);
+    const ImVec4 onFill = hovered ? AccentLightColor() : accent;
+
+    ImVec4 fill;
+    fill.x = offFill.x + (onFill.x - offFill.x) * animation;
+    fill.y = offFill.y + (onFill.y - offFill.y) * animation;
+    fill.z = offFill.z + (onFill.z - offFill.z) * animation;
+    fill.w = offFill.w + (onFill.w - offFill.w) * animation;
+
+    dl->AddRectFilled(p0, p1, ImGui::ColorConvertFloat4ToU32(fill), radius);
+    if (animation < 0.99f) {
+        // Fluent keeps a visible stroke on the "off" track only.
+        const ImVec4 stroke = dark ? ImVec4(1.f, 1.f, 1.f, 0.54f) : ImVec4(0.f, 0.f, 0.f, 0.45f);
+        dl->AddRect(p0, p1, ImGui::ColorConvertFloat4ToU32(
+                                ImVec4(stroke.x, stroke.y, stroke.z, stroke.w * (1.f - animation))),
+                    radius, 0, 1.f * scale);
+    }
+
+    const float knobR = (on ? 7.f : 6.f) * scale;
+    const float travel = trackW - trackH;
+    const ImVec2 knob(p0.x + radius + travel * animation, center.y);
+    const ImVec4 knobColor = dark ? ImVec4(1.f, 1.f, 1.f, 1.f)
+                                  : (animation > 0.5f ? ImVec4(1.f, 1.f, 1.f, 1.f)
+                                                      : ImVec4(0.f, 0.f, 0.f, 0.7f));
+    dl->AddCircleFilled(knob, knobR, ImGui::ColorConvertFloat4ToU32(knobColor));
+}
+
+} // namespace
+
 bool ToggleRow(const char* id, const std::string& label, bool* value,
                std::function<void(bool)> onChanged) {
     ImGui::PushID(id);
-    const bool prev = *value;
-    const float tileH = 48.f * UiScale();
-    const ImVec2 tileSize(ImGui::GetContentRegionAvail().x, tileH);
-    const ImVec2 p0 = ImGui::GetCursorScreenPos();
-    ImDrawList* dl = ImGui::GetWindowDrawList();
+
+    const float scale = UiScale();
     const bool dark = IsDarkTheme(maku::app::Application::Instance().GetSettings().theme);
-    const ImVec2 p1(p0.x + tileSize.x, p0.y + tileSize.y);
-    dl->AddRectFilled(p0, p1, ImGui::ColorConvertFloat4ToU32(CardSurfaceColor(dark)), TileRounding());
-    ImGui::InvisibleButton("##tile", tileSize);
-    const ImVec2 inner(p0.x + 16.f * UiScale(), p0.y + 12.f * UiScale());
-    dl->AddText(inner, IM_COL32(240, 235, 225, 255), label.c_str());
-    ImGui::SetCursorScreenPos(ImVec2(p0.x + tileSize.x - 44.f * UiScale(), p0.y + 14.f * UiScale()));
-    const ImVec4 accent = AccentColor();
-    ImGui::PushStyleColor(ImGuiCol_CheckMark, accent);
-    ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(accent.x, accent.y, accent.z, 0.22f));
-    ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(accent.x, accent.y, accent.z, 0.32f));
-    ImGui::PushStyleColor(ImGuiCol_FrameBgActive, ImVec4(accent.x, accent.y, accent.z, 0.42f));
-    ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 12.f * UiScale());
-    const bool changed = ImGui::Checkbox("##t", value);
-    ImGui::PopStyleVar();
-    ImGui::PopStyleColor(4);
-    ImGui::SetCursorScreenPos(ImVec2(p0.x, p0.y + tileSize.y + 8.f * UiScale()));
-    if (changed && onChanged) onChanged(*value);
+    const float padX = 14.f * scale;
+    const float switchW = 40.f * scale;
+
+    // Fluent settings rows are 60px tall (68 with the description line); the
+    // label wraps inside the remaining width rather than clipping.
+    const float availW = ImGui::GetContentRegionAvail().x;
+    const float textW = std::max(40.f * scale, availW - padX * 2.f - switchW - 16.f * scale);
+
+    ImGui::PushTextWrapPos(0.f);
+    const ImVec2 textSize = ImGui::CalcTextSize(label.c_str(), nullptr, false, textW);
+    ImGui::PopTextWrapPos();
+
+    const float rowH = std::max(56.f * scale, textSize.y + 24.f * scale);
+    const ImVec2 p0 = ImGui::GetCursorScreenPos();
+    const ImVec2 p1(p0.x + availW, p0.y + rowH);
+
+    const bool clicked = ImGui::InvisibleButton("##row", ImVec2(availW, rowH));
+    const bool hovered = ImGui::IsItemHovered();
+
+    ImDrawList* dl = ImGui::GetWindowDrawList();
+    ImVec4 surface = CardSurfaceColor(dark);
+    if (hovered) {
+        const ImVec4 subtle = SubtleFillColor(dark);
+        surface.x += (subtle.x - surface.x) * subtle.w;
+        surface.y += (subtle.y - surface.y) * subtle.w;
+        surface.z += (subtle.z - surface.z) * subtle.w;
+    }
+    dl->AddRectFilled(p0, p1, ImGui::ColorConvertFloat4ToU32(surface), CardRounding());
+    dl->AddRect(p0, p1, CardBorderU32(dark), CardRounding(), 0, 1.f * scale);
+
+    dl->AddText(nullptr, 0.f, ImVec2(p0.x + padX, p0.y + (rowH - textSize.y) * 0.5f),
+                ImGui::ColorConvertFloat4ToU32(TextPrimaryColor(dark)), label.c_str(), nullptr,
+                textW);
+
+    // One animation slot per row id, kept in ImGui's own storage so it survives
+    // across frames without a static map.
+    float* animation = ImGui::GetStateStorage()->GetFloatRef(ImGui::GetID("##anim"),
+                                                             *value ? 1.f : 0.f);
+    DrawToggleSwitch(dl, ImVec2(p1.x - padX - switchW * 0.5f, p0.y + rowH * 0.5f), *value, hovered,
+                     dark, *animation);
+
+    ImGui::Dummy(ImVec2(0.f, 2.f * scale));
+
+    if (clicked) {
+        *value = !*value;
+        if (onChanged) onChanged(*value);
+    }
     ImGui::PopID();
-    return changed && *value != prev;
+    return clicked;
 }
 
 bool ButtonRow(const char* id, const std::string& label, std::function<void()> onClick) {

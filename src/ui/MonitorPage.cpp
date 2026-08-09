@@ -50,6 +50,8 @@ struct MonitorUiState {
     std::string serviceMsg;
     MonitorTimeAxisView timeView{};
     ResourceId timeViewResource = ResourceId::Cpu;
+    /// Width of one averaged chart point, shown next to the zoom slider.
+    double lastBucketSeconds = 0.0;
 };
 
 MonitorUiState& State() {
@@ -280,7 +282,8 @@ void DrawSystemGraphValues(const l10n::Localization& l, const std::vector<metric
                            const char* plotId, const char* yLabel, const char* seriesLabel,
                            bool percentAxis, int visibleSeconds, int rangeHours,
                            MonitorTimeAxisView& timeView,
-                           const std::function<double(const metrics::SystemSample&)>& valueFn) {
+                           const std::function<double(const metrics::SystemSample&)>& valueFn,
+                           double* outBucketSeconds = nullptr) {
     std::vector<double> xs;
     std::vector<double> ys;
     if (samples.empty()) {
@@ -315,9 +318,13 @@ void DrawSystemGraphValues(const l10n::Localization& l, const std::vector<metric
         const int budget = PlotDownsampleBudget();
         const ImPlotRect lim = ImPlot::GetPlotLimits(ImAxis_X1, ImAxis_Y1);
         FilterSeriesByTime(xs, ys, lim.X.Min, lim.X.Max, filteredX, filteredY);
-        DownsampleAverage(filteredX, filteredY, plotX, plotY, budget);
+        // Average into wall-clock buckets: an hour-wide view becomes one point
+        // per minute instead of a dense unreadable line.
+        const double bucket = NiceBucketSeconds(lim.X.Max - lim.X.Min, budget);
+        DownsampleTimeBuckets(filteredX, filteredY, plotX, plotY, bucket);
         if (!plotX.empty())
             ImPlot::PlotLine(seriesLabel, plotX.data(), plotY.data(), static_cast<int>(plotX.size()));
+        if (outBucketSeconds) *outBucketSeconds = bucket;
 
         UpdateMonitorTimeAxisX(timeView);
         ImPlot::EndPlot();
@@ -327,13 +334,14 @@ void DrawSystemGraphValues(const l10n::Localization& l, const std::vector<metric
 void DrawSystemGraph(const l10n::Localization& l, const std::vector<metrics::SystemSample>& samples,
                      float metrics::SystemSample::* field, const char* plotId, const char* yLabel,
                      const char* seriesLabel, bool percentAxis, int visibleSeconds, int rangeHours,
-                     MonitorTimeAxisView& timeView) {
+                     MonitorTimeAxisView& timeView, double* outBucketSeconds = nullptr) {
     DrawSystemGraphValues(
         l, samples, plotId, yLabel, seriesLabel, percentAxis, visibleSeconds, rangeHours, timeView,
         [field, percentAxis](const metrics::SystemSample& s) {
             const double v = static_cast<double>(s.*field);
             return percentAxis ? static_cast<double>(std::clamp(static_cast<float>(v), 0.f, 100.f)) : v;
-        });
+        },
+        outBucketSeconds);
 }
 
 } // namespace
@@ -383,13 +391,11 @@ void DrawMonitor() {
     const bool dark = IsDarkTheme(settings.theme);
 
     PushCompactToolbarStyle();
-    if (ImGui::BeginTable("mon_toolbar", 2,
-                          ImGuiTableFlags_SizingStretchSame | ImGuiTableFlags_NoPadInnerX)) {
-        ImGui::TableSetupColumn("left", ImGuiTableColumnFlags_WidthStretch, 1.f);
-        ImGui::TableSetupColumn("right", ImGuiTableColumnFlags_WidthFixed, 360.f * UiScale());
 
-        ImGui::TableNextRow();
-        ImGui::TableSetColumnIndex(0);
+    // Two plain rows instead of a table with a hard-coded 360px right column:
+    // that column clipped the range buttons on narrower windows. Everything
+    // here sizes to its own content.
+    {
         bool svcEnabled = settings.metricsServiceEnabled;
         if (ImGui::Checkbox(l.Get("mon", "main", "service_enable_short").c_str(), &svcEnabled)) {
             settings.metricsServiceEnabled = svcEnabled;
@@ -430,16 +436,14 @@ void DrawMonitor() {
         if (!st.serviceMsg.empty()) {
             ImGui::SameLine(0.f, 6.f);
             ImGui::TextColored(ImVec4(0.9f, 0.75f, 0.3f, 1.f), "%s", st.serviceMsg.c_str());
-        } else if (!metrics_svc::IsRunningCached()) {
-            ImGui::SameLine(0.f, 6.f);
-            ImGui::TextDisabled("%s", l.Get("mon", "main", "gui_collect_hint").c_str());
         }
+    }
 
-        ImGui::TableSetColumnIndex(1);
+    {
         const char* rangeKeys[] = {"1h", "6h", "24h", "7d", "30d"};
         const int rangeHours[] = {1, 6, 24, 168, 720};
         for (int i = 0; i < 5; ++i) {
-            if (i > 0) ImGui::SameLine(0.f, 3.f);
+            if (i > 0) ImGui::SameLine(0.f, 4.f);
             const bool sel = st.rangeHours == rangeHours[i];
             if (sel) {
                 const ImVec4 a = AccentColor();
@@ -449,20 +453,39 @@ void DrawMonitor() {
             }
             if (ImGui::Button(l.Get("mon", "main", rangeKeys[i]).c_str())) {
                 st.rangeHours = rangeHours[i];
-                st.visibleMinutes = std::min(st.visibleMinutes, MaxVisibleMinutes(st.rangeHours));
+                // Show the whole range that was just picked. Leaving the zoom
+                // where it was is why these buttons looked like they did
+                // nothing: the window stayed 10 minutes wide either way.
+                st.visibleMinutes = MaxVisibleMinutes(st.rangeHours);
+                st.timeView.manualX = false;
                 InvalidateMonitorCaches(st);
             }
             if (sel) ImGui::PopStyleColor(3);
         }
-        ImGui::SameLine(0.f, 8.f);
+        ImGui::SameLine(0.f, 10.f);
         ImGui::AlignTextToFramePadding();
         ImGui::TextUnformatted(l.Get("mon", "main", "zoom_short").c_str());
         ImGui::SameLine(0.f, 4.f);
-        ImGui::SetNextItemWidth(88.f * UiScale());
-        ImGui::SliderInt("##mon_zoom", &st.visibleMinutes, 1, maxVisibleMin, "%d");
+        ImGui::SetNextItemWidth(120.f * UiScale());
+        if (ImGui::SliderInt("##mon_zoom", &st.visibleMinutes, 1, maxVisibleMin, "%d min"))
+            st.timeView.manualX = false;
 
-        ImGui::EndTable();
+        if (!metrics_svc::IsRunningCached()) {
+            ImGui::SameLine(0.f, 10.f);
+            ImGui::AlignTextToFramePadding();
+            ImGui::TextDisabled("%s", l.Get("mon", "main", "gui_collect_hint").c_str());
+        }
+        if (st.lastBucketSeconds > 0.0) {
+            const std::string bucket = FormatBucketWidth(st.lastBucketSeconds);
+            if (!bucket.empty()) {
+                ImGui::SameLine(0.f, 10.f);
+                ImGui::AlignTextToFramePadding();
+                ImGui::TextDisabled("%s %s", l.Get("mon", "main", "avg_per").c_str(),
+                                    bucket.c_str());
+            }
+        }
     }
+
     PopCompactToolbarStyle();
     ImGui::Dummy(ImVec2(0.f, 2.f * UiScale()));
 
@@ -531,7 +554,8 @@ void DrawMonitor() {
         }
         DrawSystemGraph(l, sysSamples, &metrics::SystemSample::gpuPct, "gpu_plot",
                         l.Get("mon", "graph", "pct").c_str(), l.Get("mon", "res", "gpu").c_str(),
-                        true, visibleSec, st.rangeHours, st.timeView);
+                        true, visibleSec, st.rangeHours, st.timeView,
+                        &st.lastBucketSeconds);
         break;
     case ResourceId::Ram:
         if (noChartData) {
@@ -540,7 +564,8 @@ void DrawMonitor() {
         }
         DrawSystemGraph(l, sysSamples, &metrics::SystemSample::ramPct, "ram_plot",
                         l.Get("mon", "graph", "pct").c_str(), l.Get("mon", "res", "ram").c_str(),
-                        true, visibleSec, st.rangeHours, st.timeView);
+                        true, visibleSec, st.rangeHours, st.timeView,
+                        &st.lastBucketSeconds);
         break;
     case ResourceId::Net:
         if (noChartData) {
@@ -551,9 +576,11 @@ void DrawMonitor() {
                     static_cast<long long>(liveSystem.netDown));
         DrawSystemGraphValues(l, sysSamples, "net_plot", l.Get("mon", "graph", "speed").c_str(),
                               l.Get("mon", "res", "net").c_str(), false, visibleSec, st.rangeHours,
-                              st.timeView, [](const metrics::SystemSample& s) {
+                              st.timeView,
+                              [](const metrics::SystemSample& s) {
                                   return static_cast<double>(s.netDown) / 1024.0;
-                              });
+                              },
+                              &st.lastBucketSeconds);
         break;
     case ResourceId::Disk:
         if (noChartData) {
@@ -562,7 +589,8 @@ void DrawMonitor() {
         }
         DrawSystemGraph(l, sysSamples, &metrics::SystemSample::diskPct, "disk_plot",
                         l.Get("mon", "graph", "pct").c_str(), l.Get("mon", "res", "disk").c_str(),
-                        true, visibleSec, st.rangeHours, st.timeView);
+                        true, visibleSec, st.rangeHours, st.timeView,
+                        &st.lastBucketSeconds);
         break;
     }
     ImGui::EndChild();

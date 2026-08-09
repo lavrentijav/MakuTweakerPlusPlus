@@ -448,8 +448,8 @@ void DrawPci() {
             if (BeginSettingsCard("gpu_pick_card", dark, 44.f * UiScale())) {
                 ImGui::SetNextItemWidth(-1.f);
                 ImGui::Combo("##gpu_pick", &gpuIdx, gpuItems.data(), static_cast<int>(gpuItems.size()));
-                EndSettingsCard();
             }
+            EndSettingsCard();
         }
         EndCollapsibleSection();
     }
@@ -478,8 +478,8 @@ void DrawPci() {
             if (BeginSettingsCard("disk_pick_card", dark, 44.f * UiScale())) {
                 ImGui::SetNextItemWidth(-1.f);
                 ImGui::Combo("##disk_pick", &diskIdx, diskItems.data(), static_cast<int>(diskItems.size()));
-                EndSettingsCard();
             }
+            EndSettingsCard();
         }
         EndCollapsibleSection();
     }
@@ -516,8 +516,8 @@ void DrawPci() {
                 ImGui::SetNextItemWidth(-1.f);
                 ImGui::Combo("##ram_pick", &ramStickIdx, ramItems.data(),
                              static_cast<int>(ramItems.size()));
-                EndSettingsCard();
             }
+            EndSettingsCard();
         }
         EndCollapsibleSection();
     }
@@ -553,6 +553,10 @@ void DrawPci() {
         static std::atomic<bool> benchRunning{false};
         static std::string benchResult;
         static std::mutex benchMutex;
+        // Last finished run, kept so the opt-in "share" button below has
+        // something concrete to send when analytics are switched off.
+        static std::string lastCpu, lastScoreType, lastScore;
+        static std::string shareStatus;
         if (benchResult.empty()) benchResult = l.Get("pci", "main", "benchtip");
 
         const std::string cpuNameUtf8 = util::ToUtf8(snap.cpuName);
@@ -579,6 +583,10 @@ void DrawPci() {
                         analytics::TrackBenchmark(cpuNameUtf8, scoreType, scoreStr);
                         std::lock_guard lock(benchMutex);
                         benchResult = line;
+                        lastCpu = cpuNameUtf8;
+                        lastScoreType = scoreType;
+                        lastScore = scoreStr;
+                        shareStatus.clear();
                     } catch (...) {
                         std::lock_guard lock(benchMutex);
                         benchResult = done + " (error)";
@@ -602,6 +610,26 @@ void DrawPci() {
         {
             std::lock_guard lock(benchMutex);
             ImGui::TextWrapped("%s", benchResult.c_str());
+        }
+
+        // When analytics are off, results are never sent automatically. Offer a
+        // one-shot share instead so declining the prompt does not mean the
+        // author's benchmark database loses this machine entirely.
+        if (!analytics::IsEnabled()) {
+            std::lock_guard lock(benchMutex);
+            const bool haveResult = !lastScore.empty();
+            ImGui::Dummy(ImVec2(0.f, 6.f * scale));
+            ImGui::BeginDisabled(!haveResult || busy);
+            if (ImGui::Button(l.Get("pci", "main", "sharewithauthor").c_str())) {
+                shareStatus = analytics::ShareBenchmarkWithAuthor(lastCpu, lastScoreType, lastScore)
+                                  ? l.Get("pci", "main", "sharesent")
+                                  : l.Get("pci", "main", "sharefailed");
+            }
+            ImGui::EndDisabled();
+            if (!haveResult)
+                ImGui::TextDisabled("%s", l.Get("pci", "main", "sharehint").c_str());
+            else if (!shareStatus.empty())
+                ImGui::TextDisabled("%s", shareStatus.c_str());
         }
     }
 }

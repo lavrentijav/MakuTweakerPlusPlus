@@ -2,7 +2,9 @@
 #include "core/StringUtil.h"
 #include <windows.h>
 #include <shellapi.h>
+#include <userenv.h>
 #include <sstream>
+#include <vector>
 
 namespace maku::proc {
 namespace {
@@ -87,8 +89,14 @@ RunResult Run(const std::wstring& file, const std::wstring& args, bool shell) {
     DWORD flags = CREATE_NO_WINDOW;
     if (shell) flags |= CREATE_UNICODE_ENVIRONMENT;
 
-    if (!CreateProcessW(shell ? nullptr : file.c_str(), cmdBuf.data(), nullptr, nullptr, TRUE,
-                        flags, nullptr, nullptr, &si, &pi)) {
+    // lpApplicationName must be NULL so the executable is resolved through
+    // PATH. Passing a bare name like "powershell.exe" there makes CreateProcess
+    // look only in the current directory, so every helper we shell out to
+    // (powershell, dism, sfc, bcdedit, net, sc) failed with exit code -1 and
+    // the callers silently treated that as "tweak is off".
+    // cmdBuf already quotes the program, so a path with spaces is safe.
+    if (!CreateProcessW(nullptr, cmdBuf.data(), nullptr, nullptr, TRUE, flags, nullptr, nullptr,
+                        &si, &pi)) {
         CloseHandle(outRd);
         CloseHandle(errRd);
         return r;
@@ -173,13 +181,102 @@ void KillExplorer() {
     Run(SystemExePath(L"taskkill.exe"), L"/F /IM explorer.exe");
 }
 
-void RestartExplorer() {
-    KillExplorer();
-    Sleep(1500);
-    if (!LaunchDetached(SystemExePath(L"explorer.exe"), L"")) {
-        ShellExecuteW(nullptr, nullptr, SystemExePath(L"explorer.exe").c_str(), nullptr, nullptr,
-                      SW_SHOWNORMAL);
+namespace {
+
+/// A primary token copied from the running shell, or null.
+///
+/// MakuTweaker++ usually runs elevated, and Windows refuses to accept an
+/// elevated process as the shell — starting explorer.exe with our own token
+/// gives at best a stray file-browser window, which is why "restart Explorer"
+/// looked like it only killed it. Grabbing the shell's own medium-integrity
+/// token *before* it dies lets us start the replacement as the same user at the
+/// same integrity level.
+HANDLE CaptureShellToken() {
+    const HWND shell = GetShellWindow();
+    if (!shell) return nullptr;
+
+    DWORD pid = 0;
+    GetWindowThreadProcessId(shell, &pid);
+    if (pid == 0) return nullptr;
+
+    const HANDLE process = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, FALSE, pid);
+    if (!process) return nullptr;
+
+    HANDLE processToken = nullptr;
+    HANDLE primary = nullptr;
+    if (OpenProcessToken(process, TOKEN_DUPLICATE, &processToken)) {
+        if (!DuplicateTokenEx(processToken, TOKEN_ALL_ACCESS, nullptr, SecurityImpersonation,
+                              TokenPrimary, &primary))
+            primary = nullptr;
+        CloseHandle(processToken);
     }
+    CloseHandle(process);
+    return primary;
+}
+
+bool StartExplorerWithToken(HANDLE token) {
+    if (!token) return false;
+
+    std::wstring path = SystemExePath(L"explorer.exe");
+    std::vector<wchar_t> cmdBuf(path.begin(), path.end());
+    cmdBuf.push_back(0);
+
+    STARTUPINFOW si{sizeof(si)};
+    si.lpDesktop = const_cast<wchar_t*>(L"winsta0\\default");
+    PROCESS_INFORMATION pi{};
+
+    // CreateProcessWithTokenW needs SeImpersonatePrivilege, which an elevated
+    // admin process has; CreateProcessAsUserW covers the SYSTEM case.
+    BOOL ok = CreateProcessWithTokenW(token, 0, path.c_str(), cmdBuf.data(), 0, nullptr, nullptr,
+                                      &si, &pi);
+    if (!ok)
+        ok = CreateProcessAsUserW(token, path.c_str(), cmdBuf.data(), nullptr, nullptr, FALSE, 0,
+                                  nullptr, nullptr, &si, &pi);
+    if (!ok) return false;
+
+    CloseHandle(pi.hThread);
+    CloseHandle(pi.hProcess);
+    return true;
+}
+
+/// Asks the shell to exit the way the hidden "Exit Explorer" menu item does, so
+/// it flushes its state instead of being torn down mid-write.
+bool RequestShellExit() {
+    const HWND tray = FindWindowW(L"Shell_TrayWnd", nullptr);
+    if (!tray) return false;
+    constexpr UINT kExitExplorer = WM_USER + 436;
+    return PostMessageW(tray, kExitExplorer, 0, 0) != FALSE;
+}
+
+bool ShellIsRunning() { return GetShellWindow() != nullptr; }
+
+} // namespace
+
+void RestartExplorer() {
+    HANDLE shellToken = CaptureShellToken();
+
+    if (!RequestShellExit()) {
+        KillExplorer();
+    } else {
+        // Give the graceful path a moment, then force it.
+        for (int i = 0; i < 30 && ShellIsRunning(); ++i) Sleep(100);
+        if (ShellIsRunning()) KillExplorer();
+    }
+
+    // Winlogon's AutoRestartShell may bring the shell back on its own; wait
+    // briefly and only start one ourselves if it does not.
+    for (int i = 0; i < 20 && !ShellIsRunning(); ++i) Sleep(100);
+
+    if (!ShellIsRunning()) {
+        if (!StartExplorerWithToken(shellToken)) {
+            // Not elevated (or no token): our own context is already correct.
+            if (!LaunchDetached(SystemExePath(L"explorer.exe"), L""))
+                ShellExecuteW(nullptr, nullptr, SystemExePath(L"explorer.exe").c_str(), nullptr,
+                              nullptr, SW_SHOWNORMAL);
+        }
+    }
+
+    if (shellToken) CloseHandle(shellToken);
 }
 
 } // namespace maku::proc

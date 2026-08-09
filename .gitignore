@@ -145,6 +145,10 @@ cmake-build-*/
 CMakeUserPresets.json
 .vs/
 compile_commands.json
+build-onefile/
+dist/
+build/
+build-onefile/
 
 
 # --- secrets & local-only (auto-added) ---

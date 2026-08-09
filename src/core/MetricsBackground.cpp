@@ -43,13 +43,16 @@ void MetricsBackground::Tick(const int intervalSec, const int uiRefreshMs) {
     EnsureInit();
     if (!dbReady_) return;
 
-    const int periodSec = intervalSec > 0 ? intervalSec : 5;
+    const int periodSec = intervalSec > 0 ? intervalSec : 2;
     const bool svcRunning = metrics_svc::IsRunningCached();
     DWORD pollMs = svcRunning ? metrics_svc::kMetricsServicePollMs
                               : static_cast<DWORD>(std::max(1, periodSec) * 1000);
     if (uiRefreshMs > 0) {
-        const DWORD uiCap = static_cast<DWORD>(std::max(1000, uiRefreshMs));
-        pollMs = std::max(pollMs, uiCap);
+        // The Monitor page asks for a specific cadence. Take the faster of the
+        // two rather than the slower: raising the poll interval to the UI
+        // refresh made service-backed charts update once a second at best.
+        const DWORD uiRate = static_cast<DWORD>(std::max(200, uiRefreshMs));
+        pollMs = std::min(pollMs, uiRate);
     }
     const DWORD now = GetTickCount();
     if (lastPollMs_ != 0 && now - lastPollMs_ < pollMs) return;

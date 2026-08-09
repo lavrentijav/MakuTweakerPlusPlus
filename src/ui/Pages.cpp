@@ -18,8 +18,9 @@
 #include "core/Analytics.h"
 #include "core/SysInfoFormat.h"
 #include "core/UwpUtil.h"
-#include "core/TweakProbe.h"
+#include "core/TweakRegistry.h"
 #include "core/Wmi.h"
+#include "ui/TweakPage.h"
 #include <imgui.h>
 #include <algorithm>
 #include <cfloat>
@@ -45,321 +46,192 @@ static const char* kLangTags[] = {
     "en", "ru", "uk", "be", "kk", "cs", "de", "fr", "es", "it", "pt", "fi", "et",
     "lv", "pl", "az", "tr", "zh", "tw", "ja", "ko", "vi", "th", "id", "tl", "hi"};
 
-static bool g_loaded = false;
-
-static std::string FormatScore(double score) {
-    long long v = static_cast<long long>(std::llround(score));
-    std::string s = std::to_string(v);
-    for (int i = static_cast<int>(s.size()) - 3; i > 0; i -= 3)
-        s.insert(static_cast<size_t>(i), " ");
-    return s;
-}
-
-static bool KeyMissing(HKEY root, const wchar_t* sub) {
-    return !reg::KeyExists(root, sub);
-}
-
-static void DeleteNamespaceKeys(bool on) {
-    const wchar_t* keys[] = {
-        L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{A0953C92-50DC-43bf-BE83-3742FED03C9C}",
-        L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{f86fa3ab-70d2-4fc7-9c99-fcbf05467f3a}",
-        L"SOFTWARE\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{A0953C92-50DC-43bf-BE83-3742FED03C9C}",
-        L"SOFTWARE\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{f86fa3ab-70d2-4fc7-9c99-fcbf05467f3a}",
-        L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{374DE290-123F-4565-9164-39C4925E467B}",
-        L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\MyComputer\\NameSpace\\{B4BFCC3A-DB2C-424C-B029-7FE99A87C641}"};
-    for (auto k : keys) {
-        if (on) reg::DeleteKeyTree(HKEY_LOCAL_MACHINE, k);
-        else reg::CreateKey(HKEY_LOCAL_MACHINE, k);
-    }
-}
-
 // --- Explorer ---
 static void DrawExplorer() {
     auto& l = Application::Instance().L10n();
     PageTitle(l.Get("expl", "main", "label"));
-    static bool nonrem, hidden, ext, pchome, gallery, showpc, shortcut;
-    static float lastProbe = -1000.f;
-    if (ImGui::GetTime() - lastProbe > 2.f) {
-        const auto t = tweak::ProbeExplorer();
-        nonrem = t.nonremovable;
-        hidden = t.hidden;
-        ext = t.extensions;
-        pchome = t.pcHome;
-        gallery = t.gallery;
-        showpc = t.showPc;
-        shortcut = t.shortcut;
-        lastProbe = ImGui::GetTime();
-    }
-    if (os::GetWindowsBuild() < 22621)
-        ToggleRow("nonrem", l.Get("expl", "main", "nonremovable"), &nonrem,
-                  [](bool on) { DeleteNamespaceKeys(on); });
-    ToggleRow("hidden", l.Get("expl", "main", "hidden"), &hidden, [](bool on) {
-        reg::SetDword(HKEY_CURRENT_USER,
-                      L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", L"Hidden",
-                      on ? 1u : 0u);
-    });
-    ToggleRow("ext", l.Get("expl", "main", "ext"), &ext, [](bool on) {
-        reg::SetDword(HKEY_CURRENT_USER,
-                      L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
-                      L"HideFileExt", on ? 0u : 1u);
-    });
-    ToggleRow("pchome", l.Get("expl", "main", "pchome"), &pchome, [](bool on) {
-        reg::SetDword(HKEY_CURRENT_USER,
-                      L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", L"LaunchTo",
-                      on ? 1u : 2u);
-    });
-    ToggleRow("gallery", l.Get("expl", "main", "gallery"), &gallery, [](bool on) {
-        reg::SetDword(HKEY_CURRENT_USER,
-                      L"SOFTWARE\\Classes\\CLSID\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}",
-                      L"System.IsPinnedToNameSpaceTree", on ? 0u : 1u);
-    });
-    ToggleRow("showpc", l.Get("expl", "main", "showpc"), &showpc, [](bool on) {
-        reg::SetDword(HKEY_CURRENT_USER,
-                      L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel",
-                      L"{20D04FE0-3AEA-1069-A2D8-08002B30309D}", on ? 0u : 1u);
-    });
-    ToggleRow("shortcut", l.Get("expl", "main", "shortcut"), &shortcut, [](bool on) {
-        if (on)
-            reg::SetString(HKEY_CURRENT_USER,
-                           L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\NamingTemplates",
-                           L"ShortcutNameTemplate", L"%s.lnk");
-        else
-            reg::DeleteKeyTree(HKEY_CURRENT_USER,
-                              L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\NamingTemplates");
-    });
-    if (ButtonRow("fix", l.Get("expl", "main", "e8b"), [] {
-            reg::DeleteKeyTree(HKEY_LOCAL_MACHINE,
-                               L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\DelegateFolders\\{F5FB2C77-0E2F-4A16-A381-3E560C68BC83}");
-            reg::DeleteKeyTree(HKEY_LOCAL_MACHINE,
-                               L"SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\DelegateFolders\\{F5FB2C77-0E2F-4A16-A381-3E560C68BC83}");
-        }))
-        Application::Instance().NotifyReboot(2);
+    DrawTweakPage("exp");
 
-    static bool hideDlg{};
-    if (ButtonRow("hide", l.Get("expl", "main", "choose"))) hideDlg = true;
-    if (hideDlg) {
+    ImGui::Dummy(ImVec2(0.f, 6.f * UiScale()));
+    ImGui::TextWrapped("%s", l.Get("expl", "main", "driveslabel").c_str());
+
+    static bool hideDlg = false;
+    if (ImGui::Button(l.Get("expl", "main", "choose").c_str())) {
+        hideDlg = true;
         ImGui::OpenPopup("HideDrives");
-        if (ImGui::BeginPopupModal("HideDrives", &hideDlg, ImGuiWindowFlags_AlwaysAutoResize)) {
-            ImGui::TextWrapped("%s", l.Get("expl", "status", "hdInfo1").c_str());
-            static bool letters[26]{};
-            for (int i = 0; i < 26; ++i) {
-                char lbl[2] = {static_cast<char>('A' + i), 0};
-                ImGui::Checkbox(lbl, &letters[i]);
-            }
-            if (ImGui::Button(l.Get("expl", "status", "hide").c_str())) {
-                DWORD mask = 0;
-                for (int i = 0; i < 26; ++i)
-                    if (letters[i]) mask |= (1u << i);
-                reg::SetDword(HKEY_CURRENT_USER,
-                              L"Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
-                              L"NoDrives", mask);
-                Application::Instance().NotifyReboot(2);
-                hideDlg = false;
-                ImGui::CloseCurrentPopup();
-            }
-            ImGui::SameLine();
-            if (ImGui::Button(l.Get("expl", "status", "cc").c_str())) hideDlg = false;
-            ImGui::EndPopup();
-        }
     }
-    if (ButtonRow("showall", l.Get("expl", "main", "showall"), [] {
+
+    if (ImGui::BeginPopupModal("HideDrives", &hideDlg, ImGuiWindowFlags_AlwaysAutoResize)) {
+        ImGui::TextWrapped("%s", l.Get("expl", "status", "hdInfo1").c_str());
+        ImGui::Dummy(ImVec2(0.f, 6.f * UiScale()));
+
+        // NoDrives is a 26-bit mask, bit 0 = A:. Seed the checkboxes from the
+        // live value so reopening the dialog does not silently unhide drives.
+        static bool letters[26]{};
+        static bool seeded = false;
+        if (!seeded) {
+            const DWORD mask =
+                reg::TryGetDword(HKEY_CURRENT_USER,
+                                 L"Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
+                                 L"NoDrives")
+                    .value_or(0);
+            for (int i = 0; i < 26; ++i) letters[i] = (mask & (1u << i)) != 0;
+            seeded = true;
+        }
+
+        // 26 letters in a 7-column grid keeps the popup roughly square.
+        for (int i = 0; i < 26; ++i) {
+            char lbl[2] = {static_cast<char>('A' + i), 0};
+            ImGui::Checkbox(lbl, &letters[i]);
+            if ((i % 7) != 6 && i != 25) ImGui::SameLine();
+        }
+
+        ImGui::Dummy(ImVec2(0.f, 8.f * UiScale()));
+        if (ImGui::Button(l.Get("expl", "status", "hide").c_str())) {
+            DWORD mask = 0;
+            for (int i = 0; i < 26; ++i)
+                if (letters[i]) mask |= (1u << i);
             reg::SetDword(HKEY_CURRENT_USER,
                           L"Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer",
-                          L"NoDrives", 0);
+                          L"NoDrives", mask);
             Application::Instance().NotifyReboot(2);
-        })) {
+            hideDlg = false;
+            seeded = false;
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::SameLine();
+        if (ImGui::Button(l.Get("expl", "status", "cc").c_str())) {
+            hideDlg = false;
+            seeded = false;
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::EndPopup();
     }
 }
 
 static void DrawWindowsUpdate() {
     auto& l = Application::Instance().L10n();
     PageTitle(l.Get("wu", "main", "label"));
-    static bool wu1, wu2, wu3, wu5, wu6;
-    static float lastProbe = -1000.f;
-    if (ImGui::GetTime() - lastProbe > 2.f) {
-        const auto t = tweak::ProbeWindowsUpdate();
-        wu1 = t.blockInternet;
-        wu3 = t.excludeDrivers;
-        wu5 = t.serviceStopped;
-        wu6 = t.disableReserves;
-        lastProbe = ImGui::GetTime();
+    DrawTweakPage("wu");
+
+    ImGui::Dummy(ImVec2(0.f, 6.f * UiScale()));
+    ImGui::Separator();
+    ImGui::Dummy(ImVec2(0.f, 6.f * UiScale()));
+
+    // Feature-update pinning is a choice, not a toggle, so it lives outside the
+    // registry-driven rows above.
+    ImGui::TextWrapped("%s", l.Get("wu", "main", "wu2").c_str());
+
+    const auto& options = tweak::TargetReleaseOptions();
+    static std::string current;
+    static float lastRead = -1000.f;
+    if (ImGui::GetTime() - lastRead > 3.f) {
+        current = tweak::GetTargetRelease();
+        lastRead = static_cast<float>(ImGui::GetTime());
     }
-    ToggleRow("wu1", l.Get("wu", "main", "wu1"), &wu1, [](bool on) {
-        if (on) {
-            reg::SetDword(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate",
-                          L"DoNotConnectToWindowsUpdateInternetLocations", 1);
-            reg::SetDword(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate",
-                          L"DisableWindowsUpdateAccess", 1);
-            jobs::JobQueue::Instance().Enqueue([] {
-                proc::Run(L"net", L"stop wuauserv");
-                proc::Run(L"sc", L"config wuauserv start= disabled");
-            });
+
+    static int selected = -1;
+    if (selected < 0) {
+        selected = 0;
+        for (size_t i = 0; i < options.size(); ++i)
+            if (options[i] == current) selected = static_cast<int>(i);
+    }
+
+    ImGui::SetNextItemWidth(200.f * UiScale());
+    if (ImGui::BeginCombo("##wu_target", options[static_cast<size_t>(selected)].c_str())) {
+        for (int i = 0; i < static_cast<int>(options.size()); ++i) {
+            const bool isSel = (selected == i);
+            if (ImGui::Selectable(options[static_cast<size_t>(i)].c_str(), isSel)) selected = i;
+            if (isSel) ImGui::SetItemDefaultFocus();
         }
-    });
-    ToggleRow("wu3", l.Get("wu", "main", "wu3"), &wu3, [](bool on) {
-        reg::SetDword(HKEY_LOCAL_MACHINE,
-                      L"SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate",
-                      L"ExcludeWUDriversInQualityUpdate", on ? 1u : 0u);
-    });
-    if (ButtonRow("wu4", l.Get("wu", "main", "wu4"), [] {
-            jobs::JobQueue::Instance().Enqueue([] {
-                proc::Run(L"net", L"stop wuauserv");
-                proc::RunHidden("net stop bits && net stop cryptsvc");
-                proc::RunHidden(
-                    "ren C:\\Windows\\SoftwareDistribution SoftwareDistribution.old");
-                proc::Run(L"net", L"start wuauserv");
-            });
-        }))
-        Application::Instance().NotifyReboot(1);
-    ToggleRow("wu5", l.Get("wu", "main", "wu5"), &wu5, [](bool on) {
-        proc::Run(L"net", on ? L"stop wuauserv" : L"start wuauserv");
-    });
-    ToggleRow("wu6", l.Get("wu", "main", "wu6"), &wu6, [](bool on) {
-        reg::SetDword(HKEY_LOCAL_MACHINE,
-                      L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ReserveManager",
-                      L"ShippedWithReserves", on ? 0u : 1u);
-    });
+        ImGui::EndCombo();
+    }
+    ImGui::SameLine();
+    if (ImGui::Button(l.Get("base", "def", "apply").c_str())) {
+        if (os::EnsureAdmin(Application::Instance().Hwnd())) {
+            tweak::SetTargetRelease(options[static_cast<size_t>(selected)]);
+            lastRead = -1000.f;
+            Application::Instance().NotifyReboot(1);
+        }
+    }
+    ImGui::SameLine();
+    if (ImGui::Button(l.Get("base", "def", "off").c_str())) {
+        if (os::EnsureAdmin(Application::Instance().Hwnd())) {
+            tweak::ClearTargetRelease();
+            lastRead = -1000.f;
+        }
+    }
+    if (current.empty())
+        ImGui::TextDisabled("-");
+    else
+        ImGui::Text("%s", current.c_str());
 }
 
 static void DrawSysAndRec() {
     auto& l = Application::Instance().L10n();
     PageTitle(l.Get("sr", "main", "label"));
-    static bool telemetry, uac, hybern, smartscreen, bing, sticky, bitlocker, coreisol, chkdsk;
-    static float lastProbe = -1000.f;
-    if (ImGui::GetTime() - lastProbe > 2.f) {
-        const auto t = tweak::ProbeSysRec();
-        telemetry = t.telemetryOff;
-        uac = t.uacOff;
-        hybern = t.hibernateOff;
-        smartscreen = t.smartScreenOff;
-        bing = t.bingOff;
-        lastProbe = ImGui::GetTime();
-    }
-    ToggleRow("telemetry", l.Get("sr", "main", "telemetry"), &telemetry, [](bool on) {
-        reg::SetDword(HKEY_LOCAL_MACHINE,
-                      L"SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection", L"AllowTelemetry",
-                      on ? 0u : 3u);
-    });
-    ToggleRow("uac", l.Get("sr", "main", "uac"), &uac, [](bool on) {
-        reg::SetDword(HKEY_LOCAL_MACHINE,
-                      L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", L"EnableLUA",
-                      on ? 0u : 1u);
-    });
-    ToggleRow("hybern", l.Get("sr", "main", "hybern"), &hybern,
-              [](bool on) { proc::RunHidden(on ? "powercfg /hibernate off" : "powercfg /hibernate on"); });
-    ToggleRow("smartscreen", l.Get("sr", "main", "smartscreen"), &smartscreen, [](bool on) {
-        reg::SetDword(HKEY_LOCAL_MACHINE,
-                      L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
-                      L"EnableSmartScreen", on ? 0u : 1u);
-    });
-    ToggleRow("bing", l.Get("sr", "main", "bing"), &bing, [](bool on) {
-        reg::SetDword(HKEY_CURRENT_USER, L"Software\\Policies\\Microsoft\\Windows\\Explorer",
-                      L"DisableSearchBoxSuggestions", on ? 1u : 0u);
-    });
-    if (ButtonRow("sfc", l.Get("sr", "main", "sfclabel"), [] {
-            jobs::JobQueue::Instance().Enqueue(
-                [] { proc::Run(L"sfc", L"/scannow"); Application::Instance().NotifyReboot(3); });
-        })) {
-    }
-    if (ButtonRow("dism", l.Get("sr", "main", "dismlabel"),
-                  [] { jobs::JobQueue::Instance().Enqueue([] { proc::Run(L"dism", L"/Online /Cleanup-Image /RestoreHealth"); }); })) {
-    }
-    if (ButtonRow("temp", l.Get("sr", "main", "templabel"), [] {
-            proc::RunHidden("del /q /f /s %TEMP%\\*");
-        })) {
-    }
-    if (ButtonRow("battery", l.Get("sr", "main", "batterylabel"),
-                  [] { proc::RunHidden("powercfg /batteryreport"); })) {
-    }
-    if (ButtonRow("pipcache", l.Get("sr", "main", "pipcache"), [] {
-            jobs::JobQueue::Instance().Enqueue([] {
-                proc::RunHidden("powershell -NoProfile -Command \"Remove-Item -Recurse -Force "
-                                "$env:LOCALAPPDATA\\pip\\cache -ErrorAction SilentlyContinue\"");
-            });
-        })) {
-    }
+    DrawTweakPage("sys");
 }
 
 static void DrawPersonalization() {
     auto& l = Application::Instance().L10n();
     PageTitle(l.Get("per", "main", "label"));
-    static bool dark, transparency, verbose, oldcont, endtask;
-    static float lastProbe = -1000.f;
-    if (ImGui::GetTime() - lastProbe > 2.f) {
-        const auto t = tweak::ProbePersonalization();
-        dark = t.darkTheme;
-        transparency = t.transparencyOff;
-        verbose = t.verboseBoot;
-        endtask = t.endTask;
-        oldcont = t.oldContextMenu;
-        lastProbe = ImGui::GetTime();
+    DrawTweakPage("per");
+
+    ImGui::Dummy(ImVec2(0.f, 6.f * UiScale()));
+    ImGui::Separator();
+    ImGui::Dummy(ImVec2(0.f, 6.f * UiScale()));
+
+    // Selection highlight color: the original ships eight presets written to
+    // Control Panel\Colors as space-separated "R G B" strings.
+    struct ColorPreset {
+        const char* label;
+        const wchar_t* highlight;
+        const wchar_t* hotTrack;
+        ImVec4 swatch;
+    };
+    static const ColorPreset kPresets[] = {
+        {"c1", L"51 153 255", L"0 102 204", ImVec4(0.20f, 0.60f, 1.00f, 1.f)},
+        {"c2", L"0 100 100", L"0 100 100", ImVec4(0.00f, 0.39f, 0.39f, 1.f)},
+        {"c3", L"180 0 180", L"110 0 110", ImVec4(0.71f, 0.00f, 0.71f, 1.f)},
+        {"c4", L"0 90 30", L"0 90 30", ImVec4(0.00f, 0.35f, 0.12f, 1.f)},
+        {"c5", L"100 40 0", L"100 40 0", ImVec4(0.39f, 0.16f, 0.00f, 1.f)},
+        {"c6", L"135 0 0", L"135 0 0", ImVec4(0.53f, 0.00f, 0.00f, 1.f)},
+        {"c7", L"15 0 120", L"15 0 120", ImVec4(0.06f, 0.00f, 0.47f, 1.f)},
+        {"c8", L"40 40 40", L"40 40 40", ImVec4(0.16f, 0.16f, 0.16f, 1.f)},
+    };
+
+    ImGui::TextWrapped("%s", l.Get("per", "main", "colorlabel").c_str());
+    const float swatch = 28.f * UiScale();
+    for (int i = 0; i < static_cast<int>(std::size(kPresets)); ++i) {
+        const auto& preset = kPresets[i];
+        ImGui::PushID(preset.label);
+        ImGui::PushStyleColor(ImGuiCol_Button, preset.swatch);
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, preset.swatch);
+        ImGui::PushStyleColor(ImGuiCol_ButtonActive, preset.swatch);
+        if (ImGui::Button("##sw", ImVec2(swatch, swatch))) {
+            reg::SetString(HKEY_CURRENT_USER, L"Control Panel\\Colors", L"HightLight",
+                           preset.highlight);
+            reg::SetString(HKEY_CURRENT_USER, L"Control Panel\\Colors", L"Hilight",
+                           preset.highlight);
+            reg::SetString(HKEY_CURRENT_USER, L"Control Panel\\Colors", L"HotTrackingColor",
+                           preset.hotTrack);
+            Application::Instance().NotifyReboot(1);
+        }
+        ImGui::PopStyleColor(3);
+        if (ImGui::IsItemHovered())
+            ImGui::SetTooltip("%s", l.Get("per", "main", preset.label).c_str());
+        ImGui::PopID();
+        if (i != static_cast<int>(std::size(kPresets)) - 1) ImGui::SameLine();
     }
-    ToggleRow("dark", l.Get("per", "main", "darktheme"), &dark, [](bool on) {
-        reg::SetDword(HKEY_CURRENT_USER,
-                      L"Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
-                      L"AppsUseLightTheme", on ? 0u : 1u);
-        reg::SetDword(HKEY_CURRENT_USER,
-                      L"Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
-                      L"SystemUsesLightTheme", on ? 0u : 1u);
-    });
-    ToggleRow("transparency", l.Get("per", "main", "transparency"), &transparency, [](bool on) {
-        reg::SetDword(HKEY_CURRENT_USER,
-                      L"Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
-                      L"EnableTransparency", on ? 0u : 1u);
-    });
-    ToggleRow("verbose", l.Get("per", "main", "verbose"), &verbose, [](bool on) {
-        reg::SetDword(HKEY_LOCAL_MACHINE,
-                      L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System", L"verbosestatus",
-                      on ? 1u : 0u);
-    });
-    if (os::GetWindowsBuild() >= 22000)
-        ToggleRow("endtask", l.Get("per", "main", "etask"), &endtask, [](bool on) {
-            reg::SetDword(HKEY_CURRENT_USER,
-                          L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\TaskbarDeveloperSettings",
-                          L"TaskbarEndTask", on ? 1u : 0u);
-        });
-    if (os::GetWindowsBuild() >= 22621)
-        ToggleRow("oldcont", l.Get("per", "main", "oldcont"), &oldcont, [](bool on) {
-            if (on)
-                reg::CreateKey(HKEY_CURRENT_USER,
-                               L"Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\\InprocServer32");
-            else
-                reg::DeleteKeyTree(HKEY_CURRENT_USER,
-                                   L"Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}");
-        });
 }
 
 static void DrawAdvanced() {
     auto& l = Application::Instance().L10n();
     PageTitle(l.CatName("adv"));
-    static bool vbs, ttl, disindex, swap;
-    static float lastProbe = -1000.f;
-    if (ImGui::GetTime() - lastProbe > 2.f) {
-        const auto t = tweak::ProbeAdvanced();
-        vbs = t.vbsOff;
-        ttl = t.ttlReduced;
-        disindex = t.indexingOff;
-        lastProbe = ImGui::GetTime();
-    }
-    ToggleRow("vbs", l.Get("adv", "main", "vbs"), &vbs, [](bool on) {
-        reg::SetDword(HKEY_LOCAL_MACHINE, L"SYSTEM\\CurrentControlSet\\Control\\DeviceGuard",
-                      L"EnableVirtualizationBasedSecurity", on ? 0u : 1u);
-    });
-    ToggleRow("ttl", l.Get("adv", "main", "ttl"), &ttl, [](bool on) {
-        reg::SetDword(HKEY_LOCAL_MACHINE, L"SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters",
-                      L"DefaultTTL", on ? 65u : 128u);
-    });
-    ToggleRow("disindex", l.Get("adv", "main", "index_title"), &disindex, [](bool on) {
-        reg::SetDword(HKEY_LOCAL_MACHINE, L"SYSTEM\\CurrentControlSet\\Services\\WSearch", L"Start",
-                      on ? 4u : 2u);
-    });
-    if (ButtonRow("edge", l.Get("adv", "main", "deledge_btn"), [] {
-            jobs::JobQueue::Instance().Enqueue([] {
-                proc::RunPowerShell(
-                    L"Get-AppxPackage *Microsoft.MicrosoftEdge* | Remove-AppxPackage -ErrorAction SilentlyContinue");
-            });
-        })) {
-    }
+    DrawTweakPage("adv");
+
+    ImGui::Dummy(ImVec2(0.f, 6.f * UiScale()));
     ImGui::Separator();
     ImGui::TextUnformatted(l.Get("adv", "main", "sitebantitle").c_str());
     if (ImGui::Button(l.Get("adv", "main", "sitebanopen").c_str())) modals::OpenSiteBan();
@@ -368,46 +240,29 @@ static void DrawAdvanced() {
 static void DrawComponents() {
     auto& l = Application::Instance().L10n();
     PageTitle(l.Get("compon", "main", "label"));
-    if (ButtonRow("dp", l.Get("compon", "main", "directplay"),
-                  [] { proc::Run(L"dism", L"/online /enable-feature /featurename:DirectPlay /all"); }))
-    {
-    }
-    if (ButtonRow("netfx", l.Get("compon", "main", "framework"),
-                  [] { proc::Run(L"dism", L"/online /enable-feature /featurename:NetFx3 /all"); }))
-    {
-    }
-    if (ButtonRow("pv", l.Get("compon", "main", "photoviewer"), [] {
-            proc::RunHidden(
-                "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows Photo Viewer\\Capabilities\\FileAssociations\" /v .jpg /t REG_SZ /d PhotoViewer.FileAssoc.Tiff /f");
-        }))
-    {
-    }
-    if (ButtonRow("gpedit", l.Get("compon", "main", "gpedit"), [] {
-            proc::RunPowerShell(
-                L"foreach ($i in 'gpedit','fde','gaudit','ppe') { dism /online /add-capability /CapabilityName:Rsat.$i.Tools~~~~0.0.1.0 }");
-        }))
-    {
-    }
-    if (ButtonRow("hyperv", l.Get("compon", "main", "forcedis"),
-                  [] { proc::Run(L"bcdedit", L"/set hypervisorlaunchtype off"); }))
-    {
-    }
-    if (ButtonRow("winsxs", l.Get("compon", "main", "winsxs"),
-                  [] { proc::Run(L"dism", L"/online /Cleanup-Image /StartComponentCleanup /ResetBase"); }))
-    {
-    }
+    DrawTweakPage("compon");
 }
 
-static void DrawQuickSet() {
-    auto& l = Application::Instance().L10n();
-    PageTitle(l.Get("quick", "main", "label"));
-    ImGui::TextWrapped("%s", l.Get("quick", "main", "info").c_str());
-    if (ButtonRow("q1", l.Get("quick", "main", "b"), [] {
-            reg::SetDword(HKEY_LOCAL_MACHINE, L"SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection",
-                          L"AllowTelemetry", 0);
-            proc::RunHidden("powercfg /hibernate off");
-        })) {
-    }
+static void DrawQuickSet() { DrawQuickSetup(); }
+
+/// Confirms the OS still has our delayed shutdown queued.
+///
+/// Windows offers no read-only query for a pending shutdown, but arming one is
+/// a usable probe: `shutdown -s` fails with ERROR_SHUTDOWN_IS_SCHEDULED when a
+/// shutdown is already queued, and succeeds when there is none. So a failure
+/// means "still armed, nothing changed", and a success means the timer had been
+/// cancelled behind our back — we undo the accidental re-arm and report it.
+///
+/// Runs on the job queue, never on the UI thread, and never within half a
+/// minute of the deadline so the probe cannot race the shutdown itself.
+bool ShutdownStillScheduled(int remainingSeconds) {
+    if (remainingSeconds <= 30) return true;
+    const auto armed =
+        proc::Run(L"C:\\Windows\\System32\\shutdown.exe",
+                  L"-s -t " + std::to_wstring(remainingSeconds));
+    if (armed.exitCode != 0) return true;
+    proc::Run(L"C:\\Windows\\System32\\shutdown.exe", L"-a");
+    return false;
 }
 
 static void DrawSat() {
@@ -417,22 +272,41 @@ static void DrawSat() {
 
     static int mins = 30;
     static std::chrono::steady_clock::time_point shutdownEnds{};
-    static bool shutdownActive = false;
+    static std::atomic<bool> shutdownActive{false};
+    static std::atomic<bool> verifying{false};
+    static double lastVerify = 0.0;
 
     const auto now = std::chrono::steady_clock::now();
-    if (shutdownActive && now >= shutdownEnds) shutdownActive = false;
+    if (shutdownActive.load() && now >= shutdownEnds) shutdownActive = false;
 
-    ImGui::SliderInt(l.Get("sat", "main", "minho").c_str(), &mins, 1, 600);
+    const long long remaining =
+        shutdownActive.load()
+            ? std::max(0LL, std::chrono::duration_cast<std::chrono::seconds>(shutdownEnds - now)
+                                .count())
+            : 0;
 
-    if (shutdownActive) {
-        const auto left = std::chrono::duration_cast<std::chrono::seconds>(shutdownEnds - now);
-        const long long sec = std::max(0LL, left.count());
-        const long long h = sec / 3600;
-        const long long m = (sec % 3600) / 60;
-        const long long s = sec % 60;
+    // The timer can be cancelled from a terminal, Task Scheduler or another
+    // tool. Re-check periodically so the countdown never keeps ticking against
+    // a shutdown that is no longer scheduled.
+    if (shutdownActive.load() && !verifying.load() && ImGui::GetTime() - lastVerify > 10.0) {
+        lastVerify = ImGui::GetTime();
+        verifying = true;
+        const int snapshot = static_cast<int>(remaining);
+        jobs::JobQueue::Instance().Enqueue([snapshot] {
+            if (!ShutdownStillScheduled(snapshot)) shutdownActive = false;
+            verifying = false;
+        });
+    }
+
+    ImGui::SetNextItemWidth(-200.f * UiScale());
+    ImGui::SliderInt(l.Get("sat", "main", "minho").c_str(), &mins, 1, 600, "%d min");
+
+    if (shutdownActive.load()) {
+        const long long h = remaining / 3600;
+        const long long m = (remaining % 3600) / 60;
+        const long long sec = remaining % 60;
         char buf[64]{};
-        snprintf(buf, sizeof(buf), "%02lld:%02lld:%02lld",
-                 static_cast<long long>(h), static_cast<long long>(m), static_cast<long long>(s));
+        snprintf(buf, sizeof(buf), "%02lld:%02lld:%02lld", h, m, sec);
         std::string countdownLabel = l.Get("sat", "main", "countdown");
         if (countdownLabel == "countdown") countdownLabel = "Until shutdown:";
         ImGui::TextColored(ImVec4(0.45f, 0.88f, 0.55f, 1.f), "%s %s", countdownLabel.c_str(), buf);
@@ -443,56 +317,80 @@ static void DrawSat() {
     }
 
     auto startShutdown = [&](int seconds) {
-        wchar_t args[64];
-        swprintf_s(args, L"-s -t %d", seconds);
-        proc::Run(L"C:\\Windows\\System32\\shutdown.exe", args);
+        // Clear any existing schedule first: shutdown.exe refuses to arm a
+        // second one, which used to leave the UI counting down a timer that
+        // was never actually changed.
+        proc::Run(L"C:\\Windows\\System32\\shutdown.exe", L"-a");
+        const auto r = proc::Run(L"C:\\Windows\\System32\\shutdown.exe",
+                                 L"-s -t " + std::to_wstring(seconds));
+        if (r.exitCode != 0) return;
         shutdownEnds = std::chrono::steady_clock::now() + std::chrono::seconds(seconds);
         shutdownActive = true;
+        lastVerify = ImGui::GetTime();
     };
 
-    if (ButtonRow("10m", l.Get("sat", "main", "tenM"), [&] { startShutdown(600); })) {
-    }
-    if (ButtonRow("1h", l.Get("sat", "main", "oneH"), [&] { startShutdown(3600); })) {
-    }
-    if (ButtonRow("custom", l.Get("sat", "main", "b1"), [&] { startShutdown(mins * 60); })) {
-    }
-    if (ButtonRow("cancel", l.Get("sat", "main", "b2"), [&] {
-            proc::Run(L"C:\\Windows\\System32\\shutdown.exe", L"-a");
-            shutdownActive = false;
-        })) {
-    }
+    ButtonRow("10m", l.Get("sat", "main", "tenM"), [&] { startShutdown(600); });
+    ButtonRow("1h", l.Get("sat", "main", "oneH"), [&] { startShutdown(3600); });
+    ButtonRow("custom", l.Get("sat", "main", "b1"), [&] { startShutdown(mins * 60); });
+    ButtonRow("cancel", l.Get("sat", "main", "b2"), [&] {
+        proc::Run(L"C:\\Windows\\System32\\shutdown.exe", L"-a");
+        shutdownActive = false;
+    });
 }
 
 static void DrawPerf() {
     auto& l = Application::Instance().L10n();
     PageTitle(l.Get("perfor", "main", "label"));
     ImGui::TextWrapped("%s", l.Get("perfor", "main", "info").c_str());
-    static int pct = 50;
-    ImGui::SliderInt("pct", &pct, 1, 100);
-    if (ButtonRow("apply", l.Get("perfor", "main", "applyb"), [&] {
-            const int throttle = pct;
-            auto r = proc::Run(L"powercfg", L"/getactivescheme");
-            std::wstring scheme = util::ToWide(r.output);
-            auto p = scheme.find(L": ");
-            if (p != std::wstring::npos) {
-                scheme = scheme.substr(p + 2);
-                auto end = scheme.find_last_not_of(L" \r\n");
-                if (end != std::wstring::npos) scheme.resize(end + 1);
-            }
-            wchar_t buf[256];
-            swprintf_s(buf, L"/setacvalueindex %s SUB_PROCESSOR PROCTHROTTLEMAX %d", scheme.c_str(),
-                       throttle);
-            proc::Run(L"powercfg", buf);
-            proc::Run(L"powercfg", L"/setactive " + scheme);
-        })) {
+    DrawTweakPage("perf");
+
+    ImGui::Dummy(ImVec2(0.f, 6.f * UiScale()));
+    ImGui::Separator();
+    ImGui::Dummy(ImVec2(0.f, 6.f * UiScale()));
+
+    // Maximum processor state. Seeded from powercfg so the slider reflects the
+    // machine rather than a hardcoded 50%.
+    static int pct = -1;
+    static std::string lastError;
+    if (pct < 0) {
+        const int live = tweak::GetCpuThrottleMax();
+        pct = live > 0 ? live : 100;
     }
+
+    ImGui::SetNextItemWidth(-160.f * UiScale());
+    ImGui::SliderInt("##throttle", &pct, 1, 100, "%d%%");
+    ImGui::SameLine();
+    if (ImGui::Button(l.Get("perfor", "main", "applyb").c_str())) {
+        if (os::EnsureAdmin(Application::Instance().Hwnd())) {
+            lastError.clear();
+            if (!tweak::SetCpuThrottleMax(pct, &lastError) && lastError.empty())
+                lastError = "powercfg failed";
+        }
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("100%")) {
+        if (os::EnsureAdmin(Application::Instance().Hwnd())) {
+            pct = 100;
+            lastError.clear();
+            tweak::SetCpuThrottleMax(100, &lastError);
+        }
+    }
+    if (!lastError.empty())
+        ImGui::TextColored(ImVec4(1.f, 0.45f, 0.35f, 1.f), "%s", lastError.c_str());
 }
 
 static void DrawAct() {
-    PageTitle(Application::Instance().L10n().CatName("act"));
+    auto& l = Application::Instance().L10n();
+    PageTitle(l.CatName("act"));
+    // The original's activation page is closed source, so it is deliberately
+    // absent here rather than half-implemented. Say so plainly.
     ImGui::TextWrapped(
-        "In the GitHub version, for obvious reasons, the source code of the Windows activation page is not available.\n\n"
-        "В GitHub-версии по очевидным причинам исходный код страницы активации Windows недоступен.");
+        "In the GitHub version, for obvious reasons, the source code of the Windows activation "
+        "page is not available.\n\n"
+        "В GitHub-версии по очевидным причинам исходный код страницы активации Windows "
+        "недоступен.");
+    ImGui::Dummy(ImVec2(0.f, 10.f * UiScale()));
+    if (ImGui::Button("GitHub")) proc::OpenUrl(L"https://github.com/MarkAdderly/MakuTweaker");
 }
 
 // --- UWP ---
@@ -539,6 +437,13 @@ static void DrawUwp() {
 
     ImGui::TextUnformatted(UwpStr(l, "allapps", "All installed UWP packages").c_str());
     if (ImGui::Button(UwpStr(l, "refreshlist", "Refresh list").c_str())) RequestUwpPackageReload();
+    ImGui::SameLine();
+    // The original ships a fixed checkbox list; this port lists every installed
+    // package, so the curated set becomes a selection shortcut instead.
+    const bool selectCurated =
+        ImGui::Button(UwpStr(l, "selectcurated", "Select the usual bloatware").c_str());
+    ImGui::SameLine();
+    const bool clearSelection = ImGui::Button(l.Get("base", "def", "off").c_str());
 
     if (g_uwpListLoading.load()) {
         ImGui::TextWrapped("%s", UwpStr(l, "loadinglist", "Loading installed UWP packages...").c_str());
@@ -546,6 +451,14 @@ static void DrawUwp() {
     }
 
     std::lock_guard uwpLock(g_uwpMutex);
+
+    if (g_uwpSelected.size() != g_uwpPackages.size())
+        g_uwpSelected.assign(g_uwpPackages.size(), 0);
+    if (selectCurated) {
+        for (size_t i = 0; i < g_uwpPackages.size(); ++i)
+            if (uwp::IsCuratedRemovable(g_uwpPackages[i].packageFullName)) g_uwpSelected[i] = 1;
+    }
+    if (clearSelection) std::fill(g_uwpSelected.begin(), g_uwpSelected.end(), char{0});
 
     if (g_uwpPackages.empty() && !g_uwpLastError.empty())
         ImGui::TextColored(ImVec4(1.f, 0.45f, 0.35f, 1.f), "%s", g_uwpLastError.c_str());
@@ -1027,6 +940,9 @@ static void DrawSettings() {
 
     ImGui::TextUnformatted(l.Get("ab", "main", "lang").c_str());
     ImGui::SameLine();
+    // Explicit width: the default is a fraction of the window, which pushed the
+    // combo under the right edge on the settings page.
+    ImGui::SetNextItemWidth(140.f * UiScale());
     if (ImGui::BeginCombo("##lang", kLangTags[langIdx])) {
         for (int i = 0; i < 26; ++i) {
             const bool selected = (langIdx == i);
@@ -1035,6 +951,7 @@ static void DrawSettings() {
         }
         ImGui::EndCombo();
     }
+    ImGui::SameLine();
     if (ImGui::Button(l.Get("base", "def", "apply").c_str())) {
         s.lang = kLangTags[langIdx];
         s.Save();
@@ -1069,10 +986,33 @@ static void DrawSettings() {
     if (ImGui::Checkbox(l.Get("ab", "main", "winr").c_str(), &winr)) apppaths::SetWinRAliases(winr);
     ImGui::TextWrapped("%s", l.Get("ab", "main", "winrinfo").c_str());
 
-    if (ImGui::Checkbox(l.Get("ab", "main", "disabletelemetry").c_str(), &s.disableTelemetry))
-        s.Save();
-    if (ImGui::CollapsingHeader("Telemetry info")) {
+    ImGui::Separator();
+    ImGui::TextUnformatted(l.Get("ab", "consent", "title").c_str());
+    // Opt-*out* polarity here, matching the long explanation below ("just tick
+    // the box and collection stops") that is already translated into all 26
+    // languages. The first-run dialog asks the opposite way round, which is
+    // fine — it is phrased as its own question.
+    bool disableAnalytics = s.analyticsConsent != static_cast<int>(AnalyticsConsent::Granted);
+    if (ImGui::Checkbox(l.Get("ab", "main", "disabletelemetry").c_str(), &disableAnalytics)) {
+        const auto consent =
+            disableAnalytics ? AnalyticsConsent::Declined : AnalyticsConsent::Granted;
+        analytics::SetConsent(consent);
+        s.analyticsConsent = static_cast<int>(consent);
+        s.disableTelemetry = disableAnalytics;
+    }
+    if (ImGui::CollapsingHeader(l.Get("ab", "consent", "details").c_str())) {
         ImGui::TextWrapped("%s", l.Get("ab", "main", "telemetryabt").c_str());
+        ImGui::Spacing();
+        // Show the numbers that would be shared, so "most visited tabs" is a
+        // concrete list rather than a promise.
+        ImGui::TextUnformatted(l.Get("ab", "consent", "item_tabs").c_str());
+        const auto top = analytics::TopVisitedTabs();
+        if (top.empty()) {
+            ImGui::TextDisabled("-");
+        } else {
+            for (const auto& [tag, count] : top)
+                ImGui::BulletText("%s - %d", analytics::ScreenName(tag).c_str(), count);
+        }
     }
 
     ImGui::Checkbox(l.Get("pmgr", "main", "modeset").c_str(), &s.autoStartExclusive);

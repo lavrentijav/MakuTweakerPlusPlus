@@ -45,6 +45,53 @@ ImU32 HeatColor(float pct) {
     return ImGui::ColorConvertFloat4ToU32(c);
 }
 
+/// Physical core id behind a series index.
+int CoreOfUnit(const cpu::CpuLayout& layout, CpuUnitMode unit, int id) {
+    if (unit == CpuUnitMode::Physical) return id;
+    if (id >= 0 && id < static_cast<int>(layout.logicalToCore.size()))
+        return layout.logicalToCore[static_cast<size_t>(id)];
+    return id;
+}
+
+/// Position of a logical processor among the threads sharing its core:
+/// 0 for the first, 1 for its SMT sibling, and so on.
+int SmtSiblingIndex(const cpu::CpuLayout& layout, int logicalId) {
+    if (logicalId < 0 || logicalId >= static_cast<int>(layout.logicalToCore.size())) return 0;
+    const int core = layout.logicalToCore[static_cast<size_t>(logicalId)];
+    int index = 0;
+    for (int i = 0; i < logicalId; ++i)
+        if (layout.logicalToCore[static_cast<size_t>(i)] == core) ++index;
+    return index;
+}
+
+/// Colour for one chart series.
+///
+/// A physical core and its SMT thread are different things that happen to move
+/// together, so they must not look alike: each core owns a hue (spread by the
+/// golden ratio so neighbours stay distinct), the core's first thread uses that
+/// hue at full saturation, and every sibling thread gets a lighter, washed-out
+/// variant of the same hue. Reading the chart then tells you both *which core*
+/// and *core vs thread* at a glance.
+ImVec4 UnitSeriesColor(const cpu::CpuLayout& layout, CpuUnitMode unit, int id) {
+    const int core = CoreOfUnit(layout, unit, id);
+    const int coreCount = std::max(1, layout.coreCount);
+
+    // 0.618… keeps successive hues far apart for any core count.
+    float hue = std::fmod(static_cast<float>(core) * 0.6180339887f, 1.f);
+    if (coreCount <= 8) hue = static_cast<float>(core) / static_cast<float>(coreCount);
+
+    float saturation = 0.78f;
+    float value = 0.95f;
+    if (unit == CpuUnitMode::Logical && SmtSiblingIndex(layout, id) > 0) {
+        saturation = 0.34f;
+        value = 0.72f;
+    }
+
+    ImVec4 c(0.f, 0.f, 0.f, 1.f);
+    ImGui::ColorConvertHSVtoRGB(hue, saturation, value, c.x, c.y, c.z);
+    return c;
+}
+
 int ClampTopK(int k) { return std::clamp(k, 3, 16); }
 
 std::vector<int> TopKIndices(const std::vector<float>& resolved, const std::vector<int>& pool,
@@ -133,11 +180,15 @@ CpuTimelineData BuildTimeline(const std::vector<metrics::CpuSampleRow>& rows,
 }
 
 void PlotTimelineSeries(const l10n::Localization& l, const CpuTimelineData& data, CpuUnitMode unit,
-                        const std::vector<int>* onlyIndices) {
+                        const cpu::CpuLayout& layout, const std::vector<int>* onlyIndices,
+                        double* outBucketSeconds = nullptr) {
     if (data.times.empty()) return;
 
     const int budget = PlotDownsampleBudget();
     const ImPlotRect lim = ImPlot::GetPlotLimits(ImAxis_X1, ImAxis_Y1);
+    // Wall-clock averaging, so an hour-wide view is one point per minute.
+    const double bucket = NiceBucketSeconds(lim.X.Max - lim.X.Min, budget);
+    if (outBucketSeconds) *outBucketSeconds = bucket;
     static thread_local std::vector<double> filteredX, filteredY, plotX, plotY;
 
     const auto plotOne = [&](int id) {
@@ -146,8 +197,12 @@ void PlotTimelineSeries(const l10n::Localization& l, const CpuTimelineData& data
         if (ysFull.size() != data.times.size()) return;
         FilterSeriesByTime(data.times, ysFull, lim.X.Min, lim.X.Max, filteredX, filteredY);
         if (filteredX.empty()) return;
-        DownsampleAverage(filteredX, filteredY, plotX, plotY, budget);
+        DownsampleTimeBuckets(filteredX, filteredY, plotX, plotY, bucket);
         if (plotX.empty()) return;
+        // Thinner stroke for SMT siblings reinforces the colour difference.
+        const bool sibling =
+            unit == CpuUnitMode::Logical && SmtSiblingIndex(layout, id) > 0;
+        ImPlot::SetNextLineStyle(UnitSeriesColor(layout, unit, id), sibling ? 1.1f : 1.8f);
         ImPlot::PlotLine(SeriesLabel(l, unit, id).c_str(), plotX.data(), plotY.data(),
                          static_cast<int>(plotX.size()));
     };
@@ -245,7 +300,7 @@ void DrawNumaTimeline(const l10n::Localization& l, const cpu::CpuLayout& layout,
         const std::string subPlotId = std::string(plotId) + "_numa" + std::to_string(n);
         if (ImPlot::BeginPlot(subPlotId.c_str(), ImVec2(-1, PlotHeight()))) {
             SetupPercentTimeAxes(l, timeView, xMin, xMax, visibleSeconds, rangeHours);
-            PlotTimelineSeries(l, data, unit, &indices);
+            PlotTimelineSeries(l, data, unit, layout, &indices);
             UpdateMonitorTimeAxisX(timeView);
             ImPlot::EndPlot();
         }
@@ -309,7 +364,7 @@ void DrawTopNTimeline(const l10n::Localization& l, const std::vector<float>& usa
 
     if (ImPlot::BeginPlot(plotId, ImVec2(-1, PlotHeight()))) {
         SetupPercentTimeAxes(l, timeView, xMin, xMax, visibleSeconds, rangeHours);
-        PlotTimelineSeries(l, data, unit, &topIds);
+        PlotTimelineSeries(l, data, unit, layout, &topIds);
         UpdateMonitorTimeAxisX(timeView);
         ImPlot::EndPlot();
     }
@@ -326,7 +381,7 @@ void DrawAllThreadsTimeline(const l10n::Localization& l, const cpu::CpuLayout& l
 
     if (ImPlot::BeginPlot(plotId, ImVec2(-1, PlotHeight()))) {
         SetupPercentTimeAxes(l, timeView, xMin, xMax, visibleSeconds, rangeHours);
-        PlotTimelineSeries(l, data, unit, nullptr);
+        PlotTimelineSeries(l, data, unit, layout, nullptr);
         UpdateMonitorTimeAxisX(timeView);
         ImPlot::EndPlot();
     }

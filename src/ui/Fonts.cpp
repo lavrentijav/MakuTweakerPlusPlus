@@ -63,8 +63,8 @@ void InitFonts(HWND hwnd) {
     if (hwnd)
         dpi = ImGui_ImplWin32_GetDpiScaleForHwnd(hwnd);
 
-    const float uiSize = 15.f * dpi;
-    const float titleSize = 22.f * dpi;
+    const float uiSize = 17.f * dpi;
+    const float titleSize = 25.f * dpi;
 
     ImFontConfig cfg{};
     cfg.OversampleH = 2;
@@ -75,7 +75,10 @@ void InitFonts(HWND hwnd) {
     const std::string segoeBold = SystemFontPath(L"segoeuib.ttf");
     const std::string segoeSemibold = SystemFontPath(L"seguisb.ttf");
 
-    g_fontUi = LoadSegoe(io, segoeUi.c_str(), uiSize, &cfg);
+    // Body text uses Segoe UI Semibold rather than Regular: at these sizes the
+    // regular weight reads thin against the dark Fluent surfaces.
+    g_fontUi = LoadSegoe(io, segoeSemibold.c_str(), uiSize, &cfg);
+    if (!g_fontUi) g_fontUi = LoadSegoe(io, segoeUi.c_str(), uiSize, &cfg);
     if (!g_fontUi)
         g_fontUi = LoadSegoe(io, SystemFontPath(L"tahoma.ttf").c_str(), uiSize, &cfg);
     if (!g_fontUi) {

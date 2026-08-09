@@ -25,6 +25,21 @@ bool GetString(HKEY root, const std::wstring& subKey, const std::wstring& name, 
 bool SetString(HKEY root, const std::wstring& subKey, const std::wstring& name,
                const std::wstring& value);
 
+bool GetMultiString(HKEY root, const std::wstring& subKey, const std::wstring& name,
+                    std::vector<std::wstring>& out, REGSAM sam = KEY_READ);
+bool SetMultiString(HKEY root, const std::wstring& subKey, const std::wstring& name,
+                    const std::vector<std::wstring>& values);
+
+bool DeleteValue(HKEY root, const std::wstring& subKey, const std::wstring& name);
+
 std::optional<DWORD> TryGetDword(HKEY root, const std::wstring& subKey, const std::wstring& name);
+std::optional<std::wstring> TryGetString(HKEY root, const std::wstring& subKey,
+                                         const std::wstring& name);
+
+/// True when the DWORD exists and equals `expected`.
+bool DwordEquals(HKEY root, const std::wstring& subKey, const std::wstring& name, DWORD expected);
+/// True when the string value exists and equals `expected` (case-sensitive).
+bool StringEquals(HKEY root, const std::wstring& subKey, const std::wstring& name,
+                  const std::wstring& expected);
 
 } // namespace maku::reg

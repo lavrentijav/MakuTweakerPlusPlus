@@ -26,6 +26,12 @@ ImVec4 CardGlassColor(bool dark);
 ImVec4 CardBorderColor(bool dark);
 ImU32 CardBorderU32(bool dark);
 
+/// Fluent text and control fills, for widgets drawn by hand on a draw list.
+ImVec4 TextPrimaryColor(bool dark);
+ImVec4 TextSecondaryColor(bool dark);
+ImVec4 ControlFillColor(bool dark);
+ImVec4 SubtleFillColor(bool dark);
+
 /// Stroke around metric tiles, search field, monitor sidebar cards, etc.
 void DrawCardBorder(ImDrawList* dl, ImVec2 min, ImVec2 max, bool dark, float rounding,
                     bool accentHighlight = false);
